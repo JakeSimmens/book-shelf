@@ -1,0 +1,29 @@
+h1 {
+
+}
+
+.container {
+    margin: 3px;
+
+}
+
+.shelves {
+    margin: auto;
+    background-color: rgb(75, 65, 58);
+    width: 75%;
+    
+}
+
+.shelf {
+    display: flex;
+    justify-content: space-around;
+    border: solid white 1px;
+}
+
+.shelf img {
+    width: 100px;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
