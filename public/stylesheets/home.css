@@ -28,6 +28,19 @@ h1 {
     margin-bottom: 20px;
 }
 
+.searchResult {
+    display: inline-flex;
+    justify-content: left;
+    margin: 3px;
+    width: 400px;
+    height: 125px;
+    border: solid black 1px;
+    font-weight: 600;
+    font-size: 1.25em;
+}
+
 .searchImage {
     width: 64px;
+    margin: 15px;
 }
+

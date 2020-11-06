@@ -42,12 +42,20 @@ function displaySingleBookResult(book) {
     let image = document.createElement("img");
     let title = document.createElement("p");
 
+    bookInfo.setAttribute("class", "searchResult");
     image.setAttribute("src", book.volumeInfo.imageLinks.smallThumbnail);
     image.setAttribute("class", "searchImage");
     title.innerText = book.volumeInfo.title;
     bookInfo.appendChild(image);
     bookInfo.appendChild(title);
-    searchResults.appendChild(bookInfo);
+    addClickListener(searchResults.appendChild(bookInfo));
+}
+
+function addClickListener(element) {
+    element.addEventListener("click",
+        function getMoreBookInfo() {
+            alert("Like this book");
+        });
 }
 
 
