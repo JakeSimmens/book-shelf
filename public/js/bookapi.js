@@ -24,18 +24,30 @@ function searchSubject(term) {
 function displaySearchResults(data) {
     console.log("DATA");
     console.log(data);
+    clearSearchResults();
 
     for (let book of data.items) {
-        console.log(book.volumeInfo.title);
-        console.log(book.volumeInfo.subtitle);
-        //console.log(book.volumeInfo.authors[0]);
+        displaySingleBookResult(book);
     }
+}
 
+function clearSearchResults() {
+    while (searchResults.firstChild) {
+        searchResults.removeChild(searchResults.firstChild);
+    }
+}
 
-    //create display of results
-    let element = document.createElement("p");
-    element.innerText = "test me";
-    searchResults.appendChild(element);
+function displaySingleBookResult(book) {
+    let bookInfo = document.createElement("div");
+    let image = document.createElement("img");
+    let title = document.createElement("p");
+
+    image.setAttribute("src", book.volumeInfo.imageLinks.smallThumbnail);
+    image.setAttribute("class", "searchImage");
+    title.innerText = book.volumeInfo.title;
+    bookInfo.appendChild(image);
+    bookInfo.appendChild(title);
+    searchResults.appendChild(bookInfo);
 }
 
 
