@@ -1,16 +1,33 @@
-h1 {
-
-}
 
 .container {
     margin: 3px;
 
 }
 
+.mainFrame {
+    display: flex;
+}
+
+@media (max-width: 1008px){
+    .mainFrame{
+        flex-wrap: wrap;
+    }
+}
+
+.leftFrame {
+    flex: 1;
+    min-width: 375px;
+    
+}
+
+.rightFrame {
+    flex: 2;
+    
+}
+
 .shelves {
     margin: auto;
     background-color: rgb(75, 65, 58);
-    width: 75%;
     
 }
 
@@ -32,7 +49,7 @@ h1 {
     display: inline-flex;
     justify-content: left;
     margin: 3px;
-    width: 400px;
+    width: 350px;
     height: 125px;
     border: solid black 1px;
     font-weight: 600;
