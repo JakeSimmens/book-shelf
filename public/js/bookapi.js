@@ -3,6 +3,7 @@ const searchBtn = document.querySelector(".search button");
 const searchResults = document.querySelector(".searchResults");
 
 const googleBookQueryStr = "https://www.googleapis.com/books/v1/volumes?q=";
+const googleBookVolumesStr = "https://www.googleapis.com/books/v1/volumes/";
 
 searchBtn.addEventListener("click",
     function seachBtnClick() {
@@ -75,18 +76,33 @@ function displaySingleBookResult(book) {
     bookInfo.appendChild(caption);
     caption.appendChild(title);
     caption.appendChild(authors);
-    addClickListener(searchResults.appendChild(bookInfo));
+    addClickListener(searchResults.appendChild(bookInfo), book.id);
 
 }
 
-function addClickListener(element) {
+function addClickListener(element, bookId) {
     element.addEventListener("click",
-        function getMoreBookInfo() {
-            alert("Like this book");
+        function selectBook() {
+            getMoreBookInfo(bookId);
         });
 }
 
-if (!(typeof module === "undefined")) {
-    module.exports = { Book };
+function getMoreBookInfo(id) {
+    console.log(`Book id: ${id}`);
+    getBook(id);
 }
+
+function getBook(id) {
+    if (id == "") {
+        return;
+    }
+
+    fetch(`${googleBookVolumesStr}${id}`)
+        .then(response => response.json())
+        .then(data => console.log(data));
+}
+
+// if (!(typeof module === "undefined")) {
+//     module.exports = { Book };
+// }
 
