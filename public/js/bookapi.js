@@ -6,11 +6,11 @@ const googleBookQueryStr = "https://www.googleapis.com/books/v1/volumes?q=";
 const googleBookVolumesStr = "https://www.googleapis.com/books/v1/volumes/";
 
 searchBtn.addEventListener("click",
-    function seachBtnClick() {
-        searchSubject(searchInput.value);
+    function searchBtnClick() {
+        searchGoogleBooks(searchInput.value);
     });
 
-function searchSubject(term) {
+function searchGoogleBooks(term) {
     if (term == "") {
         clearSearchResults();
         return;
@@ -29,6 +29,7 @@ function displaySearchResults(data) {
     for (let book of data.items) {
         displaySingleBookResult(book);
     }
+    clickAwayToClose(searchResults, searchInput);
 }
 
 function clearSearchResults() {
@@ -37,8 +38,21 @@ function clearSearchResults() {
     }
 }
 
+function clickAwayToClose(...ignoreElements) {
+    let listenWindowClick = function (clickedElement) {
+        for (let element of ignoreElements) {
+            if (clickedElement.target === element) return;
+        }
+        clearSearchResults();
+        window.removeEventListener("click", listenWindowClick);
+        console.log("removed listener");
+    }
+
+    window.addEventListener("click", listenWindowClick);
+}
+
 function displaySingleBookResult(book) {
-    let bookInfo = document.createElement("div");
+    let bookInfo = document.createElement("li");
     let image = document.createElement("img");
     let caption = document.createElement("div");
     let title = document.createElement("p");
@@ -84,6 +98,7 @@ function addClickListener(element, bookId) {
     element.addEventListener("click",
         function selectBook() {
             getMoreBookInfo(bookId);
+            clearSearchResults();
         });
 }
 
@@ -101,6 +116,9 @@ function getBook(id) {
         .then(response => response.json())
         .then(data => console.log(data));
 }
+
+
+
 
 // if (!(typeof module === "undefined")) {
 //     module.exports = { Book };

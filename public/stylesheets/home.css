@@ -26,8 +26,8 @@
 }
 
 .search input {
-    width: 303px;
-    margin-left: 3px;
+    width: 300px;
+    margin-left: 4px;
 }
 
 .shelves {
@@ -50,20 +50,33 @@
     margin-bottom: 20px;
 }
 
+.hideMe {
+    visibility: collaspe;
+}
+
+.searchResults {
+    margin-top: 0;
+    padding-left: 3px;
+}
+
 .searchResult {
     display: inline-flex;
     justify-content: left;
-    margin: 3px;
+    margin-left: 1px;
     margin-top: 0px;
     margin-bottom: 0px;
-    width: 300px;
+    width: 298px;
     height: 50px;
     border: solid rgb(200, 200, 200) 1px;
     border-top: 0px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
 
+
+
+}
+
+.searchResult div {
+    width: 256px;
 }
 
 .searchImage {
@@ -77,6 +90,8 @@
     font-weight: 600;
     font-size: 1em;
     margin: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
 }
 
@@ -84,5 +99,7 @@
     font-weight: 400;
     font-size: .8em;
     margin: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
 }
