@@ -5,10 +5,15 @@ const searchResults = document.querySelector(".searchResults");
 const googleBookQueryStr = "https://www.googleapis.com/books/v1/volumes?q=";
 const googleBookVolumesStr = "https://www.googleapis.com/books/v1/volumes/";
 
-searchBtn.addEventListener("click",
-    function searchBtnClick() {
-        searchGoogleBooks(searchInput.value);
-    });
+
+document.addEventListener("DOMContentLoaded", () => {
+    //call after dom is loaded to avoid error in jest testing
+    searchBtn.addEventListener("click",
+        function searchBtnClick() {
+            searchGoogleBooks(searchInput.value);
+        });
+});
+
 
 function searchGoogleBooks(term) {
     if (term == "") {
@@ -120,7 +125,14 @@ function getBook(id) {
 
 
 
-// if (!(typeof module === "undefined")) {
-//     module.exports = { Book };
-// }
+if (!(typeof module === "undefined")) {
+
+    // module.exports.searchGoogleBooks = searchGoogleBooks;
+    // module.exports.clearSearchResults = clearSearchResults;
+    // module.exports.displaySearchResults = displaySearchResults;
+    // module.exports.displaySingleBookResult = displaySingleBookResult;
+    // module.exports.clickAwayToClose = clickAwayToClose;
+    module.exports.getBook = getBook;
+
+}
 
