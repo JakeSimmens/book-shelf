@@ -1,4 +1,4 @@
-const { getBook } = require("../public/js/bookapi.js");
+const { getBook, displaySingleBookResult } = require("../public/js/bookSearch.js");
 
 // describe("Book module", () => {
 //     let book = Book();
@@ -9,7 +9,23 @@ const { getBook } = require("../public/js/bookapi.js");
 // });
 
 describe("Google Book Search", () => {
-    console.log("test");
+
+    describe("displaySingleBookResult", () => {
+
+        let bookData = {
+            volumeInfo: {
+                imageLinks: {
+                    smallThumbNail: "http://small.com"
+                },
+                title: "The Test Book",
+                authors: ["Person One", "Person 2"]
+            }
+        }
+
+
+    });
+
+
     describe("getBook", () => {
         test('should return null for id of ""', () => {
             expect(getBook("")).toBeUndefined();

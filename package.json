@@ -7,7 +7,7 @@
     "test": "jest --coverage"
   },
   "jest": {
-    "collectCoverage": true
+    "collectCoverage": false
   },
   "author": "Jake Simmens",
   "license": "ISC",
