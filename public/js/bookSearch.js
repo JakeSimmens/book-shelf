@@ -6,34 +6,31 @@ const searchInput = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 const searchResults = document.querySelector(".searchResults");
 
-const googleBookQueryStr = "https://www.googleapis.com/books/v1/volumes?q=";
-const googleBookVolumesStr = "https://www.googleapis.com/books/v1/volumes/";
-
-
 document.addEventListener("DOMContentLoaded", () => {
     //DOMContentLoaded used for jest test:  call after dom is loaded to avoid error
     searchBtn.addEventListener("click",
         function searchBtnClick() {
-            searchGoogleBooks(searchInput.value);
+            searchBooks(searchInput.value);
         });
 });
 
 
-function searchGoogleBooks(term) {
+function searchBooks(term) {
     if (term == "") {
-        clearSearchResults();
+        clearChildrenOf(searchResults);
         return;
     }
 
-    fetch(`${googleBookQueryStr}${term}`)
-        .then(response => response.json())
-        .then(data => displaySearchResults(data));
+    let getBooks = fetchBooks();
+
+    getBooks.searchByTerm(term)
+        .then(books => displaySearchResults(books));
 }
 
 function displaySearchResults(data) {
     console.log("DATA");
     console.log(data);
-    clearSearchResults();
+    clearChildrenOf(searchResults);
 
     for (let book of data.items) {
         displaySingleBookResult(book);
@@ -41,9 +38,9 @@ function displaySearchResults(data) {
     clickAwayToClose(searchResults, searchInput);
 }
 
-function clearSearchResults() {
-    while (searchResults.firstChild) {
-        searchResults.removeChild(searchResults.firstChild);
+function clearChildrenOf(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
     }
 }
 
@@ -52,9 +49,8 @@ function clickAwayToClose(...ignoreElements) {
         for (let element of ignoreElements) {
             if (clickedElement.target === element) return;
         }
-        clearSearchResults();
+        clearChildrenOf(searchResults);
         window.removeEventListener("click", listenWindowClick);
-        console.log("removed listener");
     }
 
     window.addEventListener("click", listenWindowClick);
@@ -78,18 +74,7 @@ function displaySingleBookResult(book) {
     }
 
     if (book.volumeInfo.authors !== undefined) {
-        let authorList = book.volumeInfo.authors;
-        let authorText = "";
-
-        if (authorList.length == 0) {
-            authorText = "By: unknown";
-        } else {
-            authorText = `By: ${authorList[0]}`;
-            for (let i = 1; i < authorList.length; i++) {
-                authorText.concat(`, ${authorList[i]}`);
-            }
-        }
-        authors.innerText = authorText;
+        authors.innerText = formatAuthorList(book.volumeInfo.authors);
     }
 
     image.setAttribute("class", "searchImage");
@@ -103,11 +88,26 @@ function displaySingleBookResult(book) {
 
 }
 
+function formatAuthorList(authorList) {
+    let authorText = "";
+
+    if (authorList === undefined || authorList.length == 0) {
+        authorText = "By: unknown";
+    } else {
+        authorText = `By: ${authorList[0]}`;
+        for (let i = 1; i < authorList.length; i++) {
+            authorText.concat(`, ${authorList[i]}`);
+        }
+    }
+
+    return authorText;
+}
+
 function addClickListener(element, bookId) {
     element.addEventListener("click",
         function selectBook() {
-            getBook(bookId).then(data => console.log(data));
-            clearSearchResults();
+            getBook(bookId).then(data => displayBookDetails(data));
+            clearChildrenOf(searchResults);
         });
 }
 
@@ -121,16 +121,43 @@ function getBook(id) {
     return getBookData.fetchById(id);
 }
 
-if (!(typeof module === "undefined")) {
+function displayBookDetails(data) {
+    console.log(data);
+    const bookDisplay = document.querySelector(".bookDetails");
+    clearChildrenOf(bookDisplay);
 
-    // module.exports.searchGoogleBooks = searchGoogleBooks;
-    // module.exports.clearSearchResults = clearSearchResults;
-    // module.exports.displaySearchResults = displaySearchResults;
-    // module.exports.displaySingleBookResult = displaySingleBookResult;
-    // module.exports.clickAwayToClose = clickAwayToClose;
+    let title = document.createElement("h3");
+    let subtitle = document.createElement("h4");
+    let authors = document.createElement("p");
+    let coverArt = document.createElement("img");
+    let description = document.createElement("p");
+    let pageCount = document.createElement("span");
+    let averageRating = document.createElement("span");
+
+    if (data.title !== undefined) {
+        title.innerText = data.title;
+    }
+    if (data.subtitle !== undefined) {
+        subtitle.innerText = data.subtitle;
+    }
+    if (data.authors !== undefined) {
+        authors.innerText = formatAuthorList(data.authors);
+    }
+
+    if (data.imageLinks.thumbnail !== undefined) {
+        coverArt.setAttribute("src", data.imageLinks.thumbnail);
+    }
+
+    bookDisplay.appendChild(title);
+    bookDisplay.appendChild(subtitle);
+    bookDisplay.appendChild(authors);
+    bookDisplay.appendChild(coverArt);
+}
+
+if (!(typeof module === "undefined")) {
+    //for testing
+
     module.exports.getBook = getBook;
     module.exports.displaySingleBookResult = displaySingleBookResult;
-
-
 }
 
