@@ -27,13 +27,13 @@ function searchBooks(term) {
         .then(books => displaySearchResults(books));
 }
 
-function displaySearchResults(data) {
-    console.log("DATA");
-    console.log(data);
+function displaySearchResults(books) {
+    // console.log("DATA");
+    // console.log(books[0]);
     clearChildrenOf(searchResults);
 
-    for (let book of data.items) {
-        displaySingleBookResult(book);
+    for (let i = 0; i < books.length; i++) {
+        displaySingleSearchListBook(books[i]);
     }
     clickAwayToClose(searchResults, searchInput);
 }
@@ -56,7 +56,8 @@ function clickAwayToClose(...ignoreElements) {
     window.addEventListener("click", listenWindowClick);
 }
 
-function displaySingleBookResult(book) {
+function displaySingleSearchListBook(book) {
+
     let bookInfo = document.createElement("li");
     let image = document.createElement("img");
     let caption = document.createElement("div");
@@ -65,16 +66,17 @@ function displaySingleBookResult(book) {
 
     bookInfo.setAttribute("class", "searchResult");
 
-    if (book.volumeInfo.imageLinks !== undefined) {
-        image.setAttribute("src", book.volumeInfo.imageLinks.smallThumbnail);
+
+    if (book.imageLinks !== undefined) {
+        image.setAttribute("src", book.imageLinks.smallThumbnail);
     }
 
-    if (book.volumeInfo.title !== undefined) {
-        title.innerText = book.volumeInfo.title;
+    if (book.title !== undefined) {
+        title.innerText = book.title;
     }
 
-    if (book.volumeInfo.authors !== undefined) {
-        authors.innerText = formatAuthorList(book.volumeInfo.authors);
+    if (book.authors !== undefined) {
+        authors.innerText = formatAuthorList(book.authors);
     }
 
     image.setAttribute("class", "searchImage");
@@ -129,10 +131,11 @@ function displayBookDetails(data) {
     let title = document.createElement("h3");
     let subtitle = document.createElement("h4");
     let authors = document.createElement("p");
+    let publishedDate = document.createElement("p");
     let coverArt = document.createElement("img");
     let description = document.createElement("p");
-    let pageCount = document.createElement("span");
-    let averageRating = document.createElement("span");
+    let pageCount = document.createElement("p");
+    let averageRating = document.createElement("p");
 
     if (data.title !== undefined) {
         title.innerText = data.title;
@@ -143,21 +146,38 @@ function displayBookDetails(data) {
     if (data.authors !== undefined) {
         authors.innerText = formatAuthorList(data.authors);
     }
-
+    if (data.publishedDate !== undefined) {
+        publishedDate.innerText = `Published: ${data.publishedDate}`;
+    }
     if (data.imageLinks.thumbnail !== undefined) {
         coverArt.setAttribute("src", data.imageLinks.thumbnail);
     }
+    if (data.description !== undefined) {
+        description.innerText = data.description;
+    }
+    if (data.pageCount !== undefined) {
+        pageCount.innerText = `Page Count: ${data.pageCount}`;
+    }
+    if (data.averageRating !== undefined) {
+        averageRating.innerText = `Rating: ${data.averageRating} out of 5`;
+    }
+
 
     bookDisplay.appendChild(title);
     bookDisplay.appendChild(subtitle);
     bookDisplay.appendChild(authors);
+    bookDisplay.appendChild(publishedDate);
     bookDisplay.appendChild(coverArt);
+    bookDisplay.appendChild(description);
+    bookDisplay.appendChild(pageCount);
+    bookDisplay.appendChild(averageRating);
+
 }
 
 if (!(typeof module === "undefined")) {
     //for testing
 
     module.exports.getBook = getBook;
-    module.exports.displaySingleBookResult = displaySingleBookResult;
+    module.exports.displaySingleBookResult = displaySingleSearchListBook;
 }
 

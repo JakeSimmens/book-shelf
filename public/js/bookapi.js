@@ -5,21 +5,28 @@ function fetchBooks() {
 
         fetchById(bookId) {
             return fetchGoogle.fetchById(bookId)
-                .then(data => formatGoogleData(data));
+                .then(data => extractGoogleDataForOneBook(data));
         },
 
         searchByTerm(term) {
-            return fetchGoogle.searchByTerm(term);
-        },
-
-        testMe(bookId) {
-            return fetchGoogle.fetchById(bookId)
-                .then(bookData => formatGoogleData(bookData));
+            return fetchGoogle.searchByTerm(term)
+                .then(list => extractGoogleDataForListOfBooks(list));
         }
 
     };
 
-    function formatGoogleData(data) {
+    function extractGoogleDataForListOfBooks(list) {
+        //argument: an array of objects
+        let formatedBookList = [];
+
+        for (let book of list) {
+            formatedBookList.push(extractGoogleDataForOneBook(book));
+        }
+
+        return formatedBookList;
+    }
+
+    function extractGoogleDataForOneBook(data) {
         let formatedData = {};
 
         formatedData.id = data.id;
@@ -56,7 +63,8 @@ function fetchGoogleBooks() {
 
         searchByTerm(term) {
             return fetch(`${googleBookQueryStr}${term}`)
-                .then(response => response.json());
+                .then(response => response.json())
+                .then(data => data.items);
         }
 
     };
