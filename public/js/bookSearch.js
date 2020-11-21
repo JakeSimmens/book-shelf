@@ -10,12 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
     //DOMContentLoaded used for jest test:  call after dom is loaded to avoid error
     searchBtn.addEventListener("click",
         function searchBtnClick() {
-            searchBooks(searchInput.value);
+            searchBox(searchInput.value);
         });
 });
 
-
-function searchBooks(term) {
+function searchBox(term) {
     if (term == "") {
         clearChildrenOf(searchResults);
         return;

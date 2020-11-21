@@ -1,49 +1,17 @@
 function fetchBooks() {
-    var fetchGoogle = fetchGoogleBooks();
+    var googleBooks = fetchGoogleBooks();
 
     var publicAPI = {
 
         fetchById(bookId) {
-            return fetchGoogle.fetchById(bookId)
-                .then(data => extractGoogleDataForOneBook(data));
+            return googleBooks.fetchById(bookId);
         },
 
         searchByTerm(term) {
-            return fetchGoogle.searchByTerm(term)
-                .then(list => extractGoogleDataForListOfBooks(list));
+            return googleBooks.searchByTerm(term);
         }
 
     };
-
-    function extractGoogleDataForListOfBooks(list) {
-        //argument: an array of objects
-        let formatedBookList = [];
-
-        for (let book of list) {
-            formatedBookList.push(extractGoogleDataForOneBook(book));
-        }
-
-        return formatedBookList;
-    }
-
-    function extractGoogleDataForOneBook(data) {
-        let formatedData = {};
-
-        formatedData.id = data.id;
-        formatedData.title = data.volumeInfo.title;
-        formatedData.subtitle = data.volumeInfo.subtitle;
-        formatedData.authors = data.volumeInfo.authors;
-        formatedData.publisher = data.volumeInfo.publisher;
-        formatedData.publishedDate = data.volumeInfo.publishedDate;
-        formatedData.description = data.volumeInfo.description;
-        formatedData.pageCount = data.volumeInfo.pageCount;
-        formatedData.categories = data.volumeInfo.categories;
-        formatedData.averageRating = data.volumeInfo.averageRating;
-        formatedData.ratingsCount = data.volumeInfo.ratingsCount;
-        formatedData.imageLinks = data.volumeInfo.imageLinks;
-
-        return formatedData;
-    }
 
     return publicAPI;
 
@@ -58,16 +26,47 @@ function fetchGoogleBooks() {
 
         fetchById(bookId) {
             return fetch(`${googleBookVolumesStr}${bookId}`)
-                .then(response => response.json());
+                .then(response => response.json())
+                .then(book => extractGoogleDataForOneBook(book));
         },
 
         searchByTerm(term) {
             return fetch(`${googleBookQueryStr}${term}`)
                 .then(response => response.json())
-                .then(data => data.items);
+                .then(bookList => extractGoogleDataForListOfBooks(bookList.items));
         }
 
     };
+
+    function extractGoogleDataForListOfBooks(bookList) {
+        //argument: an array of objects
+        let extractedBookListData = [];
+
+        for (let book of bookList) {
+            extractedBookListData.push(extractGoogleDataForOneBook(book));
+        }
+
+        return extractedBookListData;
+    }
+
+    function extractGoogleDataForOneBook(data) {
+        let extractedData = {};
+
+        extractedData.id = data.id;
+        extractedData.title = data.volumeInfo.title;
+        extractedData.subtitle = data.volumeInfo.subtitle;
+        extractedData.authors = data.volumeInfo.authors;
+        extractedData.publisher = data.volumeInfo.publisher;
+        extractedData.publishedDate = data.volumeInfo.publishedDate;
+        extractedData.description = data.volumeInfo.description;
+        extractedData.pageCount = data.volumeInfo.pageCount;
+        extractedData.categories = data.volumeInfo.categories;
+        extractedData.averageRating = data.volumeInfo.averageRating;
+        extractedData.ratingsCount = data.volumeInfo.ratingsCount;
+        extractedData.imageLinks = data.volumeInfo.imageLinks;
+
+        return extractedData;
+    }
 
     return publicAPI;
 }
