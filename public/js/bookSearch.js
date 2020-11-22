@@ -2,6 +2,8 @@ if (!(typeof module === "undefined")) {
     const fetchBooks = require("./bookapi.js");
 }
 
+const MAX_SEARCH_RESULT = 10;
+
 const searchInput = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 const searchResults = document.querySelector(".searchResults");
@@ -23,16 +25,15 @@ function searchBox(term) {
     let getBooks = fetchBooks();
 
     getBooks.searchByTerm(term)
-        .then(books => displaySearchResults(books));
+        .then(books => dropDownForSearchResults(books));
 }
 
-function displaySearchResults(books) {
-    // console.log("DATA");
-    // console.log(books[0]);
+function dropDownForSearchResults(books) {
+
     clearChildrenOf(searchResults);
 
-    for (let i = 0; i < books.length; i++) {
-        displaySingleSearchListBook(books[i]);
+    for (let i = 0; i < books.length && i < MAX_SEARCH_RESULT; i++) {
+        createOneDropDownItem(books[i]);
     }
     clickAwayToClose(searchResults, searchInput);
 }
@@ -55,7 +56,7 @@ function clickAwayToClose(...ignoreElements) {
     window.addEventListener("click", listenWindowClick);
 }
 
-function displaySingleSearchListBook(book) {
+function createOneDropDownItem(book) {
 
     let bookInfo = document.createElement("li");
     let image = document.createElement("img");
@@ -85,7 +86,7 @@ function displaySingleSearchListBook(book) {
     bookInfo.appendChild(caption);
     caption.appendChild(title);
     caption.appendChild(authors);
-    addClickListener(searchResults.appendChild(bookInfo), book.id);
+    addDropDownClickListener(searchResults.appendChild(bookInfo), book.id);
 
 }
 
@@ -104,15 +105,16 @@ function formatAuthorList(authorList) {
     return authorText;
 }
 
-function addClickListener(element, bookId) {
+function addDropDownClickListener(element, bookId) {
     element.addEventListener("click",
         function selectBook() {
-            getBook(bookId).then(data => displayBookDetails(data));
+            fetchBookByID(bookId)
+                .then(bookData => displayBookDetails(bookData));
             clearChildrenOf(searchResults);
         });
 }
 
-function getBook(id) {
+function fetchBookByID(id) {
     if (id == "") {
         return;
     }
@@ -123,7 +125,6 @@ function getBook(id) {
 }
 
 function displayBookDetails(data) {
-    console.log(data);
     const bookDisplay = document.querySelector(".bookDetails");
     clearChildrenOf(bookDisplay);
 
@@ -176,7 +177,7 @@ function displayBookDetails(data) {
 if (!(typeof module === "undefined")) {
     //for testing
 
-    module.exports.getBook = getBook;
-    module.exports.displaySingleBookResult = displaySingleSearchListBook;
+    module.exports.getBook = fetchBookByID;
+    module.exports.displaySingleBookResult = createOneDropDownItem;
 }
 
