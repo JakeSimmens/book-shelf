@@ -59,13 +59,15 @@ function clickAwayToClose(...ignoreElements) {
 function createOneDropDownItem(book) {
 
     let bookInfo = document.createElement("li");
+    let link = document.createElement("a");
     let image = document.createElement("img");
     let caption = document.createElement("div");
     let title = document.createElement("p");
     let authors = document.createElement("p");
 
-    bookInfo.setAttribute("class", "searchResult");
+    link.setAttribute("class", "searchResult");
 
+    link.setAttribute("href", `/book/${book.id}`);
 
     if (book.imageLinks !== undefined) {
         image.setAttribute("src", book.imageLinks.smallThumbnail);
@@ -82,11 +84,13 @@ function createOneDropDownItem(book) {
     image.setAttribute("class", "searchImage");
     title.setAttribute("class", "searchTitle");
     authors.setAttribute("class", "searchAuthors");
-    bookInfo.appendChild(image);
-    bookInfo.appendChild(caption);
+    bookInfo.appendChild(link);
+    link.appendChild(image);
+    link.appendChild(caption);
     caption.appendChild(title);
     caption.appendChild(authors);
-    addDropDownClickListener(searchResults.appendChild(bookInfo), book.id);
+    searchResults.appendChild(bookInfo);
+    //addDropDownClickListener(searchResults.appendChild(bookInfo), book.id);
 
 }
 
@@ -108,9 +112,10 @@ function formatAuthorList(authorList) {
 function addDropDownClickListener(element, bookId) {
     element.addEventListener("click",
         function selectBook() {
-            fetchBookByID(bookId)
-                .then(bookData => displayBookDetails(bookData));
-            clearChildrenOf(searchResults);
+            // fetchBookByID(bookId)
+            //     .then(bookData => displayBookDetails(bookData));
+            // clearChildrenOf(searchResults);
+
         });
 }
 

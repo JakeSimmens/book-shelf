@@ -51,12 +51,21 @@
 }
 
 .hideMe {
-    visibility: collaspe;
+    visibility: collapse;
 }
 
 .searchResults {
     margin-top: 0;
     padding-left: 3px;
+}
+
+li {
+    list-style: none;
+}
+
+.searchResults a {
+    color: black;
+    text-decoration-line: none;
 }
 
 .searchResult {
