@@ -14,15 +14,34 @@ app.get('/', function getHome(req, res) {
 //show
 app.get('/book/:id', (req, res) => {
     //show a single book's details from google
-    const { formatBookDataFromGoogle } = require("./public/js/extractBookData.js");
 
     axios.get(`https://www.googleapis.com/books/v1/volumes/${req.params.id}`)
         .then(response => formatBookDataFromGoogle(response.data))
         .then(bookData => res.render("book", { bookData: bookData }))
         .catch(err => console.log(`*****ERROR*****${err}`));
+
 });
 
 const port = process.env.PORT || 3000;
 app.listen(port, function startServer() {
     console.log("Book server is up and running");
 });
+
+function formatBookDataFromGoogle(data) {
+    let extractedData = {};
+
+    extractedData.id = data.id;
+    extractedData.title = data.volumeInfo.title;
+    extractedData.subtitle = data.volumeInfo.subtitle;
+    extractedData.authors = data.volumeInfo.authors;
+    extractedData.publisher = data.volumeInfo.publisher;
+    extractedData.publishedDate = data.volumeInfo.publishedDate;
+    extractedData.description = data.volumeInfo.description;
+    extractedData.pageCount = data.volumeInfo.pageCount;
+    extractedData.categories = data.volumeInfo.categories;
+    extractedData.averageRating = data.volumeInfo.averageRating;
+    extractedData.ratingsCount = data.volumeInfo.ratingsCount;
+    extractedData.imageLinks = data.volumeInfo.imageLinks;
+
+    return extractedData;
+}

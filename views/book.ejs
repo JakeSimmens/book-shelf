@@ -1,5 +1,39 @@
-<h1>BOOK DATA</h1>
-<p><%= bookData.id %></p>
-<p><%= bookData.title %></p>
-<p><%= bookData.authors %></p>
-<p><%= bookData.description %></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/book.css">
+    <title><%=bookData.title%> </title>
+</head>
+<body>
+    <section class="menuBar">
+        <h1>jReads</h1>
+        <button class="btnHome">Home</button>
+    </section>
+    <section class = "container">
+        <div class="leftFrame">
+
+            <img src="<%=bookData.imageLinks.thumbnail%>" alt="">
+            <button class="btnAdd">Add to Library</button>
+
+        </div>
+        <div class="rightFrame">
+            <h1><%= bookData.title %></h1>
+            <h2><%= bookData.subtitle%></h2>
+            <p><strong>Author:</strong>  <%= bookData.authors %></p>
+            <p>Rating: <%= bookData.averageRating%> out of 5</p>
+            <p class="description"><%= bookData.description %></p>
+            <p><%= bookData.publisher%></p>
+            <p><%= bookData.publishedDate%></p>
+            <p>Page count: <%= bookData.pageCount%></p>
+
+        </div>
+
+    </section>
+    <section class="container">
+        <h3>Reviews</h3>
+    </section>
+</body>
+</html>
+
