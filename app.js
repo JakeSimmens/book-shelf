@@ -22,6 +22,12 @@ app.get('/book/:id', (req, res) => {
 
 });
 
+app.post('/book', (req, res) => {
+    console.log("post request to add book");
+
+    res.redirect("/");
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, function startServer() {
     console.log("Book server is up and running");

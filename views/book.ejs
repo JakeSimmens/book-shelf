@@ -8,14 +8,16 @@
 </head>
 <body>
     <section class="menuBar">
-        <h1>jReads</h1>
-        <button class="btnHome">Home</button>
+        <a href="/" class="btnHome">jReads</a>
     </section>
     <section class = "container">
         <div class="leftFrame">
 
             <img src="<%=bookData.imageLinks.thumbnail%>" alt="">
-            <button class="btnAdd">Add to Library</button>
+            <form action="/book" method="POST" placeholder="saveBook">
+                <button class="btnAdd">Add to Library</button>
+            </form>
+            
 
         </div>
         <div class="rightFrame">
@@ -34,6 +36,7 @@
     <section class="container">
         <h3>Reviews</h3>
     </section>
+    <script src="/js/book.js"></script>
 </body>
 </html>
 
