@@ -90,7 +90,6 @@ function createOneDropDownItem(book) {
     caption.appendChild(title);
     caption.appendChild(authors);
     searchResults.appendChild(bookInfo);
-    //addDropDownClickListener(searchResults.appendChild(bookInfo), book.id);
 
 }
 
@@ -109,16 +108,6 @@ function formatAuthorList(authorList) {
     return authorText;
 }
 
-function addDropDownClickListener(element, bookId) {
-    element.addEventListener("click",
-        function selectBook() {
-            // fetchBookByID(bookId)
-            //     .then(bookData => displayBookDetails(bookData));
-            // clearChildrenOf(searchResults);
-
-        });
-}
-
 function fetchBookByID(id) {
     if (id == "") {
         return;
@@ -129,55 +118,57 @@ function fetchBookByID(id) {
     return getBookData.fetchById(id);
 }
 
-function displayBookDetails(data) {
-    const bookDisplay = document.querySelector(".bookDetails");
-    clearChildrenOf(bookDisplay);
+//NOT USING CURRENTLY
+//display's book results on current page.
+// function displayBookDetails(data) {
+//     const bookDisplay = document.querySelector(".bookDetails");
+//     clearChildrenOf(bookDisplay);
 
-    let title = document.createElement("h3");
-    let subtitle = document.createElement("h4");
-    let authors = document.createElement("p");
-    let publishedDate = document.createElement("p");
-    let coverArt = document.createElement("img");
-    let description = document.createElement("p");
-    let pageCount = document.createElement("p");
-    let averageRating = document.createElement("p");
+//     let title = document.createElement("h3");
+//     let subtitle = document.createElement("h4");
+//     let authors = document.createElement("p");
+//     let publishedDate = document.createElement("p");
+//     let coverArt = document.createElement("img");
+//     let description = document.createElement("p");
+//     let pageCount = document.createElement("p");
+//     let averageRating = document.createElement("p");
 
-    if (data.title !== undefined) {
-        title.innerText = data.title;
-    }
-    if (data.subtitle !== undefined) {
-        subtitle.innerText = data.subtitle;
-    }
-    if (data.authors !== undefined) {
-        authors.innerText = formatAuthorList(data.authors);
-    }
-    if (data.publishedDate !== undefined) {
-        publishedDate.innerText = `Published: ${data.publishedDate}`;
-    }
-    if (data.imageLinks.thumbnail !== undefined) {
-        coverArt.setAttribute("src", data.imageLinks.thumbnail);
-    }
-    if (data.description !== undefined) {
-        description.innerText = data.description;
-    }
-    if (data.pageCount !== undefined) {
-        pageCount.innerText = `Page Count: ${data.pageCount}`;
-    }
-    if (data.averageRating !== undefined) {
-        averageRating.innerText = `Rating: ${data.averageRating} out of 5`;
-    }
+//     if (data.title !== undefined) {
+//         title.innerText = data.title;
+//     }
+//     if (data.subtitle !== undefined) {
+//         subtitle.innerText = data.subtitle;
+//     }
+//     if (data.authors !== undefined) {
+//         authors.innerText = formatAuthorList(data.authors);
+//     }
+//     if (data.publishedDate !== undefined) {
+//         publishedDate.innerText = `Published: ${data.publishedDate}`;
+//     }
+//     if (data.imageLinks.thumbnail !== undefined) {
+//         coverArt.setAttribute("src", data.imageLinks.thumbnail);
+//     }
+//     if (data.description !== undefined) {
+//         description.innerText = data.description;
+//     }
+//     if (data.pageCount !== undefined) {
+//         pageCount.innerText = `Page Count: ${data.pageCount}`;
+//     }
+//     if (data.averageRating !== undefined) {
+//         averageRating.innerText = `Rating: ${data.averageRating} out of 5`;
+//     }
 
 
-    bookDisplay.appendChild(title);
-    bookDisplay.appendChild(subtitle);
-    bookDisplay.appendChild(authors);
-    bookDisplay.appendChild(publishedDate);
-    bookDisplay.appendChild(coverArt);
-    bookDisplay.appendChild(description);
-    bookDisplay.appendChild(pageCount);
-    bookDisplay.appendChild(averageRating);
+//     bookDisplay.appendChild(title);
+//     bookDisplay.appendChild(subtitle);
+//     bookDisplay.appendChild(authors);
+//     bookDisplay.appendChild(publishedDate);
+//     bookDisplay.appendChild(coverArt);
+//     bookDisplay.appendChild(description);
+//     bookDisplay.appendChild(pageCount);
+//     bookDisplay.appendChild(averageRating);
 
-}
+// }
 
 if (!(typeof module === "undefined")) {
     //for testing

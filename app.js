@@ -84,12 +84,18 @@ app.post('/book', (req, res) => {
     const googleBookID = req.body.bookID;
     axios.get(`https://www.googleapis.com/books/v1/volumes/${googleBookID}`)
         .then(response => formatBookDataFromGoogle(response.data))
-        .then(bookData => console.log(bookData))
-        .catch(err => console.log(`*****ERROR*****${err}`));
+        .then(bookData => {
+            myLibrary.push(bookData);
+            res.redirect("/");
+        })
+        .catch(err => {
+            console.log(`*****ERROR*****${err}`);
+            res.redirect("/");
+        });
 
     //need to add retrieved data to the library and database
 
-    res.redirect("/");
+
 });
 
 //show
