@@ -14,7 +14,8 @@
         <div class="leftFrame">
 
             <img src="<%=bookData.imageLinks.thumbnail%>" alt="">
-            <form action="/book" method="POST" placeholder="saveBook">
+            <form action="/book" method="POST">
+                <input hidden type="text" name="bookID" value=<%=bookData.id%> >
                 <button class="btnAdd">Add to Library</button>
             </form>
             
