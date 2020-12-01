@@ -14,12 +14,14 @@
         <div class="leftFrame">
 
             <img src="<%=bookData.imageLinks.thumbnail%>" alt="">
-            <form action="/book" method="POST">
-                <input hidden type="text" name="bookID" value=<%=bookData.id%> >
-                <button class="btnAdd">Add to Library</button>
-            </form>
-            
+            <%if(!inMyLibrary){ %>
+                <form action="/book" method="POST">
+                    <input hidden type="text" name="bookID" value=<%=bookData.id%> >
+                    <button class="btnAdd">Add to Library</button>
+                </form>
+            <%} %>
 
+        
         </div>
         <div class="rightFrame">
             <h1><%= bookData.title %></h1>

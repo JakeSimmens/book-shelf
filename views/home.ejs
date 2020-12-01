@@ -24,11 +24,12 @@
                 <h2>My Bookshelf</h2>
                 <div class="shelves">
                     <div class="shelf">
-                        <img src="/images/hobbit.jpg" alt="">
-                        <img src="/images/bible.jpg" alt="">
-                        <img src="/images/darkTower.jpg" alt="">
-                        <img src="/images/jurassicPark.jpg" alt="">
-                        <img src="/images/lostWorld.jpg" alt="">
+                        <% for(let i = 0; i < myLibrary.length; i++){ %>
+                            <a href="/myBook/<%=myLibrary[i].id%>">
+                                <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="">
+                            </a>
+
+                        <% } %>
         
                     </div>
                     <div class="shelf">
@@ -50,7 +51,7 @@
             </div>
         </div>
     </section>
-
+    <script src="/js/myLibrary.js"></script>
     <script src="/js/bookapi.js"></script>
     <script src="/js/bookSearch.js"></script>
 </body>

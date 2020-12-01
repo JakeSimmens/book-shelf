@@ -22,8 +22,8 @@ var myLibrary = [
         averageRating: 4.7,
         ratingsCount: 14698,
         imageLinks: {
-            thumbnail: "/images/hobbit.jpg",
-            small: "/images/hobbit.jpg"
+            thumbnail: "/images/jurassicPark.jpg",
+            small: "/images/jurassicPark.jpg"
         }
     },
     {
@@ -65,7 +65,7 @@ var myLibrary = [
 
 app.get('/', function getHome(req, res) {
 
-    res.render("home");
+    res.render("home", { myLibrary: myLibrary });
 });
 
 //show
@@ -74,7 +74,7 @@ app.get('/book/:id', (req, res) => {
 
     axios.get(`https://www.googleapis.com/books/v1/volumes/${req.params.id}`)
         .then(response => formatBookDataFromGoogle(response.data))
-        .then(bookData => res.render("book", { bookData: bookData }))
+        .then(bookData => res.render("book", { bookData: bookData, inMyLibrary: false }))
         .catch(err => console.log(`*****ERROR*****${err}`));
 
 });
@@ -90,6 +90,22 @@ app.post('/book', (req, res) => {
     //need to add retrieved data to the library and database
 
     res.redirect("/");
+});
+
+//show
+app.get('/myBook/:id', (req, res) => {
+
+    //search local db
+    for (let book of myLibrary) {
+        if (book.id === req.params.id) {
+            res.render("book", { bookData: book, inMyLibrary: true });
+            return;
+        }
+    }
+
+    console.log("book not found in myLibrary");
+    res.redirect("/");
+
 });
 
 const port = process.env.PORT || 3000;
