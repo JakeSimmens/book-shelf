@@ -23,30 +23,19 @@
             <div class="container">
                 <h2>My Bookshelf</h2>
                 <div class="shelves">
-                    <div class="shelf">
-                        <% for(let i = 0; i < myLibrary.length; i++){ %>
+
+                <% for(let i = 0; i < myLibrary.length; i++){ %>
+                    <% if( i % maxBooksPerShelf == 0){ %>
+                        <div class="shelf">
+                    <%} %>
                             <a href="/myBook/<%=myLibrary[i].id%>">
                                 <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="">
                             </a>
+                    <% if( i % maxBooksPerShelf == maxBooksPerShelf-1 || i == myLibrary.length - 1){ %>
+                        </div>
+                    <%} %>
 
-                        <% } %>
-        
-                    </div>
-                    <div class="shelf">
-                        <img src="/images/hobbit.jpg" alt="">
-                        <img src="/images/bible.jpg" alt="">
-                        <img src="/images/darkTower.jpg" alt="">
-                        <img src="/images/jurassicPark.jpg" alt="">
-                        <img src="/images/lostWorld.jpg" alt="">
-                    </div>
-                    <div class="shelf">
-                        <img src="/images/hobbit.jpg" alt="">
-                        <img src="/images/bible.jpg" alt="">
-                        <img src="/images/darkTower.jpg" alt="">
-                        <img src="/images/jurassicPark.jpg" alt="">
-                        <img src="/images/lostWorld.jpg" alt="">
-                    </div>
-        
+                <% } %>       
                 </div>
             </div>
         </div>

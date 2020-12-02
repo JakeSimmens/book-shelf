@@ -62,10 +62,12 @@ var myLibrary = [
     }
 ];
 
+let MAX_BOOKS_PER_SHELF = 5;
+
 
 app.get('/', function getHome(req, res) {
 
-    res.render("home", { myLibrary: myLibrary });
+    res.render("home", { myLibrary: myLibrary, maxBooksPerShelf: MAX_BOOKS_PER_SHELF });
 });
 
 //show

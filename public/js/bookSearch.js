@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         function searchBtnClick() {
             searchBox(searchInput.value);
         });
+        
 });
 
 function searchBox(term) {
