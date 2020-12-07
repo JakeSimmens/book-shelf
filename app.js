@@ -1,5 +1,5 @@
 //const {MONGO_USERNAME, MONGO_PASSWORD} = require("./secrets.js");
-const {mongoCollection} = require("./database.js");
+const {insertBook} = require("./database.js");
 const {seed} = require("./seed.js");
 const express = require("express");
 const app = express();
@@ -16,8 +16,6 @@ app.use(express.static("public"));
 var myLibrary = seed();
 
 let MAX_BOOKS_PER_SHELF = 5;
-let booksCollection = mongoCollection("books");
-console.log(booksCollection);
 
 
 app.get('/', function getHome(req, res) {
@@ -42,9 +40,7 @@ app.post('/book', (req, res) => {
     axios.get(`https://www.googleapis.com/books/v1/volumes/${googleBookID}`)
         .then(response => formatBookDataFromGoogle(response.data))
         .then(bookData => {
-
-
-            booksCollection.insert(bookData);
+            insertBook(bookData);
             //myLibrary.push(bookData);
             res.redirect("/");
         })

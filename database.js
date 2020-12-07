@@ -1,10 +1,45 @@
 const {MONGO_USERNAME, MONGO_PASSWORD} = require("./secrets.js");
-const DATABASE_NAME = "jReads";
-const mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${DATABASE_NAME}?retryWrites=true&w=majority`;
+const JREADS_DB = "jReads";
 
-const {MongoClient} = require("mongodb");
-const client = new MongoClient(mongoUrl);
-const dbName = "jReads";
+let counter = 0;
+
+
+//connect to database
+const MongoClient = require("mongodb").MongoClient;
+const assert = require("assert");
+const mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${JREADS_DB}?retryWrites=true&w=majority`;
+
+function insertBook(bookData){
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
+        assert.strictEqual(null, err);
+    
+        const db = client.db(JREADS_DB);
+        db.collection('books').insertOne(bookData)
+        .then(result => {
+            console.log(`Added record for ${bookData.title}`);
+            //console.log(result);
+    
+        })
+        .catch(err => {
+            console.log("*** E R R O R ***");
+            console.log(err);
+        })
+        .finally( () => {
+            counter++;
+            client.close();
+        });
+    
+    });
+}
+
+
+
+
+
+
+
+
+
 
 //write to database
 var mongoCollection = function (collectionName="books"){
@@ -73,4 +108,4 @@ var mongoCollection = function (collectionName="books"){
 
 //runDB();
 
-module.exports.mongoCollection = mongoCollection;
+module.exports.insertBook = insertBook;
