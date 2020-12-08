@@ -1,111 +1,116 @@
 const {MONGO_USERNAME, MONGO_PASSWORD} = require("./secrets.js");
 const JREADS_DB = "jReads";
-
-let counter = 0;
-
+const BOOKS_COLLECTION = "books";
 
 //connect to database
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 const mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${JREADS_DB}?retryWrites=true&w=majority`;
 
-function insertBook(bookData){
+
+//CREATE
+function insertOne(bookData, callback){
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
         assert.strictEqual(null, err);
     
         const db = client.db(JREADS_DB);
-        db.collection('books').insertOne(bookData)
+        let collection = db.collection(BOOKS_COLLECTION);
+        collection.insertOne(bookData)
         .then(result => {
-            console.log(`Added record for ${bookData.title}`);
-            //console.log(result);
-    
+            console.log(`Add entry for ${bookData.title}`);  
         })
         .catch(err => {
             console.log("*** E R R O R ***");
             console.log(err);
         })
         .finally( () => {
-            counter++;
+            client.close();
+            callback();
+        });
+    
+    });
+}
+
+function clearDB(){
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
+        assert.strictEqual(null, err);
+    
+        const db = client.db(JREADS_DB);
+        db.collection('books').deleteMany({})
+        .then( () => {
+            console.log("Database cleared")
+        })
+        .catch(err => {
+            console.log("*** E R R O R ***");
+            console.log(err);
+        })
+        .finally( () => {
             client.close();
         });
     
     });
 }
 
-
-
-
-
-
-
-
-
-
-//write to database
-var mongoCollection = function (collectionName="books"){
-
-    var publicAPI = {
-
-        insert(item){
-            console.log('test me mongo function');
-            // try{
-            //     await client.connect();
-            //     console.log("Connected to database");
-            //     const db = client.db(DATABASE_NAME);
-            //     const collection = db.collection(collectionName);  //should be books
-            //     console.log(`insert: ${item.title}`);
-            //     //await collection.insertOne(item);
-            // } catch(err) {
-            //     console.log(err);
-            // } finally {
-            //     await client.close();
-            // }
-        }
-    }
-
-    return publicAPI;
+function insertMany(bookData){
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
+        assert.strictEqual(null, err);
+    
+        const db = client.db(JREADS_DB);
+        let collection = db.collection(BOOKS_COLLECTION);
+        collection.insertMany(bookData)
+        .then( () => {
+            console.log("Added multiple book entries");  
+        })
+        .catch(err => {
+            console.log("*** E R R O R ***");
+            console.log(err);
+        })
+        .finally( () => {
+            client.close();
+        });
+    
+    });
 }
 
+//READ
+function findOne(findId, callback){
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
+        assert.strictEqual(null, err);
+    
+        const db = client.db(JREADS_DB);
+        const collection = db.collection(BOOKS_COLLECTION);
+        console.log("Searching database...");
+        collection.find({id: findId}).toArray((err, books) => {
+            if(err){
+                console.log(err);
+                throw err;
+            }
+            callback(books[0]);
+        });
 
+    });
+}
 
-// async function runDB(){
-//     try {
-//         await client.connect();
-//         console.log("conntected to database");
-//         const db = client.db(dbName);
+function findMany(term, callback){
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
+        assert.strictEqual(null, err);
+    
+        const db = client.db(JREADS_DB);
+        const collection = db.collection(BOOKS_COLLECTION);
+        console.log("Searching database...");
+        collection.find(term).toArray((err, books) => {
+            if(err){
+                console.log(err);
+                throw err;
+            }
+            callback(books);
+        });
 
-//         const collection = db.collection("books");
+    });
+}
 
-//         let book =     {
-//             id: "abc123",
-//             title: "The Book of One",
-//             subtitle: "Prequel to Two",
-//             authors: ["Bob Bill", "Ray Bob", "Tracy Fred"],
-//             publisher: "Publishing House",
-//             publishedDate: "July 2015",
-//             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla faucibus ligula leo. Morbi mattis diam vestibulum mi venenatis faucibus. Nullam nec euismod felis, a vulputate turpis. Nunc eget dui eget lorem mollis consectetur. Aliquam pharetra nunc vel eleifend sodales. Pellentesque eget ex ac nisl fringilla vulputate. Integer aliquam ultrices felis at elementum. Vestibulum libero massa, eleifend a libero et, auctor ultricies odio. Donec pretium tincidunt diam, et malesuada ex tincidunt sed.",
-//             pageCount: 590,
-//             categories: "adventure",
-//             averageRating: 4.7,
-//             ratingsCount: 14698,
-//             imageLinks: {
-//                 thumbnail: "/images/jurassicPark.jpg",
-//                 small: "/images/jurassicPark.jpg"
-//             }
-//         };
-
-//         await collection.insertOne(book);
-
-//         let foundBook = await collection.findOne();
-
-//         console.log(foundBook);
-//     } catch(err){
-//         console.log(err.stack);
-//     } finally {
-//         await client.close();
-//     }
-// }
-
-//runDB();
-
-module.exports.insertBook = insertBook;
+module.exports.insertOne = insertOne;
+module.exports.insertMany = insertMany;
+module.exports.findOne = findOne;
+module.exports.findMany = findMany;
+module.exports.clearDB = clearDB;

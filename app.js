@@ -1,5 +1,5 @@
 //const {MONGO_USERNAME, MONGO_PASSWORD} = require("./secrets.js");
-const {insertBook} = require("./database.js");
+const {insertOne, findOne, findMany} = require("./database.js");
 const {seed} = require("./seed.js");
 const express = require("express");
 const app = express();
@@ -13,14 +13,25 @@ app.use(express.static("public"));
 
 
 //ARRAY FOR TEMP DATABASE
-var myLibrary = seed();
+//var myLibrary = seed();
+seed();
 
 let MAX_BOOKS_PER_SHELF = 5;
 
 
 app.get('/', function getHome(req, res) {
 
-    res.render("home", { myLibrary: myLibrary, maxBooksPerShelf: MAX_BOOKS_PER_SHELF });
+    //console.log(findOne({}));
+    //res.send("Home page");
+    //res.render("home", { myLibrary: myLibrary, maxBooksPerShelf: MAX_BOOKS_PER_SHELF });
+
+    findMany({}, function renderLibraryPage(data){
+        res.render("home", {
+            myLibrary: data,
+            maxBooksPerShelf: MAX_BOOKS_PER_SHELF
+        });
+    });
+
 });
 
 //show
@@ -40,9 +51,11 @@ app.post('/book', (req, res) => {
     axios.get(`https://www.googleapis.com/books/v1/volumes/${googleBookID}`)
         .then(response => formatBookDataFromGoogle(response.data))
         .then(bookData => {
-            insertBook(bookData);
+            insertOne(bookData, function redirectToLibrary(){
+                res.redirect("/");
+            });
             //myLibrary.push(bookData);
-            res.redirect("/");
+
         })
         .catch(err => {
             console.log(`*****ERROR***** ${err}`);
@@ -57,16 +70,20 @@ app.post('/book', (req, res) => {
 //show
 app.get('/myBook/:id', (req, res) => {
 
-    //search local db
-    for (let book of myLibrary) {
-        if (book.id === req.params.id) {
-            res.render("book", { bookData: book, inMyLibrary: true });
-            return;
-        }
-    }
+    findOne(req.params.id, function renderBookPage(data){
+        res.render("book", {
+            bookData: data,
+            inMyLibrary: true
+        });
+    });
 
-    console.log("book not found in myLibrary");
-    res.redirect("/");
+    //search local db
+    // for (let book of myLibrary) {
+    //     if (book.id === req.params.id) {
+    //         res.render("book", { bookData: book, inMyLibrary: true });
+    //         return;
+    //     }
+    // }
 
 });
 
