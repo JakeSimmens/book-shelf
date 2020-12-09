@@ -31,7 +31,7 @@ function insertOne(bookData, callback){
     });
 }
 
-function clearDB(){
+function clearDB(callback){
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
         assert.strictEqual(null, err);
     
@@ -46,6 +46,7 @@ function clearDB(){
         })
         .finally( () => {
             client.close();
+            callback();
         });
     
     });

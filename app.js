@@ -10,20 +10,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
-
-
-//ARRAY FOR TEMP DATABASE
-//var myLibrary = seed();
+//seed database
 seed();
 
 let MAX_BOOKS_PER_SHELF = 5;
 
-
 app.get('/', function getHome(req, res) {
-
-    //console.log(findOne({}));
-    //res.send("Home page");
-    //res.render("home", { myLibrary: myLibrary, maxBooksPerShelf: MAX_BOOKS_PER_SHELF });
 
     findMany({}, function renderLibraryPage(data){
         res.render("home", {
@@ -54,16 +46,11 @@ app.post('/book', (req, res) => {
             insertOne(bookData, function redirectToLibrary(){
                 res.redirect("/");
             });
-            //myLibrary.push(bookData);
-
         })
         .catch(err => {
             console.log(`*****ERROR***** ${err}`);
             res.redirect("/");
         });
-
-    //need to add retrieved data to the library and database
-
 
 });
 
@@ -76,14 +63,6 @@ app.get('/myBook/:id', (req, res) => {
             inMyLibrary: true
         });
     });
-
-    //search local db
-    // for (let book of myLibrary) {
-    //     if (book.id === req.params.id) {
-    //         res.render("book", { bookData: book, inMyLibrary: true });
-    //         return;
-    //     }
-    // }
 
 });
 

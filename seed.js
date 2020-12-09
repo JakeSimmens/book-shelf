@@ -57,24 +57,9 @@ function seed(){
     ];
 
 
-    clearDB();
-    // .then(() => {
-    insertMany(books);
-    // })
-    // .catch(err => {
-    //     console.log(`Seeding DB error:  ${err}`);
-    // });
-
-    return books;
-
-    // insertMany(books)
-    // .then(() => {
-    //     console.log("Database is seeded");
-    // })
-    // .catch(err => {
-    //     console.log("*** E R R O R  Seeding***");
-    //     console.log(err);
-    // });
+    clearDB( function populateDB() {
+        insertMany(books);
+    });
 }
 
 module.exports.seed = seed;
