@@ -9,6 +9,10 @@ const mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi
 
 
 //CREATE
+
+function insert(data, callback){
+    
+}
 function insertOne(bookData, callback){
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
         assert.strictEqual(null, err);
@@ -18,27 +22,6 @@ function insertOne(bookData, callback){
         collection.insertOne(bookData)
         .then(result => {
             console.log(`Add entry for ${bookData.title}`);  
-        })
-        .catch(err => {
-            console.log("*** E R R O R ***");
-            console.log(err);
-        })
-        .finally( () => {
-            client.close();
-            callback();
-        });
-    
-    });
-}
-
-function clearDB(callback){
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
-        assert.strictEqual(null, err);
-    
-        const db = client.db(JREADS_DB);
-        db.collection('books').deleteMany({})
-        .then( () => {
-            console.log("Database cleared")
         })
         .catch(err => {
             console.log("*** E R R O R ***");
@@ -72,6 +55,29 @@ function insertMany(bookData){
     
     });
 }
+
+function clearDB(callback){
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
+        assert.strictEqual(null, err);
+    
+        const db = client.db(JREADS_DB);
+        db.collection('books').deleteMany({})
+        .then( () => {
+            console.log("Database cleared")
+        })
+        .catch(err => {
+            console.log("*** E R R O R ***");
+            console.log(err);
+        })
+        .finally( () => {
+            client.close();
+            callback();
+        });
+    
+    });
+}
+
+
 
 //READ
 function findOne(findId, callback){

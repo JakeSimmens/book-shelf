@@ -27,16 +27,17 @@ app.get('/', function getHome(req, res) {
 });
 
 //show
-app.get('/book/:id', (req, res) => {
+app.get('/book/:googleid', (req, res) => {
     //show a single book's details from google
 
-    axios.get(`https://www.googleapis.com/books/v1/volumes/${req.params.id}`)
+    axios.get(`https://www.googleapis.com/books/v1/volumes/${req.params.googleid}`)
         .then(response => formatBookDataFromGoogle(response.data))
         .then(bookData => res.render("book", { bookData: bookData, inMyLibrary: false }))
         .catch(err => console.log(`*****ERROR*****${err}`));
 
 });
 
+//write
 app.post('/book', (req, res) => {
     console.log("post request to add book");
     const googleBookID = req.body.bookID;
