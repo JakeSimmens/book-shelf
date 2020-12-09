@@ -27,13 +27,28 @@ app.get('/', function getHome(req, res) {
 });
 
 //show
-app.get('/book/:googleid', (req, res) => {
+app.get('/book/:googleid', async (req, res) => {
     //show a single book's details from google
 
-    axios.get(`https://www.googleapis.com/books/v1/volumes/${req.params.googleid}`)
-        .then(response => formatBookDataFromGoogle(response.data))
-        .then(bookData => res.render("book", { bookData: bookData, inMyLibrary: false }))
-        .catch(err => console.log(`*****ERROR*****${err}`));
+    // axios.get(`https://www.googleapis.com/books/v1/volumes/${req.params.googleid}`)
+    //     .then(response => formatBookDataFromGoogle(response.data))
+    //     .then(bookData => res.render("book", { bookData: bookData, inMyLibrary: false }))
+    //     .catch(err => console.log(`*****ERROR*****${err}`));
+    try {
+        let response = await axios.get(`https://www.googleapis.com/books/v1/volumes/${req.params.googleid}`);
+
+        let bookData = formatBookDataFromGoogle(response.data);
+        res.render("book", { bookData: bookData, inMyLibrary: false });
+        
+    } catch (err) {
+        console.log(`HTTP error: ${err}`);
+    }
+
+
+
+        // .then(response => formatBookDataFromGoogle(response.data))
+        // .then(bookData => res.render("book", { bookData: bookData, inMyLibrary: false }))
+        // .catch(err => console.log(`*****ERROR*****${err}`));
 
 });
 
