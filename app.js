@@ -15,7 +15,9 @@ seed();
 
 let MAX_BOOKS_PER_SHELF = 5;
 
-app.get('/', function getHome(req, res) {
+//index
+app.get('/', (req, res) => {
+    //not sure how to get async await to work with this function
 
     findMany({}, function renderLibraryPage(data){
         res.render("home", {
@@ -26,7 +28,19 @@ app.get('/', function getHome(req, res) {
 
 });
 
-//show
+//show my library book
+app.get('/myBook/:id', (req, res) => {
+
+    findOne(req.params.id, function renderBookPage(data){
+        res.render("book", {
+            bookData: data,
+            inMyLibrary: true
+        });
+    });
+
+});
+
+//show google book
 app.get('/book/:googleid', async (req, res) => {
     //show a single book's details from google
 
@@ -43,39 +57,27 @@ app.get('/book/:googleid', async (req, res) => {
 });
 
 //write
-app.post('/book', (req, res) => {
-    console.log("post request to add book");
+app.post('/book', async (req, res) => {
     const googleBookID = req.body.bookID;
-    axios.get(`https://www.googleapis.com/books/v1/volumes/${googleBookID}`)
-        .then(response => formatBookDataFromGoogle(response.data))
-        .then(bookData => {
-            insertOne(bookData, function redirectToLibrary(){
-                res.redirect("/");
-            });
-        })
-        .catch(err => {
-            console.log(`*****ERROR***** ${err}`);
+
+    try {
+        let response = await axios.get(`https://www.googleapis.com/books/v1/volumes/${googleBookID}`);
+        let bookData = formatBookDataFromGoogle(response.data);
+        insertOne(bookData, function redirectToLibrary(){
             res.redirect("/");
         });
-
+    } catch (err) {
+        console.log(`*****ERROR***** ${err}`);
+        res.redirect("/");
+    }
 });
 
-//show
-app.get('/myBook/:id', (req, res) => {
-
-    findOne(req.params.id, function renderBookPage(data){
-        res.render("book", {
-            bookData: data,
-            inMyLibrary: true
-        });
-    });
-
-});
 
 const port = process.env.PORT || 3000;
 app.listen(port, function startServer() {
-    console.log("Book server is up and running");
+    console.log("jReads running");
 });
+
 
 function formatBookDataFromGoogle(data) {
     let extractedData = {};

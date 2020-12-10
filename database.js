@@ -14,24 +14,18 @@ function insert(data, callback){
 
 }
 function insertOne(bookData, callback){
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
-        assert.strictEqual(null, err);
-    
-        const db = client.db(JREADS_DB);
-        let collection = db.collection(BOOKS_COLLECTION);
-        collection.insertOne(bookData)
-        .then(result => {
-            console.log(`Add entry for ${bookData.title}`);  
-        })
-        .catch(err => {
-            console.log("*** E R R O R ***");
-            console.log(err);
-        })
-        .finally( () => {
-            client.close();
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
+        try {
+            assert.strictEqual(null, err);
+            const db = client.db(JREADS_DB);
+            const collection = db.collection(BOOKS_COLLECTION);
+            await collection.insertOne(bookData);
+            await client.close();
             callback();
-        });
-    
+
+        } catch (err) {
+            console.log("Error inserting: ", err);
+        }
     });
 }
 
@@ -99,37 +93,7 @@ function findOne(findId, callback){
 }
 
 function findMany(term, callback){
-    // try {
-    //     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
-    //         assert.strictEqual(null, err);
-        
-    //         const db = client.db(JREADS_DB);
-    //         const collection = db.collection(BOOKS_COLLECTION);
-    //         console.log(`Searching: ${term}`);
-
-    //         let myPromise = function () {
-    //             return new Promise(function(resolve, reject){
-    //                 collection.find(term).toArray((err, books) => {
-    //                     if(err){
-    //                         reject(err);
-    //                     } else {
-    //                         console.log(`found items: ${books}`);
-    //                         resolve(books);
-    //                     }
-    //                 });
-    //             });
-    //         };
-
-    //         let result = await myPromise();
-    //         console.log("after promise");
-    //         return result;
-
-    //     });
-    // } catch (err) {
-    //     console.log(err);
-    // }
-
-
+ 
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
         assert.strictEqual(null, err);
     
@@ -143,7 +107,6 @@ function findMany(term, callback){
             }
             callback(books);
         });
-
     });
 }
 
