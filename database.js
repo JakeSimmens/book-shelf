@@ -30,23 +30,19 @@ function insertOne(bookData, callback){
 }
 
 function insertMany(bookData){
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
-        assert.strictEqual(null, err);
-    
-        const db = client.db(JREADS_DB);
-        let collection = db.collection(BOOKS_COLLECTION);
-        collection.insertMany(bookData)
-        .then( () => {
-            console.log("Added multiple book entries");  
-        })
-        .catch(err => {
-            console.log("*** E R R O R ***");
-            console.log(err);
-        })
-        .finally( () => {
-            client.close();
-        });
-    
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
+
+        try {
+            assert.strictEqual(null, err);
+            const db = client.db(JREADS_DB);
+            const collection = db.collection(BOOKS_COLLECTION);
+            await collection.insertMany(bookData);
+            await client.close();
+
+        } catch (err) {
+            console.log("Error inserting: ", err);
+        }
+
     });
 }
 
