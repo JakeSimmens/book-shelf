@@ -59,6 +59,7 @@ function seed(){
 
     clearDB( function populateDB() {
         insertMany(books);
+        console.log("Database seeded");
     });
 }
 

@@ -47,23 +47,18 @@ function insertMany(bookData){
 }
 
 function clearDB(callback){
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
-        assert.strictEqual(null, err);
-    
-        const db = client.db(JREADS_DB);
-        db.collection('books').deleteMany({})
-        .then( () => {
-            console.log("Database cleared")
-        })
-        .catch(err => {
-            console.log("*** E R R O R ***");
-            console.log(err);
-        })
-        .finally( () => {
-            client.close();
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
+        
+        try {
+            assert.strictEqual(null, err);
+            const db = client.db(JREADS_DB);
+            const collection = db.collection(BOOKS_COLLECTION);
+            await collection.deleteMany({});
+            await client.close();
             callback();
-        });
-    
+        } catch (err) {
+            console.log("Error clearing database: ", err);
+        }
     });
 }
 
