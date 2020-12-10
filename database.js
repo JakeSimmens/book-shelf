@@ -11,7 +11,7 @@ const mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi
 //CREATE
 
 function insert(data, callback){
-    
+
 }
 function insertOne(bookData, callback){
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
@@ -99,6 +99,37 @@ function findOne(findId, callback){
 }
 
 function findMany(term, callback){
+    // try {
+    //     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
+    //         assert.strictEqual(null, err);
+        
+    //         const db = client.db(JREADS_DB);
+    //         const collection = db.collection(BOOKS_COLLECTION);
+    //         console.log(`Searching: ${term}`);
+
+    //         let myPromise = function () {
+    //             return new Promise(function(resolve, reject){
+    //                 collection.find(term).toArray((err, books) => {
+    //                     if(err){
+    //                         reject(err);
+    //                     } else {
+    //                         console.log(`found items: ${books}`);
+    //                         resolve(books);
+    //                     }
+    //                 });
+    //             });
+    //         };
+
+    //         let result = await myPromise();
+    //         console.log("after promise");
+    //         return result;
+
+    //     });
+    // } catch (err) {
+    //     console.log(err);
+    // }
+
+
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
         assert.strictEqual(null, err);
     
