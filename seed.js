@@ -6,8 +6,9 @@ function seed(){
 }
 
 function populateDB(){
-    insert(books);
-    console.log("Database seeded");
+    insert(books, () => {
+        console.log("Database seeded");
+    });
 }
 
 var books = [

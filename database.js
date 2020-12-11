@@ -10,7 +10,7 @@ const mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi
 
 
 //CREATE
-function insert(data, callback = () => {}){
+function insert(data, callback){
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
         try {
             assert.strictEqual(null, err);
@@ -84,7 +84,6 @@ function deleteOne(deleteID, callback){
 
             let result = await collection.deleteOne({_id: objId});
             await client.close();
-            //console.log("Delete Result: ", result.deletedCount);
             callback(result);
         } catch (err) {
             console.log("Error deleting book: ", err);

@@ -21,6 +21,7 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.3",
     "jest": "^26.6.1"
   }
 }
