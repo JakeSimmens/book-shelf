@@ -9,17 +9,19 @@ const mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi
 
 
 //CREATE
-
-function insert(data, callback){
-
-}
-function insertOne(bookData, callback){
+function insert(data, callback = () => {}){
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
         try {
             assert.strictEqual(null, err);
             const db = client.db(JREADS_DB);
             const collection = db.collection(BOOKS_COLLECTION);
-            await collection.insertOne(bookData);
+
+            if(!data.length){
+                await collection.insertOne(data);
+            } else {
+                await collection.insertMany(data);
+            }
+
             await client.close();
             callback();
 
@@ -27,25 +29,45 @@ function insertOne(bookData, callback){
             console.log("Error inserting: ", err);
         }
     });
+
 }
 
-function insertMany(bookData){
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
-
-        try {
-            assert.strictEqual(null, err);
-            const db = client.db(JREADS_DB);
-            const collection = db.collection(BOOKS_COLLECTION);
-            await collection.insertMany(bookData);
-            await client.close();
-
-        } catch (err) {
-            console.log("Error inserting: ", err);
-        }
+//READ
+function findById(findId, callback){
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
+        assert.strictEqual(null, err);
+    
+        const db = client.db(JREADS_DB);
+        const collection = db.collection(BOOKS_COLLECTION);
+        collection.find({id: findId}).toArray((errorFinding, books) => {
+            if(errorFinding){
+                console.log(errorFinding);
+                throw errorFinding;
+            } 
+            callback(books[0]);
+        });
 
     });
 }
 
+//READ
+function findMany(term, callback){
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
+        assert.strictEqual(null, err);
+    
+        const db = client.db(JREADS_DB);
+        const collection = db.collection(BOOKS_COLLECTION);
+        collection.find(term).toArray((err, books) => {
+            if(err){
+                console.log(err);
+                throw err;
+            }
+            callback(books);
+        });
+    });
+}
+
+//DESTROY
 function clearDB(callback){
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
         
@@ -63,46 +85,7 @@ function clearDB(callback){
 }
 
 
-
-//READ
-function findOne(findId, callback){
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
-        assert.strictEqual(null, err);
-    
-        const db = client.db(JREADS_DB);
-        const collection = db.collection(BOOKS_COLLECTION);
-        console.log("Searching database...");
-        collection.find({id: findId}).toArray((err, books) => {
-            if(err){
-                console.log(err);
-                throw err;
-            }
-            callback(books[0]);
-        });
-
-    });
-}
-
-function findMany(term, callback){
- 
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
-        assert.strictEqual(null, err);
-    
-        const db = client.db(JREADS_DB);
-        const collection = db.collection(BOOKS_COLLECTION);
-        console.log("Searching database...");
-        collection.find(term).toArray((err, books) => {
-            if(err){
-                console.log(err);
-                throw err;
-            }
-            callback(books);
-        });
-    });
-}
-
-module.exports.insertOne = insertOne;
-module.exports.insertMany = insertMany;
-module.exports.findOne = findOne;
+module.exports.insert = insert;
+module.exports.findById = findById;
 module.exports.findMany = findMany;
 module.exports.clearDB = clearDB;

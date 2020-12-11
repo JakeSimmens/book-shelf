@@ -1,5 +1,5 @@
 //const {MONGO_USERNAME, MONGO_PASSWORD} = require("./secrets.js");
-const {insertOne, findOne, findMany} = require("./database.js");
+const {insert, findById, findMany} = require("./database.js");
 const {seed} = require("./seed.js");
 const express = require("express");
 const app = express();
@@ -17,7 +17,6 @@ let MAX_BOOKS_PER_SHELF = 5;
 
 //index
 app.get('/', (req, res) => {
-    //not sure how to get async await to work with this function
 
     findMany({}, function renderLibraryPage(data){
         res.render("home", {
@@ -31,7 +30,7 @@ app.get('/', (req, res) => {
 //show my library book
 app.get('/myBook/:id', (req, res) => {
 
-    findOne(req.params.id, function renderBookPage(data){
+    findById(req.params.id, function renderBookPage(data){
         res.render("book", {
             bookData: data,
             inMyLibrary: true
@@ -41,17 +40,19 @@ app.get('/myBook/:id', (req, res) => {
 });
 
 //show google book
-app.get('/book/:googleid', async (req, res) => {
-    //show a single book's details from google
+app.get('/book/:id', async (req, res) => {
+
+    const googleBookID = req.params.id;
+    const url = `https://www.googleapis.com/books/v1/volumes/${googleBookID}`;
 
     try {
-        let response = await axios.get(`https://www.googleapis.com/books/v1/volumes/${req.params.googleid}`);
-
+        let response = await axios.get(url);
         let bookData = formatBookDataFromGoogle(response.data);
+
         res.render("book", { bookData: bookData, inMyLibrary: false });
 
     } catch (err) {
-        console.log(`HTTP error: ${err}`);
+        console.log("HTTP error: ", err);
     }
 
 });
@@ -59,15 +60,18 @@ app.get('/book/:googleid', async (req, res) => {
 //write
 app.post('/book', async (req, res) => {
     const googleBookID = req.body.bookID;
+    const url = `https://www.googleapis.com/books/v1/volumes/${googleBookID}`;
 
     try {
-        let response = await axios.get(`https://www.googleapis.com/books/v1/volumes/${googleBookID}`);
+        let response = await axios.get(url);
         let bookData = formatBookDataFromGoogle(response.data);
-        insertOne(bookData, function redirectToLibrary(){
+
+        insert(bookData, function redirectToLibrary(){
             res.redirect("/");
         });
+
     } catch (err) {
-        console.log(`*****ERROR***** ${err}`);
+        console.log("Error inserting book", err);
         res.redirect("/");
     }
 });

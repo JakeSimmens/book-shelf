@@ -1,4 +1,4 @@
-const {insertMany, clearDB} = require("./database.js");
+const {insertMany, insert, clearDB} = require("./database.js");
 
 //DATABASE
 function seed(){
@@ -58,7 +58,7 @@ function seed(){
 
 
     clearDB( function populateDB() {
-        insertMany(books);
+        insert(books);
         console.log("Database seeded");
     });
 }
