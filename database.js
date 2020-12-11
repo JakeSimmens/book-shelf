@@ -42,9 +42,13 @@ function findById(findId, callback){
         collection.find({id: findId}).toArray((errorFinding, books) => {
             if(errorFinding){
                 console.log(errorFinding);
-                throw errorFinding;
+                throw "Error thrown from findById";
             } 
-            callback(books[0]);
+            if(books[0]){
+                callback(books);
+            } else {
+                callback([]);
+            }
         });
 
     });
@@ -68,6 +72,26 @@ function findMany(term, callback){
 }
 
 //DESTROY
+function deleteOne(deleteID, callback){
+    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
+        
+        try {
+            assert.strictEqual(null, err);
+            const db = client.db(JREADS_DB);
+            const collection = db.collection(BOOKS_COLLECTION);
+            let query = {id: deleteID};
+
+            let result = await collection.deleteOne(query);
+            await client.close();
+            console.log("Delete Result: ", result.deletedCount);
+            callback();
+        } catch (err) {
+            console.log("Error deleting book: ", err);
+        }
+    });
+}
+
+//DESTROY
 function clearDB(callback){
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
         
@@ -84,8 +108,8 @@ function clearDB(callback){
     });
 }
 
-
 module.exports.insert = insert;
 module.exports.findById = findById;
 module.exports.findMany = findMany;
+module.exports.deleteOne = deleteOne;
 module.exports.clearDB = clearDB;

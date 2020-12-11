@@ -20,6 +20,11 @@
                     <button class="btnAdd">Add to Library</button>
                 </form>
             <%} %>
+            <%if(inMyLibrary){ %>
+                <form action="/myBook/<%=bookData.id%>?_method=DELETE" method="POST">
+                    <button class="btnDelete">Remove from Library</button>
+                </form>
+            <%} %>
 
         
         </div>

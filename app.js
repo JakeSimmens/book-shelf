@@ -1,14 +1,16 @@
 //const {MONGO_USERNAME, MONGO_PASSWORD} = require("./secrets.js");
-const {insert, findById, findMany} = require("./database.js");
+const {insert, findById, findMany, deleteOne} = require("./database.js");
 const {seed} = require("./seed.js");
 const express = require("express");
 const app = express();
 const axios = require("axios");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
 
 //seed database
 seed();
@@ -31,12 +33,16 @@ app.get('/', (req, res) => {
 app.get('/myBook/:id', (req, res) => {
 
     findById(req.params.id, function renderBookPage(data){
-        res.render("book", {
-            bookData: data,
-            inMyLibrary: true
-        });
+        if(data.length == 0){
+            res.redirect("/");
+        } else {
+            console.log("id: ", data[0].id);
+            res.render("book", {
+                bookData: data[0],
+                inMyLibrary: true
+             });
+        }
     });
-
 });
 
 //show google book
@@ -74,6 +80,16 @@ app.post('/book', async (req, res) => {
         console.log("Error inserting book", err);
         res.redirect("/");
     }
+});
+
+//delete
+
+app.delete('/myBook/:id', (req, res) => {
+    console.log("Delete book id: ", req.params.id);
+    deleteOne(req.params.id, function redirecToLibrary(){
+        res.redirect("/");
+    });
+
 });
 
 
