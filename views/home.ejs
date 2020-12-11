@@ -28,7 +28,7 @@
                     <% if( i % maxBooksPerShelf == 0){ %>
                         <div class="shelf">
                     <%} %>
-                            <a href="/myBook/<%=myLibrary[i].id%>">
+                            <a href="/myBook/<%=myLibrary[i]._id%>">
                                 <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="">
                             </a>
                     <% if( i % maxBooksPerShelf == maxBooksPerShelf-1 || i == myLibrary.length - 1){ %>

@@ -4,6 +4,7 @@ const BOOKS_COLLECTION = "books";
 
 //connect to database
 const MongoClient = require("mongodb").MongoClient;
+const ObjectId = require("mongodb").ObjectId;
 const assert = require("assert");
 const mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${JREADS_DB}?retryWrites=true&w=majority`;
 
@@ -33,13 +34,13 @@ function insert(data, callback = () => {}){
 }
 
 //READ
-function findById(findId, callback){
+function findById(id, callback){
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
         assert.strictEqual(null, err);
     
         const db = client.db(JREADS_DB);
         const collection = db.collection(BOOKS_COLLECTION);
-        collection.find({id: findId}).toArray((errorFinding, books) => {
+        collection.find(ObjectId(id)).toArray((errorFinding, books) => {
             if(errorFinding){
                 console.log(errorFinding);
                 throw "Error thrown from findById";
@@ -79,12 +80,12 @@ function deleteOne(deleteID, callback){
             assert.strictEqual(null, err);
             const db = client.db(JREADS_DB);
             const collection = db.collection(BOOKS_COLLECTION);
-            let query = {id: deleteID};
+            let objId = new ObjectId(deleteID);
 
-            let result = await collection.deleteOne(query);
+            let result = await collection.deleteOne({_id: objId});
             await client.close();
-            console.log("Delete Result: ", result.deletedCount);
-            callback();
+            //console.log("Delete Result: ", result.deletedCount);
+            callback(result);
         } catch (err) {
             console.log("Error deleting book: ", err);
         }

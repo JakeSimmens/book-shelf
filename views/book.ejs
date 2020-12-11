@@ -16,12 +16,12 @@
             <img src="<%=bookData.imageLinks.thumbnail%>" alt="">
             <%if(!inMyLibrary){ %>
                 <form action="/book" method="POST">
-                    <input hidden type="text" name="bookID" value=<%=bookData.id%> >
+                    <input hidden type="text" name="bookID" value=<%=googleBookID%> >
                     <button class="btnAdd">Add to Library</button>
                 </form>
             <%} %>
             <%if(inMyLibrary){ %>
-                <form action="/myBook/<%=bookData.id%>?_method=DELETE" method="POST">
+                <form action="/myBook/<%=bookData._id%>?_method=DELETE" method="POST">
                     <button class="btnDelete">Remove from Library</button>
                 </form>
             <%} %>

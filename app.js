@@ -36,7 +36,6 @@ app.get('/myBook/:id', (req, res) => {
         if(data.length == 0){
             res.redirect("/");
         } else {
-            console.log("id: ", data[0].id);
             res.render("book", {
                 bookData: data[0],
                 inMyLibrary: true
@@ -55,7 +54,7 @@ app.get('/book/:id', async (req, res) => {
         let response = await axios.get(url);
         let bookData = formatBookDataFromGoogle(response.data);
 
-        res.render("book", { bookData: bookData, inMyLibrary: false });
+        res.render("book", { bookData: bookData, googleBookID: googleBookID,inMyLibrary: false });
 
     } catch (err) {
         console.log("HTTP error: ", err);
@@ -85,7 +84,7 @@ app.post('/book', async (req, res) => {
 //delete
 
 app.delete('/myBook/:id', (req, res) => {
-    console.log("Delete book id: ", req.params.id);
+
     deleteOne(req.params.id, function redirecToLibrary(){
         res.redirect("/");
     });
@@ -102,7 +101,6 @@ app.listen(port, function startServer() {
 function formatBookDataFromGoogle(data) {
     let extractedData = {};
 
-    extractedData.id = data.id;
     extractedData.title = data.volumeInfo.title;
     extractedData.subtitle = data.volumeInfo.subtitle;
     extractedData.authors = data.volumeInfo.authors;
