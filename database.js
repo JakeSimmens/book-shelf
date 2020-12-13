@@ -6,16 +6,43 @@ const BOOKS_COLLECTION = "books";
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 const assert = require("assert");
-const mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${JREADS_DB}?retryWrites=true&w=majority`;
+let mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${JREADS_DB}?retryWrites=true&w=majority`;
 
+let dbInfo = {
+    name: JREADS_DB,
+    collection: BOOKS_COLLECTION,
+    isTestRun: false
+};
+
+function setMongoURL(dbname){
+
+    let url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${dbname}?retryWrites=true&w=majority`;
+
+    return url;
+}
+
+function setMongoOptions(isTest){
+    //Running Jest test throws an error if useUnifiedTopology option is set to true
+
+    if(isTest){
+        return { useUnifiedTopology: false };
+    } else {
+        return { useUnifiedTopology: true };
+    }
+}
 
 //CREATE
-function insert(data, callback){
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
+function insert(data, callback, dbParams = dbInfo ){
+
+    let url = setMongoURL(dbParams.name);
+    let options = setMongoOptions(dbParams.isTestRun);
+
+
+    MongoClient.connect(url, options, async (err, client) => {
         try {
             assert.strictEqual(null, err);
-            const db = client.db(JREADS_DB);
-            const collection = db.collection(BOOKS_COLLECTION);
+            const db = client.db(dbParams.name);
+            const collection = db.collection(dbParams.collection);
 
             if(!data.length){
                 await collection.insertOne(data);
@@ -57,6 +84,8 @@ function findById(id, callback){
 
 //READ
 function findMany(term, callback){
+
+
     MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
         assert.strictEqual(null, err);
     

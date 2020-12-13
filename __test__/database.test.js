@@ -1,4 +1,4 @@
-const {insert} = require("../database.js");
+const {insert, findMany} = require("../database.js");
 
 describe("mongoDB CRUD Operations", () => {
     describe("insert", () => {
@@ -20,10 +20,20 @@ describe("mongoDB CRUD Operations", () => {
             }
         };
 
+        dbParams = {
+            name: "test",
+            collection: "books",
+            isTestRun: true
+        };
+
 
 
         it("should add book to database", () =>{
-            insert(bookData,);
+            insert(bookData, () => {}, dbParams);
+
+            //search for book
+            expect(2+2).toBe(4);
+  
         })
     });
 });
