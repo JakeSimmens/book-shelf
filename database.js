@@ -71,18 +71,24 @@ function findById(id, callback, dbParams = dbInfo){
         const db = client.db(dbParams.name);
         const collection = db.collection(dbParams.collection);
 
+        try {
+            collection.find(ObjectId(id)).toArray((errorFinding, books) => {
+                if(errorFinding){
+                    console.log(errorFinding);
+                    throw "Error thrown from findById";
+                } 
+                if(books[0]){
+                    callback(books);
+                } else {
+                    callback([]);
+                }
+            });
+        } catch (err) {
+            console.log(err);
+            callback([]);
+        }
 
-        collection.find(ObjectId(id)).toArray((errorFinding, books) => {
-            if(errorFinding){
-                console.log(errorFinding);
-                throw "Error thrown from findById";
-            } 
-            if(books[0]){
-                callback(books);
-            } else {
-                callback([]);
-            }
-        });
+
 
     });
 }

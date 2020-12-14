@@ -58,6 +58,7 @@ app.get('/book/:id', async (req, res) => {
 
     } catch (err) {
         console.log("HTTP error: ", err);
+        res.redirect("/");
     }
 
 });
