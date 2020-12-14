@@ -32,11 +32,10 @@ function setMongoOptions(isTest){
 }
 
 //CREATE
-function insert(data, callback, dbParams = dbInfo ){
+function insert(data, callback, dbParams = dbInfo){
 
     let url = setMongoURL(dbParams.name);
     let options = setMongoOptions(dbParams.isTestRun);
-
 
     MongoClient.connect(url, options, async (err, client) => {
         try {
@@ -61,12 +60,18 @@ function insert(data, callback, dbParams = dbInfo ){
 }
 
 //READ
-function findById(id, callback){
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
+function findById(id, callback, dbParams = dbInfo){
+
+    let url = setMongoURL(dbParams.name);
+    let options = setMongoOptions(dbParams.isTestRun);
+
+    MongoClient.connect(url, options, (err, client) => {
         assert.strictEqual(null, err);
     
-        const db = client.db(JREADS_DB);
-        const collection = db.collection(BOOKS_COLLECTION);
+        const db = client.db(dbParams.name);
+        const collection = db.collection(dbParams.collection);
+
+
         collection.find(ObjectId(id)).toArray((errorFinding, books) => {
             if(errorFinding){
                 console.log(errorFinding);
@@ -83,14 +88,16 @@ function findById(id, callback){
 }
 
 //READ
-function findMany(term, callback){
+function findMany(term, callback, dbParams = dbInfo){
 
+    let url = setMongoURL(dbParams.name);
+    let options = setMongoOptions(dbParams.isTestRun);
 
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
+    MongoClient.connect(url, options, (err, client) => {
         assert.strictEqual(null, err);
     
-        const db = client.db(JREADS_DB);
-        const collection = db.collection(BOOKS_COLLECTION);
+        const db = client.db(dbParams.name);
+        const collection = db.collection(dbParams.collection);
         collection.find(term).toArray((err, books) => {
             if(err){
                 console.log(err);
@@ -102,13 +109,17 @@ function findMany(term, callback){
 }
 
 //DESTROY
-function deleteOne(deleteID, callback){
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
+function deleteOne(deleteID, callback, dbParams = dbInfo){
+
+    let url = setMongoURL(dbParams.name);
+    let options = setMongoOptions(dbParams.isTestRun);
+
+    MongoClient.connect(url, options, async (err, client) => {
         
         try {
             assert.strictEqual(null, err);
-            const db = client.db(JREADS_DB);
-            const collection = db.collection(BOOKS_COLLECTION);
+            const db = client.db(dbParams.name);
+            const collection = db.collection(dbParams.collection);
             let objId = new ObjectId(deleteID);
 
             let result = await collection.deleteOne({_id: objId});
@@ -121,13 +132,17 @@ function deleteOne(deleteID, callback){
 }
 
 //DESTROY
-function clearDB(callback){
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, async (err, client) => {
+function clearDB(callback, dbParams = dbInfo){
+
+    let url = setMongoURL(dbParams.name);
+    let options = setMongoOptions(dbParams.isTestRun);
+
+    MongoClient.connect(url, options, async (err, client) => {
         
         try {
             assert.strictEqual(null, err);
-            const db = client.db(JREADS_DB);
-            const collection = db.collection(BOOKS_COLLECTION);
+            const db = client.db(dbParams.name);
+            const collection = db.collection(dbParams.collection);
             await collection.deleteMany({});
             await client.close();
             callback();

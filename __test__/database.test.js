@@ -1,6 +1,41 @@
-const {insert, findMany} = require("../database.js");
+const {insert, findMany, clearDB} = require("../database.js");
+
+const doNothing = () => {};
+
+let dbParams = {
+    name: "test",
+    collection: "books",
+    isTestRun: true
+};
 
 describe("mongoDB CRUD Operations", () => {
+    describe("clearDB", () => {
+        var bookData = {
+            title: "Book for Testing",
+            subtitle: "Prequel to Two"
+        };
+
+        insert(bookData, doNothing, dbParams);
+
+        it("should clear all entries from the database", () =>{
+            // let checkDatabaseEmpty = findMany(
+            //     {},
+            //     (result) => {
+            //         console.log("Result: ", result);
+            //         expect(result.length).toBe(0);
+            //     },
+            //     dbParams);
+
+            clearDB(doNothing, dbParams);
+            findMany({},(result)=>{
+                //console.log("Result: ", result);
+                expect(result.length).toBe(0);
+            }
+            ,dbParams);
+
+        });
+
+    });
     describe("insert", () => {
 
         var bookData = {
@@ -20,16 +55,8 @@ describe("mongoDB CRUD Operations", () => {
             }
         };
 
-        dbParams = {
-            name: "test",
-            collection: "books",
-            isTestRun: true
-        };
-
-
-
         it("should add book to database", () =>{
-            insert(bookData, () => {}, dbParams);
+            insert(bookData, doNothing, dbParams);
 
             //search for book
             expect(2+2).toBe(4);
