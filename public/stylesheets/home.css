@@ -1,5 +1,14 @@
 .menuBar {
-    display: flex;
+    /* display: flex; */
+    background-color: rgba(231, 231, 231);
+
+    width: 100%;
+}
+
+.barItem {
+    display: inline-flex;
+    justify-content: space-between;
+    margin-left: 10px;
 }
 
 

@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/stylesheets/book.css">
-    <title><%=bookData.title%> </title>
-</head>
-<body>
-    <section class="menuBar">
-        <a href="/" class="btnHome">jReads</a>
-    </section>
+<%- include("./partials/header") %>
+
+
     <section class = "container">
         <div class="leftFrame">
 
@@ -44,7 +35,6 @@
     <section class="container">
         <h3>Reviews</h3>
     </section>
-    <script src="/js/book.js"></script>
-</body>
-</html>
+
+<%- include("./partials/footer") %>
 

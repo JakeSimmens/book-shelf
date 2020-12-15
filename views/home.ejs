@@ -1,23 +1,5 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/stylesheets/home.css">
-    <title>Books</title>
-</head>
-<body>
-    <section class="menuBar">
-        <div class="barItem">
-            <h1>jReads</h1>
-        </div>
-        <div class="barItem">
-            <input type="text" placeholder="Search books">
-        </div>
-        <div class="barItem">
-            <button>Login</button>
-        </div>
+<%- include("./partials/header") %>
 
-    </section>
     <section class="mainFrame">
         <div class="leftFrame">
             <div class="search">
@@ -49,7 +31,6 @@
             </div>
         </div>
     </section>
-    <script src="/js/bookapi.js"></script>
-    <script src="/js/bookSearch.js"></script>
-</body>
-</html>
+
+
+<%- include("./partials/footer") %>
