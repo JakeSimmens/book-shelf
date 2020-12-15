@@ -1,4 +1,4 @@
-const {insert, findMany, clearDB} = require("../database.js");
+const {insert, findMany, clearDB, deleteOne} = require("../database.js");
 
 const doNothing = () => {};
 
@@ -8,59 +8,58 @@ let dbParams = {
     isTestRun: true
 };
 
-describe("mongoDB CRUD Operations", () => {
-    describe("clearDB", () => {
-        var bookData = {
-            title: "Book for Testing",
-            subtitle: "Prequel to Two"
-        };
+async function seedTestData(){
+    var bookData = {
+        title: "Book for Testing",
+        subtitle: "Prequel to Two"
+    };
 
-        insert(bookData, doNothing, dbParams);
-
-        it("should clear all entries from the database", () =>{
-            // let checkDatabaseEmpty = findMany(
-            //     {},
-            //     (result) => {
-            //         console.log("Result: ", result);
-            //         expect(result.length).toBe(0);
-            //     },
-            //     dbParams);
-
-            clearDB(doNothing, dbParams);
-            findMany({},(result)=>{
-                //console.log("Result: ", result);
-                expect(result.length).toBe(0);
-            }
-            ,dbParams);
-
-        });
-
+    return new Promise((resolve, reject) => {
+        insert([bookData, bookData, bookData], () => {
+            resolve();
+        }, dbParams);
     });
-    describe("insert", () => {
 
-        var bookData = {
-            title: "Book for Testing",
-            subtitle: "Prequel to Two",
-            authors: ["Bob Bill", "Ray Bob", "Tracy Fred"],
-            publisher: "Publishing House",
-            publishedDate: "July 2015",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla faucibus ligula leo. Donec pretium tincidunt diam, et malesuada ex tincidunt sed.",
-            pageCount: 590,
-            categories: "adventure",
-            averageRating: 4.7,
-            ratingsCount: 14698,
-            imageLinks: {
-                thumbnail: "/images/jurassicPark.jpg",
-                small: "/images/jurassicPark.jpg"
-            }
-        };
+};
 
-        it("should add book to database", () =>{
-            insert(bookData, doNothing, dbParams);
+describe("MongoDB CRUD Operations", () => {
+    describe("clearDB function", () => {
+        it("should work on this test for CRUD", async (done) => {
 
-            //search for book
-            expect(2+2).toBe(4);
+            await seedTestData();
+            done();
+
+            expect(2+5).toBe(7);
+        });
+    });
+});
+
+// describe("mongoDB CRUD Operations", () => {
+
+//     describe("clearDB", async () => {
+
+//         //await seedTestData();
+
+//         it("should clear all entries from the database", (done) =>{
+
+//             function callback(result){
+//                 try {
+//                     expect(result.deletedCount).toBe(3);
+//                     done();
+//                 } catch (err) {
+//                     done(err);
+//                 }
+//             }
+
+//             clearDB(callback, dbParams);
+
+
+//     });
   
-        })
+// });
+
+describe("test it", () => {
+    it("should work on this test", () => {
+        expect(2+5).toBe(7);
     });
 });

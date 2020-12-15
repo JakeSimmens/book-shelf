@@ -1,3 +1,7 @@
+.menuBar {
+    display: flex;
+}
+
 
 .container {
     margin: 3px;

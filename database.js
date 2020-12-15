@@ -1,12 +1,11 @@
 const {MONGO_USERNAME, MONGO_PASSWORD} = require("./secrets.js");
-const JREADS_DB = "jReads";
-const BOOKS_COLLECTION = "books";
 
 //connect to database
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 const assert = require("assert");
-let mongoUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${JREADS_DB}?retryWrites=true&w=majority`;
+const JREADS_DB = "jReads";
+const BOOKS_COLLECTION = "books";
 
 let dbInfo = {
     name: JREADS_DB,
@@ -38,19 +37,21 @@ function insert(data, callback, dbParams = dbInfo){
     let options = setMongoOptions(dbParams.isTestRun);
 
     MongoClient.connect(url, options, async (err, client) => {
+        let response;
+
         try {
             assert.strictEqual(null, err);
             const db = client.db(dbParams.name);
             const collection = db.collection(dbParams.collection);
 
             if(!data.length){
-                await collection.insertOne(data);
+                response = await collection.insertOne(data);
             } else {
-                await collection.insertMany(data);
+                response = await collection.insertMany(data);
             }
 
             await client.close();
-            callback();
+            callback(response.result);
 
         } catch (err) {
             console.log("Error inserting: ", err);
@@ -87,9 +88,6 @@ function findById(id, callback, dbParams = dbInfo){
             console.log(err);
             callback([]);
         }
-
-
-
     });
 }
 
@@ -104,13 +102,20 @@ function findMany(term, callback, dbParams = dbInfo){
     
         const db = client.db(dbParams.name);
         const collection = db.collection(dbParams.collection);
-        collection.find(term).toArray((err, books) => {
-            if(err){
-                console.log(err);
-                throw err;
-            }
-            callback(books);
-        });
+
+        try {
+            collection.find(term).toArray((err, books) => {
+                if(err){
+                    console.log(err);
+                    throw err;
+                }
+                callback(books);
+            });
+        } catch (err) {
+            console.log(err);
+            callback([]);
+        }
+
     });
 }
 
@@ -149,9 +154,9 @@ function clearDB(callback, dbParams = dbInfo){
             assert.strictEqual(null, err);
             const db = client.db(dbParams.name);
             const collection = db.collection(dbParams.collection);
-            await collection.deleteMany({});
+            let result = await collection.deleteMany({});
             await client.close();
-            callback();
+            callback(result);
         } catch (err) {
             console.log("Error clearing database: ", err);
         }
