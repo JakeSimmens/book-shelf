@@ -1,7 +1,7 @@
 .menuBar {
     /* display: flex; */
     background-color: rgba(231, 231, 231);
-
+    height: 50px;
     width: 100%;
 }
 
@@ -38,10 +38,7 @@
     
 }
 
-.search input {
-    width: 300px;
-    margin-left: 4px;
-}
+
 
 .shelves {
     margin: auto;
@@ -81,7 +78,14 @@ li {
     text-decoration-line: none;
 }
 
+.search input {
+    width: 300px;
+    margin-left: 4px;
+}
+
 .searchResult {
+    /* position places results on top of content */
+    position: relative;  
     display: inline-flex;
     justify-content: left;
     margin-left: 1px;
@@ -90,6 +94,7 @@ li {
     width: 298px;
     height: 50px;
     border: solid rgb(200, 200, 200) 1px;
+    background-color: white;
     border-top: 0px;
     white-space: nowrap;
 
