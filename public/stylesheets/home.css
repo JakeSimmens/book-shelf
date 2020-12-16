@@ -34,7 +34,7 @@
 }
 
 .rightFrame {
-    flex: 2;
+    flex: 3;
     
 }
 
@@ -49,8 +49,14 @@
 .shelf {
     display: flex;
     justify-content: space-between;
+    align-items: end;
     border: solid white 1px;
+    padding: 10px;
 
+}
+
+.shelf figure {
+    margin: 10px;
 }
 
 .shelf img {
