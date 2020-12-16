@@ -68,7 +68,7 @@ function createOneDropDownItem(book) {
 
     link.setAttribute("class", "searchResult");
 
-    link.setAttribute("href", `/book/${book.id}`);
+    link.setAttribute("href", `/findBook/${book.id}`);
 
     if (book.imageLinks !== undefined) {
         image.setAttribute("src", book.imageLinks.smallThumbnail);

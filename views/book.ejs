@@ -7,7 +7,7 @@
             <img src="<%=bookData.imageLinks.thumbnail%>" 
             alt="Book cover for <%=bookData.title%>">
             <%if(!inMyLibrary){ %>
-                <form action="/book" method="POST">
+                <form action="/findBook" method="POST">
                     <input hidden type="text" name="bookID" value=<%=googleBookID%> >
                     <button class="btnAdd">Add to Library</button>
                 </form>
