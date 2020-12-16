@@ -4,7 +4,8 @@
     <section class = "container">
         <div class="leftFrame">
 
-            <img src="<%=bookData.imageLinks.thumbnail%>" alt="">
+            <img src="<%=bookData.imageLinks.thumbnail%>" 
+            alt="Book cover for <%=bookData.title%>">
             <%if(!inMyLibrary){ %>
                 <form action="/book" method="POST">
                     <input hidden type="text" name="bookID" value=<%=googleBookID%> >

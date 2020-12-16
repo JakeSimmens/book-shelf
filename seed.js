@@ -13,7 +13,7 @@ function populateDB(){
 
 var books = [
     {
-        title: "The Book of One",
+        title: "Jurassic Park",
         subtitle: "Prequel to Two",
         authors: ["Bob Bill", "Ray Bob", "Tracy Fred"],
         publisher: "Publishing House",
@@ -29,8 +29,8 @@ var books = [
         }
     },
     {
-        title: "The Book of Two",
-        subtitle: "Prequel to Three",
+        title: "The Lost World",
+        subtitle: "JP Part 2",
         authors: ["One Bob", "Four Fred"],
         publisher: "What? Publishing House",
         publishedDate: "May 2018",
@@ -45,7 +45,7 @@ var books = [
         }
     },
     {
-        title: "Three Book",
+        title: "The Gunslinger",
         subtitle: "Another one",
         authors: ["One Bob"],
         publisher: "House of Books",

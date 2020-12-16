@@ -29,7 +29,7 @@
 
 .leftFrame {
     flex: 1;
-    min-width: 375px;
+    min-width: 200px;
     
 }
 
@@ -48,17 +48,25 @@
 
 .shelf {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     border: solid white 1px;
+
 }
 
 .shelf img {
     width: 100px;
-    margin-left: 1%;
-    margin-right: 1%;
+    margin-left: 1px;
+    margin-right: 1px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.shelf figcaption {
+    color: white;
+    text-decoration: none;
+    
+}
+
 
 .hideMe {
     visibility: collapse;
