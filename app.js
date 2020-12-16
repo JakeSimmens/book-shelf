@@ -92,6 +92,10 @@ app.delete('/myBook/:id', (req, res) => {
 
 });
 
+app.get('/login', (req, res) => {
+    res.render("login");
+})
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, function startServer() {
