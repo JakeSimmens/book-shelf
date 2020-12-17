@@ -13,6 +13,39 @@ let dbInfo = {
     isTestRun: false
 };
 
+function setDatabaseToUse(dbChoice){
+
+    let name = JREADS_DB;
+    let isTestRun = false;
+    let collection = "books";
+
+
+    switch(dbChoice){
+        case "books":
+            collection = "books";
+            break;
+        case "users":
+            collection = "users";
+            break;
+        case "passwords":
+            collection = "passwords";
+            break;
+        case "comments":
+            collection = "comments";
+            break;
+        case "test":
+            name = "test"
+            collection = "books";
+            break;
+    }
+
+    return {
+        name: name,
+        collection: collection,
+        isTestRun: isTestRun
+    }
+}
+
 function setMongoURL(dbname){
 
     let url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${dbname}?retryWrites=true&w=majority`;
@@ -31,8 +64,9 @@ function setMongoOptions(isTest){
 }
 
 //CREATE
-function insert(data, callback, dbParams = dbInfo){
+function insert(data, callback, database){
 
+    let dbParams = setDatabaseToUse(database);
     let url = setMongoURL(dbParams.name);
     let options = setMongoOptions(dbParams.isTestRun);
 
@@ -61,8 +95,9 @@ function insert(data, callback, dbParams = dbInfo){
 }
 
 //READ
-function findById(id, callback, dbParams = dbInfo){
+function findById(id, callback, database){
 
+    let dbParams = setDatabaseToUse(database);
     let url = setMongoURL(dbParams.name);
     let options = setMongoOptions(dbParams.isTestRun);
 
@@ -92,8 +127,9 @@ function findById(id, callback, dbParams = dbInfo){
 }
 
 //READ
-function findMany(term, callback, dbParams = dbInfo){
+function findMany(term, callback, database){
 
+    let dbParams = setDatabaseToUse(database);
     let url = setMongoURL(dbParams.name);
     let options = setMongoOptions(dbParams.isTestRun);
 
@@ -120,8 +156,9 @@ function findMany(term, callback, dbParams = dbInfo){
 }
 
 //DESTROY
-function deleteOne(deleteID, callback, dbParams = dbInfo){
+function deleteOne(deleteID, callback, database){
 
+    let dbParams = setDatabaseToUse(database);
     let url = setMongoURL(dbParams.name);
     let options = setMongoOptions(dbParams.isTestRun);
 
@@ -143,8 +180,9 @@ function deleteOne(deleteID, callback, dbParams = dbInfo){
 }
 
 //DESTROY
-function clearDB(callback, dbParams = dbInfo){
+function clearDB(callback, database){
 
+    let dbParams = setDatabaseToUse(database);
     let url = setMongoURL(dbParams.name);
     let options = setMongoOptions(dbParams.isTestRun);
 

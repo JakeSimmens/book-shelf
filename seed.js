@@ -1,14 +1,18 @@
 const {insert, clearDB} = require("./database.js");
+const BOOKS_DATABASE = "books";
 
 //DATABASE
 function seed(){
-    clearDB(populateDB);
+    clearDB(populateDB, BOOKS_DATABASE);
 }
 
 function populateDB(){
-    insert(books, () => {
-        console.log("Database seeded");
-    });
+    insert(
+        books,
+        () => {
+            console.log("Database seeded");
+        },
+        BOOKS_DATABASE);
 }
 
 var books = [

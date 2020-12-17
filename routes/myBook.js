@@ -2,6 +2,7 @@ const {insert, findById, findMany, deleteOne} = require("../database.js");
 
 const express = require("express");
 const router = express.Router();
+const BOOKS_DATABASE = "books";
 
 //show my library book
 router.get('/:id', (req, res) => {
@@ -15,16 +16,20 @@ router.get('/:id', (req, res) => {
                 inMyLibrary: true
              });
         }
-    });
+    }, BOOKS_DATABASE);
 });
 
 
 //delete
 router.delete('/:id', (req, res) => {
 
-    deleteOne(req.params.id, function redirecToLibrary(){
-        res.redirect("/");
-    });
+    deleteOne(
+        req.params.id, 
+        function redirecToLibrary()
+        {
+            res.redirect("/");
+        },
+        BOOKS_DATABASE);
 
 });
 
