@@ -16,12 +16,12 @@ function createMongoAPI(database, collection){
     let url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${DATABASE}?retryWrites=true&w=majority`;
     let options = { useUnifiedTopology: true };
 
-    let setForTesting = function () {
+    let setForTesting = function() {
         isTestRun = true;
         options = { useUnifiedTopology: false };
     }
 
-    let insert = function (data, callback){
+    let insert = function(data, callback){
 
         MongoClient.connect(url, options, async (err, client) => {
             let response;
@@ -47,6 +47,30 @@ function createMongoAPI(database, collection){
     
     }
 
+    let findMany = function(term, callback){
+    
+        MongoClient.connect(url, options, (err, client) => {
+            assert.strictEqual(null, err);
+        
+            const db = client.db(DATABASE);
+            const collection = db.collection(COLLECTION);
+    
+            try {
+                collection.find(term).toArray((err, items) => {
+                    if(err){
+                        console.log(err);
+                        throw err;
+                    }
+                    callback(items);
+                });
+            } catch (err) {
+                console.log(err);
+                callback([]);
+            }
+    
+        });
+    }
+
     let clearDB = function (callback){
 
         MongoClient.connect(url, options, async (err, client) => {
@@ -70,6 +94,7 @@ function createMongoAPI(database, collection){
     let publicAPI = {
         setForTesting,
         insert,
+        findMany,
         clearDB
     };
 
