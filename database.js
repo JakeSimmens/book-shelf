@@ -36,6 +36,7 @@ function setDatabaseToUse(dbChoice){
         case "test":
             name = "test"
             collection = "books";
+            istTestRun = true;
             break;
     }
 
@@ -115,6 +116,37 @@ function findById(id, database, callback){
                 } 
                 if(books[0]){
                     callback(books);
+                } else {
+                    callback([]);
+                }
+            });
+        } catch (err) {
+            console.log(err);
+            callback([]);
+        }
+    });
+}
+
+function findOne(term, database, callback){
+
+    let dbParams = setDatabaseToUse(database);
+    let url = setMongoURL(dbParams.name);
+    let options = setMongoOptions(dbParams.isTestRun);
+
+    MongoClient.connect(url, options, (err, client) => {
+        assert.strictEqual(null, err);
+    
+        const db = client.db(dbParams.name);
+        const collection = db.collection(dbParams.collection);
+
+        try {
+            collection.find(term).toArray((errorFinding, items) => {
+                if(errorFinding){
+                    console.log(errorFinding);
+                    throw "Error thrown from findById";
+                } 
+                if(items[0]){
+                    callback(items);
                 } else {
                     callback([]);
                 }
