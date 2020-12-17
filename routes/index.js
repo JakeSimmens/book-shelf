@@ -9,16 +9,14 @@ let MAX_BOOKS_PER_SHELF = 5;
 //index
 router.get("/", (req, res) => {
 
-    findMany(
-        {}, 
+    findMany({}, BOOKS_DATABASE,
         function renderLibraryPage(data)
         {
             res.render("home", {
                 myLibrary: data,
                 maxBooksPerShelf: MAX_BOOKS_PER_SHELF
             });
-        },
-        BOOKS_DATABASE);
+        });
 
 });
 

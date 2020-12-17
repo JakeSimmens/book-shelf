@@ -3,16 +3,16 @@ const BOOKS_DATABASE = "books";
 
 //DATABASE
 function seed(){
-    clearDB(populateDB, BOOKS_DATABASE);
+    clearDB( BOOKS_DATABASE, populateDB);
 }
 
 function populateDB(){
     insert(
         books,
+        BOOKS_DATABASE,
         () => {
             console.log("Database seeded");
-        },
-        BOOKS_DATABASE);
+        });
 }
 
 var books = [

@@ -64,7 +64,7 @@ function setMongoOptions(isTest){
 }
 
 //CREATE
-function insert(data, callback, database){
+function insert(data, database, callback){
 
     let dbParams = setDatabaseToUse(database);
     let url = setMongoURL(dbParams.name);
@@ -95,7 +95,7 @@ function insert(data, callback, database){
 }
 
 //READ
-function findById(id, callback, database){
+function findById(id, database, callback){
 
     let dbParams = setDatabaseToUse(database);
     let url = setMongoURL(dbParams.name);
@@ -127,7 +127,7 @@ function findById(id, callback, database){
 }
 
 //READ
-function findMany(term, callback, database){
+function findMany(term, database, callback){
 
     let dbParams = setDatabaseToUse(database);
     let url = setMongoURL(dbParams.name);
@@ -156,7 +156,7 @@ function findMany(term, callback, database){
 }
 
 //DESTROY
-function deleteOne(deleteID, callback, database){
+function deleteOne(deleteID, database, callback){
 
     let dbParams = setDatabaseToUse(database);
     let url = setMongoURL(dbParams.name);
@@ -180,7 +180,7 @@ function deleteOne(deleteID, callback, database){
 }
 
 //DESTROY
-function clearDB(callback, database){
+function clearDB(database, callback){
 
     let dbParams = setDatabaseToUse(database);
     let url = setMongoURL(dbParams.name);

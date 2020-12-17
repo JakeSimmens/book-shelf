@@ -35,13 +35,11 @@ router.post('/', async (req, res) => {
         let response = await axios.get(url);
         let bookData = formatBookDataFromGoogle(response.data);
 
-        insert(
-            bookData, 
+        insert(bookData, BOOKS_DATABASE,
             function redirectToLibrary()
             {
                 res.redirect("/");
-            }, 
-            BOOKS_DATABASE);
+            });
 
     } catch (err) {
         console.log("Error inserting book. ", err.message);
