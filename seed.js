@@ -1,15 +1,17 @@
-const {insert, clearDB} = require("./database.js");
-const BOOKS_DATABASE = "books";
+const {createMongoAPI, insert, clearDB} = require("./database.js");
+
+const DATABASE = "jReads";
+const BOOKS_COLLECTION = "books";
+
+let db = createMongoAPI(DATABASE, BOOKS_COLLECTION);
 
 //DATABASE
 function seed(){
-    clearDB( BOOKS_DATABASE, populateDB);
+    db.clearDB(populateDB);
 }
 
 function populateDB(){
-    insert(
-        books,
-        BOOKS_DATABASE,
+    db.insert(books,
         () => {
             console.log("Database seeded");
         });

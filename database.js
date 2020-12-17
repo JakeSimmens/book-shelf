@@ -7,6 +7,76 @@ const assert = require("assert");
 const JREADS_DB = "jReads";
 const BOOKS_COLLECTION = "books";
 
+function createMongoAPI(database, collection){
+
+    const DATABASE = database;
+    const COLLECTION = collection;
+    let isTestRun = false;
+
+    let url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${DATABASE}?retryWrites=true&w=majority`;
+    let options = { useUnifiedTopology: true };
+
+    let setForTesting = function () {
+        isTestRun = true;
+        options = { useUnifiedTopology: false };
+    }
+
+    let insert = function (data, callback){
+
+        MongoClient.connect(url, options, async (err, client) => {
+            let response;
+    
+            try {
+                assert.strictEqual(null, err);
+                const db = client.db(DATABASE);
+                const collection = db.collection(COLLECTION);
+    
+                if(!data.length){
+                    response = await collection.insertOne(data);
+                } else {
+                    response = await collection.insertMany(data);
+                }
+    
+                await client.close();
+                callback(response.result);
+    
+            } catch (err) {
+                console.log("Error inserting: ", err);
+            }
+        });
+    
+    }
+
+    let clearDB = function (callback){
+
+        MongoClient.connect(url, options, async (err, client) => {
+            
+            try {
+                assert.strictEqual(null, err);
+                const db = client.db(DATABASE);
+                const collection = db.collection(COLLECTION);
+                let result = await collection.deleteMany({});
+                await client.close();
+                callback(result);
+            } catch (err) {
+                console.log("Error clearing database: ", err);
+            }
+        });
+    }
+
+
+
+
+    let publicAPI = {
+        setForTesting,
+        insert,
+        clearDB
+    };
+
+    return publicAPI;
+
+}
+
 let dbInfo = {
     name: JREADS_DB,
     collection: BOOKS_COLLECTION,
@@ -238,3 +308,4 @@ module.exports.findById = findById;
 module.exports.findMany = findMany;
 module.exports.deleteOne = deleteOne;
 module.exports.clearDB = clearDB;
+module.exports.createMongoAPI = createMongoAPI;
