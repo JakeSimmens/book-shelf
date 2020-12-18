@@ -1,4 +1,4 @@
-const {createMongoAPI, insert, clearDB} = require("./database.js");
+const {createMongoAPI} = require("./database.js");
 
 const DATABASE = "jReads";
 const BOOKS_COLLECTION = "books";
