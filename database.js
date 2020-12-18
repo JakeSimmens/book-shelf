@@ -47,6 +47,33 @@ function createMongoAPI(database, collection){
     
     }
 
+    let findById = function (id, callback){
+
+        MongoClient.connect(url, options, (err, client) => {
+            assert.strictEqual(null, err);
+        
+            const db = client.db(DATABASE);
+            const collection = db.collection(COLLECTION);
+    
+            try {
+                collection.find(ObjectId(id)).toArray((errorFinding, items) => {
+                    if(errorFinding){
+                        console.log(errorFinding);
+                        throw "Error thrown from findById";
+                    } 
+                    if(items[0]){
+                        callback(items);
+                    } else {
+                        callback([]);
+                    }
+                });
+            } catch (err) {
+                console.log(err);
+                callback([]);
+            }
+        });
+    }
+
     let findMany = function(term, callback){
     
         MongoClient.connect(url, options, (err, client) => {
@@ -71,6 +98,25 @@ function createMongoAPI(database, collection){
         });
     }
 
+    let deleteOne = function (deleteID, callback){
+
+        MongoClient.connect(url, options, async (err, client) => {
+            
+            try {
+                assert.strictEqual(null, err);
+                const db = client.db(DATABASE);
+                const collection = db.collection(COLLECTION);
+                let objId = new ObjectId(deleteID);
+    
+                let result = await collection.deleteOne({_id: objId});
+                await client.close();
+                callback(result);
+            } catch (err) {
+                console.log("Error deleting book: ", err);
+            }
+        });
+    }
+
     let clearDB = function (callback){
 
         MongoClient.connect(url, options, async (err, client) => {
@@ -89,12 +135,12 @@ function createMongoAPI(database, collection){
     }
 
 
-
-
     let publicAPI = {
         setForTesting,
         insert,
+        findById,
         findMany,
+        deleteOne,
         clearDB
     };
 
@@ -222,36 +268,7 @@ function findById(id, database, callback){
     });
 }
 
-function findOne(term, database, callback){
 
-    let dbParams = setDatabaseToUse(database);
-    let url = setMongoURL(dbParams.name);
-    let options = setMongoOptions(dbParams.isTestRun);
-
-    MongoClient.connect(url, options, (err, client) => {
-        assert.strictEqual(null, err);
-    
-        const db = client.db(dbParams.name);
-        const collection = db.collection(dbParams.collection);
-
-        try {
-            collection.find(term).toArray((errorFinding, items) => {
-                if(errorFinding){
-                    console.log(errorFinding);
-                    throw "Error thrown from findById";
-                } 
-                if(items[0]){
-                    callback(items);
-                } else {
-                    callback([]);
-                }
-            });
-        } catch (err) {
-            console.log(err);
-            callback([]);
-        }
-    });
-}
 
 //READ
 function findMany(term, database, callback){
