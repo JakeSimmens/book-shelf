@@ -2,20 +2,38 @@ const {createMongoAPI} = require("./database.js");
 
 const DATABASE = "jReads";
 const BOOKS_COLLECTION = "books";
+const USERS_COLLECTION = "users";
+const PASSWORD_COLLECTION = "passwords";
 
-let db = createMongoAPI(DATABASE, BOOKS_COLLECTION);
+let booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);
+let usersDB = createMongoAPI(DATABASE, USERS_COLLECTION);
+let passwordDB = createMongoAPI(DATABASE, PASSWORD_COLLECTION);
 
 //DATABASE
 function seed(){
-    db.clearDB(populateDB);
+    booksDB.clearDB(populateBooks);
+    usersDB.clearDB(populateUsers);
 }
 
-function populateDB(){
-    db.insert(books,
+function populateUsers(){
+    usersDB.insert(users,
         () => {
-            console.log("Database seeded");
+            console.log("Users collection seeded");
         });
 }
+
+function populateBooks(){
+    booksDB.insert(books,
+        () => {
+            console.log("Books collection seeded");
+        });
+}
+
+var users = [
+    {username: "jake", password: "ia"},
+    {username: "elise", password: "wi"},
+    {username: "isaac", password: "mn"}
+];
 
 var books = [
     {

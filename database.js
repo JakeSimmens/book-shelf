@@ -76,6 +76,43 @@ function createMongoAPI(database, collection){
         });
     }
 
+    let findOne = function(term, callback){
+    
+        MongoClient.connect(url, options, async (err, client) => {
+            assert.strictEqual(null, err);
+        
+            const db = client.db(DATABASE);
+            const collection = db.collection(COLLECTION);
+    
+            try {
+                // collection.find(term).limit(1).toArray((err, item) => {
+                //     if(err){
+                //         console.log(err);
+                //         throw err;
+                //     }
+                //     callback(item);
+                // });
+                let cursor = collection.find(term).limit(1);
+                //console.log("findOne result: ", cursor);
+
+
+                if(!cursor.hasNext()){
+                    console.log(err);
+                    throw err;
+                } else {
+                    let item = await cursor.next();
+                    console.log("findOne item: ", item);
+                    callback(err, item);
+                }
+                
+            } catch (err) {
+                console.log(err);
+                callback(err, {});
+            }
+    
+        });
+    }
+
     let findMany = function(term, callback){
     
         MongoClient.connect(url, options, (err, client) => {
@@ -144,6 +181,7 @@ function createMongoAPI(database, collection){
         setForTesting,
         insert,
         findById,
+        findOne,
         findMany,
         deleteOne,
         clearDB
