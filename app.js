@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const flash = require("connect-flash");
 
 
 
@@ -22,6 +23,7 @@ app.use(session({
     saveUninitialized: false
     //cookie: { secure: true }  //need to setup https
 }));
+app.use(flash());
 
 //ROUTES
 const indexRoutes = require("./routes/index");

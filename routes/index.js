@@ -60,13 +60,14 @@ passport.deserializeUser( function(username, callback){
 
 //index
 router.get("/", (req, res) => {
-
+    req.flash("info", "welcome");
     booksDB.findMany({},
         function renderLibraryPage(data)
         {
             res.render("home", {
                 myLibrary: data,
-                maxBooksPerShelf: MAX_BOOKS_PER_SHELF
+                maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+                message: req.flash("info")
             });
         });
 
@@ -101,16 +102,21 @@ router.get("/login", (req, res) => {
     res.render("login");
 });
 
-router.post("/login",
-    passport.authenticate("local", {failureRedirect: "/login"}),
+router.post("/login", passport.authenticate("local",
+    {
+        successRedirect: "/",
+        failureRedirect: "/login",
+        successFlash: "You have logge in!",
+        failureFlash: true
+    }),
     (req, res) => {
-        console.log("logged in");
-        res.redirect("/");
-    });
+    }
+    );
 
 router.get("/logout", (req, res) => {
     req.logOut();
     console.log("You have logged out.");
+    req.flash("You logged out");
     res.redirect("/");
 });
 
