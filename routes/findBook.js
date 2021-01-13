@@ -1,9 +1,13 @@
-const {insert, findById, findMany, deleteOne} = require("../database.js");
+const {createMongoAPI} = require("../database.js");
 
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
+const DATABASE = "jReads";
+const BOOKS_COLLECTION = "books";
+
+let db = createMongoAPI(DATABASE, BOOKS_COLLECTION);
 
 //show google book
 router.get('/:id', async (req, res) => {
@@ -27,7 +31,6 @@ router.get('/:id', async (req, res) => {
 //write
 router.post('/', async (req, res) => {
 
-    const BOOKS_DATABASE = "books";
     const googleBookID = req.body.bookID;
     const url = `https://www.googleapis.com/books/v1/volumes/${googleBookID}`;
 
@@ -35,7 +38,7 @@ router.post('/', async (req, res) => {
         let response = await axios.get(url);
         let bookData = formatBookDataFromGoogle(response.data);
 
-        insert(bookData, BOOKS_DATABASE,
+        db.insert(bookData,
             function redirectToLibrary()
             {
                 res.redirect("/");

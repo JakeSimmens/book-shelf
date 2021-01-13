@@ -1,208 +1,194 @@
 const {MONGO_USERNAME, MONGO_PASSWORD} = require("./secrets.js");
 
-//connect to database
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 const assert = require("assert");
-const JREADS_DB = "jReads";
-const BOOKS_COLLECTION = "books";
 
-let dbInfo = {
-    name: JREADS_DB,
-    collection: BOOKS_COLLECTION,
-    isTestRun: false
-};
 
-function setDatabaseToUse(dbChoice){
+function createMongoAPI(database, collection){
 
-    let name = JREADS_DB;
+    const DATABASE = database;
+    const COLLECTION = collection;
     let isTestRun = false;
-    let collection = "books";
+
+    let url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${DATABASE}?retryWrites=true&w=majority`;
+    let options = { useUnifiedTopology: true };
 
 
-    switch(dbChoice){
-        case "books":
-            collection = "books";
-            break;
-        case "users":
-            collection = "users";
-            break;
-        case "passwords":
-            collection = "passwords";
-            break;
-        case "comments":
-            collection = "comments";
-            break;
-        case "test":
-            name = "test"
-            collection = "books";
-            break;
+    //FUNCTIONS
+
+    let setForTesting = function() {
+        isTestRun = true;
+        options = { useUnifiedTopology: false };
     }
 
-    return {
-        name: name,
-        collection: collection,
-        isTestRun: isTestRun
-    }
-}
+    let insert = function(newData, callback){
 
-function setMongoURL(dbname){
+        MongoClient.connect(url, options, async (err, client) => {
 
-    let url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${dbname}?retryWrites=true&w=majority`;
-
-    return url;
-}
-
-function setMongoOptions(isTest){
-    //Running Jest test throws an error if useUnifiedTopology option is set to true
-
-    if(isTest){
-        return { useUnifiedTopology: false };
-    } else {
-        return { useUnifiedTopology: true };
-    }
-}
-
-//CREATE
-function insert(data, database, callback){
-
-    let dbParams = setDatabaseToUse(database);
-    let url = setMongoURL(dbParams.name);
-    let options = setMongoOptions(dbParams.isTestRun);
-
-    MongoClient.connect(url, options, async (err, client) => {
-        let response;
-
-        try {
-            assert.strictEqual(null, err);
-            const db = client.db(dbParams.name);
-            const collection = db.collection(dbParams.collection);
-
-            if(!data.length){
-                response = await collection.insertOne(data);
-            } else {
-                response = await collection.insertMany(data);
-            }
-
-            await client.close();
-            callback(response.result);
-
-        } catch (err) {
-            console.log("Error inserting: ", err);
-        }
-    });
-
-}
-
-//READ
-function findById(id, database, callback){
-
-    let dbParams = setDatabaseToUse(database);
-    let url = setMongoURL(dbParams.name);
-    let options = setMongoOptions(dbParams.isTestRun);
-
-    MongoClient.connect(url, options, (err, client) => {
-        assert.strictEqual(null, err);
+            let response;
+            const db = client.db(DATABASE);
+            const collection = db.collection(COLLECTION);
     
-        const db = client.db(dbParams.name);
-        const collection = db.collection(dbParams.collection);
-
-        try {
-            collection.find(ObjectId(id)).toArray((errorFinding, books) => {
-                if(errorFinding){
-                    console.log(errorFinding);
-                    throw "Error thrown from findById";
-                } 
-                if(books[0]){
-                    callback(books);
+            try {
+                assert.strictEqual(null, err);
+    
+                if(!newData.length){
+                    response = await collection.insertOne(newData);
                 } else {
-                    callback([]);
+                    response = await collection.insertMany(newData);
                 }
-            });
-        } catch (err) {
-            console.log(err);
-            callback([]);
-        }
-    });
-}
-
-//READ
-function findMany(term, database, callback){
-
-    let dbParams = setDatabaseToUse(database);
-    let url = setMongoURL(dbParams.name);
-    let options = setMongoOptions(dbParams.isTestRun);
-
-    MongoClient.connect(url, options, (err, client) => {
-        assert.strictEqual(null, err);
     
-        const db = client.db(dbParams.name);
-        const collection = db.collection(dbParams.collection);
+                await client.close();
+                callback(response.result);
+    
+            } catch (err) {
+                console.log("Error inserting: ", err);
+            }
+        });
+    
+    }
 
-        try {
-            collection.find(term).toArray((err, books) => {
-                if(err){
+    let findById = function (id, callback){
+
+        MongoClient.connect(url, options, (err, client) => {
+            assert.strictEqual(null, err);
+        
+            const db = client.db(DATABASE);
+            const collection = db.collection(COLLECTION);
+    
+            try {
+                collection.find(ObjectId(id)).toArray((errorFinding, items) => {
+                    if(errorFinding){
+                        console.log(errorFinding);
+                        throw "Error thrown from findById";
+                    } 
+                    if(items[0]){
+                        callback(items);
+                    } else {
+                        callback([]);
+                    }
+                });
+            } catch (err) {
+                console.log(err);
+                callback([]);
+            }
+        });
+    }
+
+    let findOne = function(term, callback){
+    
+        MongoClient.connect(url, options, async (err, client) => {
+            assert.strictEqual(null, err);
+        
+            const db = client.db(DATABASE);
+            const collection = db.collection(COLLECTION);
+    
+            try {
+                // collection.find(term).limit(1).toArray((err, item) => {
+                //     if(err){
+                //         console.log(err);
+                //         throw err;
+                //     }
+                //     callback(item);
+                // });
+                let cursor = collection.find(term).limit(1);
+                //console.log("findOne result: ", cursor);
+
+
+                if(!cursor.hasNext()){
                     console.log(err);
                     throw err;
+                } else {
+                    let item = await cursor.next();
+                    console.log("findOne item: ", item);
+                    callback(err, item);
                 }
-                callback(books);
-            });
-        } catch (err) {
-            console.log(err);
-            callback([]);
-        }
+                
+            } catch (err) {
+                console.log(err);
+                callback(err, {});
+            }
+    
+        });
+    }
 
-    });
-}
-
-//DESTROY
-function deleteOne(deleteID, database, callback){
-
-    let dbParams = setDatabaseToUse(database);
-    let url = setMongoURL(dbParams.name);
-    let options = setMongoOptions(dbParams.isTestRun);
-
-    MongoClient.connect(url, options, async (err, client) => {
-        
-        try {
+    let findMany = function(term, callback){
+    
+        MongoClient.connect(url, options, (err, client) => {
             assert.strictEqual(null, err);
-            const db = client.db(dbParams.name);
-            const collection = db.collection(dbParams.collection);
-            let objId = new ObjectId(deleteID);
-
-            let result = await collection.deleteOne({_id: objId});
-            await client.close();
-            callback(result);
-        } catch (err) {
-            console.log("Error deleting book: ", err);
-        }
-    });
-}
-
-//DESTROY
-function clearDB(database, callback){
-
-    let dbParams = setDatabaseToUse(database);
-    let url = setMongoURL(dbParams.name);
-    let options = setMongoOptions(dbParams.isTestRun);
-
-    MongoClient.connect(url, options, async (err, client) => {
         
-        try {
-            assert.strictEqual(null, err);
-            const db = client.db(dbParams.name);
-            const collection = db.collection(dbParams.collection);
-            let result = await collection.deleteMany({});
-            await client.close();
-            callback(result);
-        } catch (err) {
-            console.log("Error clearing database: ", err);
-        }
-    });
+            const db = client.db(DATABASE);
+            const collection = db.collection(COLLECTION);
+    
+            try {
+                collection.find(term).toArray((err, items) => {
+                    if(err){
+                        console.log(err);
+                        throw err;
+                    }
+                    callback(items);
+                });
+            } catch (err) {
+                console.log(err);
+                callback([]);
+            }
+    
+        });
+    }
+
+    let deleteOne = function (deleteID, callback){
+
+        MongoClient.connect(url, options, async (err, client) => {
+
+            const db = client.db(DATABASE);
+            const collection = db.collection(COLLECTION);
+            
+            try {
+                assert.strictEqual(null, err);
+
+                let objId = new ObjectId(deleteID);
+    
+                let result = await collection.deleteOne({_id: objId});
+                await client.close();
+                callback(result);
+            } catch (err) {
+                console.log("Error deleting book: ", err);
+            }
+        });
+    }
+
+    let clearDB = function (callback){
+
+        MongoClient.connect(url, options, async (err, client) => {
+
+            const db = client.db(DATABASE);
+            const collection = db.collection(COLLECTION);
+            
+            try {
+                assert.strictEqual(null, err);
+
+                let result = await collection.deleteMany({});
+                await client.close();
+                callback(result);
+            } catch (err) {
+                console.log("Error clearing database: ", err);
+            }
+        });
+    }
+
+    let publicAPI = {
+        setForTesting,
+        insert,
+        findById,
+        findOne,
+        findMany,
+        deleteOne,
+        clearDB
+    };
+
+    return publicAPI;
+
 }
 
-module.exports.insert = insert;
-module.exports.findById = findById;
-module.exports.findMany = findMany;
-module.exports.deleteOne = deleteOne;
-module.exports.clearDB = clearDB;
+module.exports.createMongoAPI = createMongoAPI;
