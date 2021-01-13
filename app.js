@@ -40,6 +40,8 @@ seed();
 
 
 const port = process.env.PORT || 3000;
-app.listen(port, function startServer() {
+app.server = app.listen(port, function startServer() {
     console.log("jReads running");
 });
+
+module.exports = app;
