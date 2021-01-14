@@ -36,9 +36,6 @@ app.use("/findBook", findBookRoutes);
 //seed database
 seed();
 
-
-
-
 const port = process.env.PORT || 3000;
 app.server = app.listen(port, function startServer() {
     console.log("jReads running");

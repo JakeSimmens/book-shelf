@@ -4,10 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest"
   },
   "jest": {
-    "collectCoverage": false
+    "collectCoverage": false,
+    "testEnvironment": "node"
   },
   "author": "Jake Simmens",
   "license": "ISC",
