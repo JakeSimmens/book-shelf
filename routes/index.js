@@ -18,10 +18,9 @@ const USERS_COLLECTION = "users";
 const PASSWORD_COLLECTION = "passwords";
 
 let MAX_BOOKS_PER_SHELF = 5;
-let booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);
+let booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);  //need to mock
 let userDB = createMongoAPI(DATABASE, USERS_COLLECTION);
 let passwordDB = createMongoAPI(DATABASE, PASSWORD_COLLECTION);
-
 
 passport.use(new LocalStrategy(
     function(username, password, done){
