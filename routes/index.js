@@ -6,8 +6,6 @@ const router = express.Router();
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
-
-
 const BOOKS_DATABASE = "books";
 const USERS_DATABASE = "users";
 const PASSWORD_DATABASE = "passwords";
@@ -56,7 +54,6 @@ passport.deserializeUser( function(username, callback){
     });
 });
 
-
 //index
 router.get("/", (req, res) => {
     req.flash("info", "welcome");
@@ -69,7 +66,6 @@ router.get("/", (req, res) => {
                 message: req.flash("info")
             });
         });
-
 });
 
 router.get("/register", (req, res) => {
@@ -77,6 +73,10 @@ router.get("/register", (req, res) => {
 })
 
 router.post("/register", (req, res) => {
+    if(!req.body.username){
+        res.redirect("/");
+    }
+
     let username = req.body.username;
     username = username.trim();
     
@@ -95,8 +95,6 @@ router.post("/register", (req, res) => {
     res.redirect("/");
 });
 
-
-
 router.get("/login", (req, res) => {
     res.render("login");
 });
@@ -109,8 +107,9 @@ router.post("/login", passport.authenticate("local",
         failureFlash: true
     }),
     (req, res) => {
+
     }
-    );
+);
 
 router.get("/logout", (req, res) => {
     req.logOut();
