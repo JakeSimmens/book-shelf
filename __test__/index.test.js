@@ -1,6 +1,5 @@
 const testApp = require("../app");
 const request = require("supertest");
-const bodyParser = require("body-parser");
 
 jest.mock("../seed.js");  //stop seed from running
 jest.mock("../database", () => {
