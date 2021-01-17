@@ -51,6 +51,7 @@ router.post('/', async (req, res) => {
 });
 
 function formatBookDataFromGoogle(data) {
+
     let extractedData = {};
 
     extractedData.title = data.volumeInfo.title;
