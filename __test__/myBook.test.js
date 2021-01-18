@@ -4,12 +4,12 @@ const axios = require("axios");
 
 jest.mock("../seed.js");  //stop seed from running
 jest.mock("axios");
-let mockMongoAPI = jest.mock("../database", () => {
+jest.mock("../database.js", () => {
 
     function createMongoAPI(database, collection){
 
         let findMany = jest.fn((term, callback) => {callback([])});
-        let insert = jest.spy((data, callback) => {callback()});
+        let insert = jest.fn((data, callback) => {callback()});
         let findById = jest.fn((id, callback) => {callback([])});
 
         let publicAPI = {
@@ -23,7 +23,7 @@ let mockMongoAPI = jest.mock("../database", () => {
 });
 
 describe("Route /myBook", () => {
-    afterAll( done => {
+    afterAll(done => {
         testApp.server.close();
         done();
     });
@@ -80,19 +80,10 @@ describe("Route /myBook", () => {
     it("should request a book not in the database and redirect to '/'", async () => {
         let response = await request(testApp)
             .get("/myBook/6KTPirqYw5wC")
-            .expect(302)
+        
+        console.log("header: ", response.header);
 
         expect(response.header.location).toBe("/");
         //expect(2+2).toBe(4);
     });
-
-    // it("should fail to POST a bad Google BookID and redirect to '/'", async () => {
-    //     let response = await request(testApp)
-    //         .post("/my")
-    //         .expect(302)
-
-    //     expect(response.header.location).toBe("/");
-    // });
-
-
 });
