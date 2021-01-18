@@ -10,7 +10,6 @@ jest.mock("../database", () => {
 
         let findMany = jest.fn((term, callback) => {callback([])});
         let insert = jest.fn((data, callback) => {callback()});
-
         let publicAPI = {
             findMany,
             insert
@@ -93,8 +92,6 @@ describe("Route /findBook", () => {
 
 
     it("should POST a GoogleBookID and redirect to '/'", async () => {
-
-
         axios.get.mockImplementationOnce( () => Promise.resolve({status: 200, data: dataOfBook}));
         let response = await request(testApp)
             .post("/findBook")
