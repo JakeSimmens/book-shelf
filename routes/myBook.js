@@ -34,7 +34,6 @@ router.delete('/:id', (req, res) => {
         {
             res.redirect("/");
         });
-
 });
 
 module.exports = router;

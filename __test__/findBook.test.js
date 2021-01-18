@@ -4,13 +4,12 @@ const axios = require("axios");
 
 jest.mock("../seed.js");  //stop seed from running
 jest.mock("axios");
-let mockMongoAPI = jest.mock("../database", () => {
+jest.mock("../database", () => {
 
     function createMongoAPI(database, collection){
 
         let findMany = jest.fn((term, callback) => {callback([])});
-        let insert = jest.spy((data, callback) => {callback()});
-
+        let insert = jest.fn((data, callback) => {callback()});
         let publicAPI = {
             findMany,
             insert
@@ -93,8 +92,6 @@ describe("Route /findBook", () => {
 
 
     it("should POST a GoogleBookID and redirect to '/'", async () => {
-
-
         axios.get.mockImplementationOnce( () => Promise.resolve({status: 200, data: dataOfBook}));
         let response = await request(testApp)
             .post("/findBook")
