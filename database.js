@@ -29,6 +29,8 @@ function createMongoAPI(database, collection){
             let response;
             const db = client.db(DATABASE);
             const collection = db.collection(COLLECTION);
+
+            console.log("inside connect 1");
     
             try {
                 assert.strictEqual(null, err);
