@@ -87,16 +87,7 @@ function createMongoAPI(database, collection){
             const collection = db.collection(COLLECTION);
     
             try {
-                // collection.find(term).limit(1).toArray((err, item) => {
-                //     if(err){
-                //         console.log(err);
-                //         throw err;
-                //     }
-                //     callback(item);
-                // });
                 let cursor = collection.find(term).limit(1);
-                //console.log("findOne result: ", cursor);
-
 
                 if(!cursor.hasNext()){
                     console.log(err);
