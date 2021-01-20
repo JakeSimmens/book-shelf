@@ -69,4 +69,4 @@ function formatBookDataFromGoogle(data) {
     return extractedData;
 }
 
-module.exports = router;
+module.exports = {router, formatBookDataFromGoogle};
