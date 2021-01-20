@@ -1,18 +1,17 @@
 const db = require("../database.js");
 const MongoClient = require("mongodb").MongoClient;
 
-const DATABASE = "mockDB"; //"jReads";
-const BOOKS_COLLECTION = "mockBooks"; //"books";
+const DATABASE = "jReads";
+const BOOKS_COLLECTION = "books";
 
 let mongoApi = db.createMongoAPI(DATABASE, BOOKS_COLLECTION);
-mongoApi.setForTesting();
 
 describe("Database API", ()=>{
 
     describe("insert", ()=>{
         it("should connect with mongo client", async () =>{
             const mockConnect = jest.spyOn(MongoClient, "connect");
-            mockConnect.mockImplementation(()=>{});
+            mockConnect.mockImplementation();
 
             let data = {
                 book: "Bible",
@@ -28,7 +27,7 @@ describe("Database API", ()=>{
     describe("findById", ()=>{
         it("should connect with mongo client", async () =>{
             const mockConnect = jest.spyOn(MongoClient, "connect");
-            mockConnect.mockImplementation(()=>{});
+            mockConnect.mockImplementation();
 
             let data = {
                 id: "12345"
@@ -43,7 +42,7 @@ describe("Database API", ()=>{
     describe("findOne", ()=>{
         it("should connect with mongo client", async () =>{
             const mockConnect = jest.spyOn(MongoClient, "connect");
-            mockConnect.mockImplementation(()=>{});
+            mockConnect.mockImplementation();
 
             let data = {
                 id: "12345"
@@ -58,7 +57,7 @@ describe("Database API", ()=>{
     describe("findMany", ()=>{
         it("should connect with mongo client", async () =>{
             const mockConnect = jest.spyOn(MongoClient, "connect");
-            mockConnect.mockImplementation(()=>{});
+            mockConnect.mockImplementation();
 
             let data = {};
             let callback;
@@ -71,7 +70,7 @@ describe("Database API", ()=>{
     describe("deleteOne", ()=>{
         it("should connect with mongo client", async () =>{
             const mockConnect = jest.spyOn(MongoClient, "connect");
-            mockConnect.mockImplementation(()=>{});
+            mockConnect.mockImplementation();
 
             let id = "12345";
             let callback;
@@ -84,7 +83,7 @@ describe("Database API", ()=>{
     describe("clearDB", ()=>{
         it("should connect with mongo client", async () =>{
             const mockConnect = jest.spyOn(MongoClient, "connect");
-            mockConnect.mockImplementation(()=>{});
+            mockConnect.mockImplementation();
 
             let callback;
 
@@ -92,6 +91,4 @@ describe("Database API", ()=>{
             expect(mockConnect).toHaveBeenCalled();
         });
     });
-
-
 });
