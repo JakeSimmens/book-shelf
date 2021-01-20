@@ -9,8 +9,6 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const flash = require("connect-flash");
 
-
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -28,7 +26,8 @@ app.use(flash());
 //ROUTES
 const indexRoutes = require("./routes/index");
 const myBookRoutes = require("./routes/myBook");
-const findBookRoutes = require("./routes/findBook");
+const findBookRoutes = require("./routes/findBook").router;
+
 app.use("/", indexRoutes);
 app.use("/myBook", myBookRoutes);
 app.use("/findBook", findBookRoutes);
