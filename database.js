@@ -1,9 +1,7 @@
 const {MONGO_USERNAME, MONGO_PASSWORD} = require("./secrets.js");
-
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 const assert = require("assert");
-
 
 function createMongoAPI(database, collection){
 
@@ -13,7 +11,6 @@ function createMongoAPI(database, collection){
 
     let url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${DATABASE}?retryWrites=true&w=majority`;
     let options = { useUnifiedTopology: true };
-
 
     //FUNCTIONS
 
@@ -29,7 +26,7 @@ function createMongoAPI(database, collection){
             let response;
             const db = client.db(DATABASE);
             const collection = db.collection(COLLECTION);
-    
+
             try {
                 assert.strictEqual(null, err);
     
@@ -46,7 +43,6 @@ function createMongoAPI(database, collection){
                 console.log("Error inserting: ", err);
             }
         });
-    
     }
 
     let findById = function (id, callback){
@@ -85,16 +81,7 @@ function createMongoAPI(database, collection){
             const collection = db.collection(COLLECTION);
     
             try {
-                // collection.find(term).limit(1).toArray((err, item) => {
-                //     if(err){
-                //         console.log(err);
-                //         throw err;
-                //     }
-                //     callback(item);
-                // });
                 let cursor = collection.find(term).limit(1);
-                //console.log("findOne result: ", cursor);
-
 
                 if(!cursor.hasNext()){
                     console.log(err);
@@ -109,7 +96,6 @@ function createMongoAPI(database, collection){
                 console.log(err);
                 callback(err, {});
             }
-    
         });
     }
 
@@ -133,7 +119,6 @@ function createMongoAPI(database, collection){
                 console.log(err);
                 callback([]);
             }
-    
         });
     }
 
@@ -188,7 +173,6 @@ function createMongoAPI(database, collection){
     };
 
     return publicAPI;
-
 }
 
 module.exports.createMongoAPI = createMongoAPI;
