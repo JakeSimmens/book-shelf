@@ -14,6 +14,18 @@ document.addEventListener("DOMContentLoaded", () => {
         function searchBtnClick() {
             searchBox(searchInput.value);
         });
+
+    searchInput.addEventListener("keyup",
+        function executeSearchOnEnter(event){
+            if(event.key === "Enter"){
+                searchBox(searchInput.value);
+            }
+        });
+
+    const onSearchInput = debouncer(()=>{
+        searchBox(searchInput.value);
+    }, 750);
+    searchInput.addEventListener("input", onSearchInput);
         
 });
 
