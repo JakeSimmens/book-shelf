@@ -21,6 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 searchBox(searchInput.value);
             }
         });
+
+    const onSearchInput = debouncer(()=>{
+        searchBox(searchInput.value);
+    }, 750);
+    searchInput.addEventListener("input", onSearchInput);
         
 });
 
