@@ -47,6 +47,7 @@ passport.serializeUser( function(user, callback){
 passport.deserializeUser( function(username, callback){
     //uses what is saved in the session earlier to access user
     usersDB.findOne({username: username}, (err, user) => {
+        console.log("deserialize:", err, user);
         if(err){
             return callback(err);
         }
@@ -78,21 +79,33 @@ router.post("/register", (req, res) => {
     }
 
     let username = req.body.username;
+    let pw = req.body.password;
     username = username.trim();
     
     userDB.findOne({username: username},
-        function checkForNoMatch(data){
-            if(data.length === 0){
-                console.log("user not found");
+        function checkForNoMatch(err, data){
+            let path = "/";
+            if(data.username !== undefined){
+                console.log("Acccount already exists");
+                path = "/login";
             } else {
-                console.log("user found");
+            //create account
+                console.log("user not found, creating account now");
+                userDB.insert({username: username, password: pw}, () => {
+                    console.log("user Added to DB");
+                    //can auto log in here
+                });
+
             }
+
+            res.redirect(path);
+    
         });
     //check username is available
     //add username to database
     //add password to database
 
-    res.redirect("/");
+    
 });
 
 router.get("/login", (req, res) => {
@@ -100,20 +113,23 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/login", passport.authenticate("local",
-    {
-        successRedirect: "/",
-        failureRedirect: "/login",
-        successFlash: "You have logge in!",
-        failureFlash: true
-    }),
-    (req, res) => {
+                                            {
+                                                successRedirect: "/",
+                                                failureRedirect: "/login",
+                                                successFlash: "You have logged in!",
+                                                failureFlash: true
+                                            }));
+//     (req, res) => {
+//         console.log("logged in: ", req.user.username);
+//         //res.redirect('/');
 
-    }
-);
+//     }
+// );
 
 router.get("/logout", (req, res) => {
+    console.log("log out info:", req.user);
     req.logOut();
-    console.log("You have logged out.");
+    console.log("Logged out: ", req.user.username);
     req.flash("You logged out");
     res.redirect("/");
 });
