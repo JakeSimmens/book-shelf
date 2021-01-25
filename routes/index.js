@@ -47,6 +47,7 @@ passport.serializeUser( function(user, callback){
 passport.deserializeUser( function(username, callback){
     //uses what is saved in the session earlier to access user
     usersDB.findOne({username: username}, (err, user) => {
+        console.log("deserialize:", err, user);
         if(err){
             return callback(err);
         }
@@ -98,7 +99,7 @@ router.post("/register", (req, res) => {
             }
 
             res.redirect(path);
-            
+    
         });
     //check username is available
     //add username to database
@@ -111,21 +112,22 @@ router.get("/login", (req, res) => {
     res.render("login");
 });
 
-router.post("/login", passport.authenticate("local"),
-    // {
-    //     successRedirect: "/",
-    //     failureRedirect: "/login",
-    //     successFlash: "You have logged in!",
-    //     failureFlash: true
-    // }),
-    (req, res) => {
-        console.log("logged in: ", req.user.username);
-        res.redirect('/');
+router.post("/login", passport.authenticate("local",
+                                            {
+                                                successRedirect: "/",
+                                                failureRedirect: "/login",
+                                                successFlash: "You have logged in!",
+                                                failureFlash: true
+                                            }));
+//     (req, res) => {
+//         console.log("logged in: ", req.user.username);
+//         //res.redirect('/');
 
-    }
-);
+//     }
+// );
 
 router.get("/logout", (req, res) => {
+    console.log("log out info:", req.user);
     req.logOut();
     console.log("Logged out: ", req.user.username);
     req.flash("You logged out");
