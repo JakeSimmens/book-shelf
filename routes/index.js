@@ -78,19 +78,27 @@ router.post("/register", (req, res) => {
     }
 
     let username = req.body.username;
+    let pw = req.body.password;
     username = username.trim();
     
     userDB.findOne({username: username},
         function checkForNoMatch(err, data){
-            if(data.username === undefined || err){
-                console.log("user not found, creating account now");
-                res.redirect("/");
-                //create account
-            } else {
+            let path = "/";
+            if(data.username !== undefined){
                 console.log("Acccount already exists");
-                //acount exists, so you need to login
-                res.redirect("/login");
+                path = "/login";
+            } else {
+            //create account
+                console.log("user not found, creating account now");
+                userDB.insert({username: username, password: pw}, () => {
+                    console.log("user Added to DB");
+                    //can auto log in here
+                });
+
             }
+
+            res.redirect(path);
+            
         });
     //check username is available
     //add username to database
