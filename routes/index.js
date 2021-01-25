@@ -81,39 +81,45 @@ router.post("/register", (req, res) => {
     username = username.trim();
     
     userDB.findOne({username: username},
-        function checkForNoMatch(data){
-            if(data.length === 0){
-                console.log("user not found");
+        function checkForNoMatch(err, data){
+            if(data.username === undefined || err){
+                console.log("user not found, creating account now");
+                res.redirect("/");
+                //create account
             } else {
-                console.log("user found");
+                console.log("Acccount already exists");
+                //acount exists, so you need to login
+                res.redirect("/login");
             }
         });
     //check username is available
     //add username to database
     //add password to database
 
-    res.redirect("/");
+    
 });
 
 router.get("/login", (req, res) => {
     res.render("login");
 });
 
-router.post("/login", passport.authenticate("local",
-    {
-        successRedirect: "/",
-        failureRedirect: "/login",
-        successFlash: "You have logge in!",
-        failureFlash: true
-    }),
+router.post("/login", passport.authenticate("local"),
+    // {
+    //     successRedirect: "/",
+    //     failureRedirect: "/login",
+    //     successFlash: "You have logged in!",
+    //     failureFlash: true
+    // }),
     (req, res) => {
+        console.log("logged in: ", req.user.username);
+        res.redirect('/');
 
     }
 );
 
 router.get("/logout", (req, res) => {
     req.logOut();
-    console.log("You have logged out.");
+    console.log("Logged out: ", req.user.username);
     req.flash("You logged out");
     res.redirect("/");
 });

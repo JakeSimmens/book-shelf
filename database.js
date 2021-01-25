@@ -84,16 +84,13 @@ function createMongoAPI(database, collection){
                 let cursor = collection.find(term).limit(1);
 
                 if(!cursor.hasNext()){
-                    console.log(err);
                     throw err;
                 } else {
                     let item = await cursor.next();
-                    console.log("findOne item: ", item);
                     callback(err, item);
                 }
                 
             } catch (err) {
-                console.log(err);
                 callback(err, {});
             }
         });
