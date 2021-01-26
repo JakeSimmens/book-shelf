@@ -11,7 +11,7 @@ const BOOKS_COLLECTION = "books";
 let db = createMongoAPI(DATABASE, BOOKS_COLLECTION);
 
 //show my library book
-router.get('/:id', middleware.isLoggedIn, (req, res) => {
+router.get('/:id', (req, res) => {
 
     db.findById(req.params.id,
         function renderBookPage(data){
