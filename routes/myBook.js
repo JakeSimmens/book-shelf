@@ -1,4 +1,5 @@
 const {createMongoAPI} = require("../database.js");
+const middleware = require("../middleware");
 
 const express = require("express");
 const router = express.Router();
@@ -10,7 +11,7 @@ const BOOKS_COLLECTION = "books";
 let db = createMongoAPI(DATABASE, BOOKS_COLLECTION);
 
 //show my library book
-router.get('/:id', (req, res) => {
+router.get('/:id', middleware.isLoggedIn, (req, res) => {
 
     db.findById(req.params.id,
         function renderBookPage(data){
