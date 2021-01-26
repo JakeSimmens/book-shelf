@@ -1,14 +1,11 @@
-//const {createMongoAPI, insert, findById, findMany, deleteOne} = require("../database.js");
 const {createMongoAPI} = require("../database.js");
-
+const {PASSPORT_SECRET} = require("../secrets");
+const middleware = require("../middleware");
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-
-const BOOKS_DATABASE = "books";
-const USERS_DATABASE = "users";
-const PASSWORD_DATABASE = "passwords";
+const session = require("express-session");
 
 const DATABASE = "jReads";
 const BOOKS_COLLECTION = "books";
@@ -20,12 +17,18 @@ let booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);  //need to mock
 let userDB = createMongoAPI(DATABASE, USERS_COLLECTION);
 let passwordDB = createMongoAPI(DATABASE, PASSWORD_COLLECTION);
 
+//PASSPORT AUTHENTICATION
+router.use(session({
+    secret: PASSPORT_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+router.use(passport.initialize());
+router.use(passport.session());
 passport.use(new LocalStrategy(
     function(username, password, done){
         userDB.findOne({username: username},
             function(err, user){
-                console.log("user: ", user);
-                //console.log("err: ", err);
                 if(err) {return done(err);}
                 if(!user){
                     return done(null, false, {message: "Incorrect username"});
@@ -33,9 +36,9 @@ passport.use(new LocalStrategy(
                 if(user.password != password){
                     return done(null, false, {message: "Incorrect password"});
                 }
-
                 return done(null, user);
-            });
+            }
+        );
     }
 ));
 
@@ -46,8 +49,7 @@ passport.serializeUser( function(user, callback){
 
 passport.deserializeUser( function(username, callback){
     //uses what is saved in the session earlier to access user
-    usersDB.findOne({username: username}, (err, user) => {
-        console.log("deserialize:", err, user);
+    userDB.findOne({username: username}, (err, user) => {
         if(err){
             return callback(err);
         }
@@ -84,28 +86,24 @@ router.post("/register", (req, res) => {
     
     userDB.findOne({username: username},
         function checkForNoMatch(err, data){
-            let path = "/";
             if(data.username !== undefined){
                 console.log("Acccount already exists");
-                path = "/login";
+                res.redirect("/login");
             } else {
             //create account
                 console.log("user not found, creating account now");
-                userDB.insert({username: username, password: pw}, () => {
-                    console.log("user Added to DB");
+                userDB.insert({username: username, password: pw}, (user) => {
+                    console.log("user Added to DB", user);
                     //can auto log in here
+                    passport.authenticate("local", 
+                        {
+                            successRedirect: "/",
+                            failureRedirect: "/login"
+                        });
                 });
 
             }
-
-            res.redirect(path);
-    
         });
-    //check username is available
-    //add username to database
-    //add password to database
-
-    
 });
 
 router.get("/login", (req, res) => {
@@ -113,23 +111,14 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/login", passport.authenticate("local",
-                                            {
-                                                successRedirect: "/",
-                                                failureRedirect: "/login",
-                                                successFlash: "You have logged in!",
-                                                failureFlash: true
-                                            }));
-//     (req, res) => {
-//         console.log("logged in: ", req.user.username);
-//         //res.redirect('/');
+    {
+        successRedirect: "/",
+        failureRedirect: "/login"
+    }));
 
-//     }
-// );
-
-router.get("/logout", (req, res) => {
-    console.log("log out info:", req.user);
+router.get("/logout", middleware.isLoggedIn, (req, res) => {
     req.logOut();
-    console.log("Logged out: ", req.user.username);
+    console.log("logged out");
     req.flash("You logged out");
     res.redirect("/");
 });
