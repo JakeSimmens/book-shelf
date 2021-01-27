@@ -57,6 +57,13 @@ passport.deserializeUser( function(username, callback){
     });
 });
 
+router.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    //res.locals.error = req.flash("error");  //error refers to ejs code
+    //res.locals.success = req.flash("success");  //success refers to ejs code
+    next();
+});
+
 //index
 router.get("/", (req, res) => {
     req.flash("info", "welcome");
