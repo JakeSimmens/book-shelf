@@ -6,16 +6,18 @@ const router = express.Router();
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
+const bcrypt = require("bcrypt");
 
 const DATABASE = "jReads";
 const BOOKS_COLLECTION = "books";
 const USERS_COLLECTION = "users";
 const PASSWORD_COLLECTION = "passwords";
 
-let MAX_BOOKS_PER_SHELF = 5;
-let booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);  //need to mock
-let userDB = createMongoAPI(DATABASE, USERS_COLLECTION);
-let passwordDB = createMongoAPI(DATABASE, PASSWORD_COLLECTION);
+const MAX_BOOKS_PER_SHELF = 5;
+const booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);  //need to mock
+const userDB = createMongoAPI(DATABASE, USERS_COLLECTION);
+const passwordDB = createMongoAPI(DATABASE, PASSWORD_COLLECTION);
+const saltRounds = 10;
 
 //PASSPORT AUTHENTICATION
 router.use(session({
@@ -28,12 +30,13 @@ router.use(passport.session());
 passport.use(new LocalStrategy(
     function(username, password, done){
         userDB.findOne({username: username},
-            function(err, user){
+            async function(err, user){
                 if(err) {return done(err);}
                 if(!user){
                     return done(null, false, {message: "Incorrect username"});
                 }
-                if(user.password != password){
+                let match = await bcrypt.compare(password, user.password);
+                if(!match){
                     return done(null, false, {message: "Incorrect password"});
                 }
                 return done(null, user);
@@ -95,12 +98,17 @@ router.post("/register", (req, res) => {
             if(data.username !== undefined){
                 res.redirect("/login");
             } else {
-                userDB.insert({username: username, password: pw}, (user) => {
-                    req.login(user, (err)=>{
-                        if(err){
-                            return next(err);
-                        }
-                        return res.redirect("/");
+                bcrypt.hash(pw, saltRounds, (err, hash)=>{
+                    if(err){
+                        return res.redirect("/login");
+                    }
+                    userDB.insert({username: username, password: hash}, (user) => {
+                        req.login(user, (err)=>{
+                            if(err){
+                                return next(err);
+                            }
+                            return res.redirect("/");
+                        });
                     });
                 });
             }
