@@ -8,6 +8,8 @@ const PASSWORD_COLLECTION = "passwords";
 let booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);
 let usersDB = createMongoAPI(DATABASE, USERS_COLLECTION);
 let passwordDB = createMongoAPI(DATABASE, PASSWORD_COLLECTION);
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 //DATABASE
 function seed(){
@@ -15,11 +17,13 @@ function seed(){
     usersDB.clearDB(populateUsers);
 }
 
-function populateUsers(){
-    usersDB.insert(users,
-        () => {
-            console.log("Users collection seeded");
-        });
+async function populateUsers(){
+    for(let user of users){
+        let hash = await bcrypt.hash(user.password, saltRounds);
+        let newUser = {username: user.username, password: hash};
+        usersDB.insert(newUser, ()=>{});
+    }
+    console.log("Users collection seeded");
 }
 
 function populateBooks(){
@@ -31,8 +35,7 @@ function populateBooks(){
 
 var users = [
     {username: "jake", password: "ia"},
-    {username: "elise", password: "wi"},
-    {username: "isaac", password: "mn"}
+    {username: "elise", password: "wi"}
 ];
 
 var books = [
