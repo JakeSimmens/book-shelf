@@ -31,7 +31,9 @@
         <div class="barItem">
             <a href="/register">Register</a>
         </div>
-        <div>
-
+        <div class="barItem">
+            <% if(currentUser){ %>
+                <p>Welcome <%=currentUser%></p>
+            <% } %>
         </div>
     </section>

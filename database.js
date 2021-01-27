@@ -37,7 +37,7 @@ function createMongoAPI(database, collection){
                 }
     
                 await client.close();
-                callback(response.result);
+                callback(newData);
     
             } catch (err) {
                 console.log("Error inserting: ", err);

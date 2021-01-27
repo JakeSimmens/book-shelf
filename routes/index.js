@@ -57,12 +57,18 @@ passport.deserializeUser( function(username, callback){
     });
 });
 
+router.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    //res.locals.error = req.flash("error");  //error refers to ejs code
+    //res.locals.success = req.flash("success");  //success refers to ejs code
+    next();
+});
+
 //index
 router.get("/", (req, res) => {
     req.flash("info", "welcome");
     booksDB.findMany({},
-        function renderLibraryPage(data)
-        {
+        function renderLibraryPage(data){
             res.render("home", {
                 myLibrary: data,
                 maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
@@ -87,21 +93,16 @@ router.post("/register", (req, res) => {
     userDB.findOne({username: username},
         function checkForNoMatch(err, data){
             if(data.username !== undefined){
-                console.log("Acccount already exists");
                 res.redirect("/login");
             } else {
-            //create account
-                console.log("user not found, creating account now");
                 userDB.insert({username: username, password: pw}, (user) => {
-                    console.log("user Added to DB", user);
-                    //can auto log in here
-                    passport.authenticate("local", 
-                        {
-                            successRedirect: "/",
-                            failureRedirect: "/login"
-                        });
+                    req.login(user, (err)=>{
+                        if(err){
+                            return next(err);
+                        }
+                        return res.redirect("/");
+                    });
                 });
-
             }
         });
 });
@@ -118,7 +119,6 @@ router.post("/login", passport.authenticate("local",
 
 router.get("/logout", middleware.isLoggedIn, (req, res) => {
     req.logOut();
-    console.log("logged out");
     req.flash("You logged out");
     res.redirect("/");
 });
