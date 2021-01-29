@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <title>jReads</title>
 </head>
 <body>
-    <section class="menuBar">
-        <div class="barItem">
-            <a href="/">
-                <h1>jReads</h1>
-            </a>
-            
-        </div>
+    <!-- <section class="menuBar">
         <div class="barItem">
             <div class="search">
                 <label for="search"></label>
@@ -22,18 +17,56 @@
                 <ul class="searchResults"></ul>
             </div>
         </div>
-        <div class="barItem">
-            <a href="/login">Login</a>
-        </div>
-        <div class="barItem">
-            <a href="/logout">Logout</a>
-        </div>
-        <div class="barItem">
-            <a href="/register">Register</a>
-        </div>
-        <div class="barItem">
-            <% if(currentUser){ %>
-                <p>Welcome <%=currentUser%></p>
-            <% } %>
-        </div>
+    </section> -->
+
+
+    <section>
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="/">
+                <strong>jReads</strong>
+              </a>
+
+
+          
+              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </a>
+            </div>
+          
+            <div id="navbarBasicExample" class="navbar-menu">
+              <div class="navbar-start">
+                <div class="navbar-item">
+                    <div class="search">
+                        <label for="search"></label>
+                        <input name="search" type="text" placeholder="Find a book">
+                        <button>Go</button>
+                        <ul class="searchResults"></ul>
+                    </div>
+                </div>
+              </div>
+          
+              <div class="navbar-end">
+                <div class="navbar-item">
+                    <% if(currentUser){ %>
+                        <p>Welcome, <%=currentUser%></p>
+                    <% } %>
+                </div>
+                    <hr class="navbar-divider">
+                  <div class="buttons">
+                    <a class="button is-primary" href="/register">
+                      <strong>Sign up</strong>
+                    </a>
+                    <a class="button is-light" href="/login">
+                      Log in
+                    </a>
+                    <a class="button is-light" href="/logout">
+                      Log out
+                    </a>
+                  </div>
+              </div>
+            </div>
+          </nav>
     </section>
