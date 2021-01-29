@@ -3,7 +3,6 @@ if (!(typeof module === "undefined")) {
 }
 
 const MAX_SEARCH_RESULT = 10;
-
 const searchInput = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 const searchResults = document.querySelector(".searchResults");
@@ -36,15 +35,12 @@ function searchBox(term) {
     }
 
     let getBooks = fetchBooks();
-
     getBooks.searchByTerm(term)
         .then(books => dropDownForSearchResults(books));
 }
 
 function dropDownForSearchResults(books) {
-
     clearChildrenOf(searchResults);
-
     for (let i = 0; i < books.length && i < MAX_SEARCH_RESULT; i++) {
         createOneDropDownItem(books[i]);
     }
@@ -65,12 +61,10 @@ function clickAwayToClose(...ignoreElements) {
         clearChildrenOf(searchResults);
         window.removeEventListener("click", listenWindowClick);
     }
-
     window.addEventListener("click", listenWindowClick);
 }
 
 function createOneDropDownItem(book) {
-
     let bookInfo = document.createElement("li");
     let link = document.createElement("a");
     let image = document.createElement("img");
@@ -79,17 +73,14 @@ function createOneDropDownItem(book) {
     let authors = document.createElement("p");
 
     link.setAttribute("class", "searchResult");
-
     link.setAttribute("href", `/findBook/${book.id}`);
 
     if (book.imageLinks !== undefined) {
         image.setAttribute("src", book.imageLinks.smallThumbnail);
     }
-
     if (book.title !== undefined) {
         title.innerText = book.title;
     }
-
     if (book.authors !== undefined) {
         authors.innerText = formatAuthorList(book.authors);
     }
@@ -103,7 +94,6 @@ function createOneDropDownItem(book) {
     caption.appendChild(title);
     caption.appendChild(authors);
     searchResults.appendChild(bookInfo);
-
 }
 
 function formatAuthorList(authorList) {
@@ -117,7 +107,6 @@ function formatAuthorList(authorList) {
             authorText.concat(`, ${authorList[i]}`);
         }
     }
-
     return authorText;
 }
 
@@ -127,7 +116,6 @@ function fetchBookByID(id) {
     }
 
     let getBookData = fetchBooks();
-
     return getBookData.fetchById(id);
 }
 
@@ -185,7 +173,6 @@ function fetchBookByID(id) {
 
 if (!(typeof module === "undefined")) {
     //for testing
-
     module.exports.getBook = fetchBookByID;
     module.exports.displaySingleBookResult = createOneDropDownItem;
 }

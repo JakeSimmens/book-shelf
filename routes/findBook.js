@@ -6,19 +6,16 @@ const axios = require("axios");
 
 const DATABASE = "jReads";
 const BOOKS_COLLECTION = "books";
-
 let db = createMongoAPI(DATABASE, BOOKS_COLLECTION);
 
 //show google book
 router.get('/:id', async (req, res) => {
-
     const googleBookID = req.params.id;
     const url = `https://www.googleapis.com/books/v1/volumes/${googleBookID}`;
 
     try {
         let response = await axios.get(url);
         let bookData = formatBookDataFromGoogle(response.data);
-
         res.render("book", { bookData: bookData, googleBookID: googleBookID,inMyLibrary: false });
 
     } catch (err) {
@@ -30,7 +27,6 @@ router.get('/:id', async (req, res) => {
 
 //write
 router.post('/', async (req, res) => {
-
     const googleBookID = req.body.bookID;
     const url = `https://www.googleapis.com/books/v1/volumes/${googleBookID}`;
 
