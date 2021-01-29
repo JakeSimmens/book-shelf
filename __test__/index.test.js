@@ -1,5 +1,6 @@
 const testApp = require("../app");
 const request = require("supertest");
+const { createMongoAPI } = require("../database");
 
 jest.mock("../seed.js");  //stop seed from running
 jest.mock("../database", () => {
@@ -11,8 +12,11 @@ jest.mock("../database", () => {
                 callback([]);
             }
         );
+
+        let findOne = jest.fn((term, callback) => {});
         let publicAPI = {
-            findMany
+            findMany,
+            findOne
         }
         return publicAPI;
     }
@@ -43,6 +47,7 @@ describe("Route - index.js", () => {
                 .post("/register")
                 .expect(302)
         });
+
     });
 
     describe("Routes for /login", () => {
@@ -66,7 +71,4 @@ describe("Route - index.js", () => {
                 .expect(302)
         });
     });
-
-
-
 });

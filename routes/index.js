@@ -11,12 +11,10 @@ const bcrypt = require("bcrypt");
 const DATABASE = "jReads";
 const BOOKS_COLLECTION = "books";
 const USERS_COLLECTION = "users";
-const PASSWORD_COLLECTION = "passwords";
 
 const MAX_BOOKS_PER_SHELF = 5;
 const booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);  //need to mock
 const userDB = createMongoAPI(DATABASE, USERS_COLLECTION);
-const passwordDB = createMongoAPI(DATABASE, PASSWORD_COLLECTION);
 const saltRounds = 10;
 
 //PASSPORT AUTHENTICATION

@@ -2,7 +2,6 @@
 
 function fetchBooks() {
     var googleBooks = fetchGoogleBooks();
-
     var publicAPI = {
 
         fetchById(bookId) {
@@ -12,7 +11,6 @@ function fetchBooks() {
         searchByTerm(term) {
             return googleBooks.searchByTerm(term);
         }
-
     };
 
     return publicAPI;
@@ -44,25 +42,19 @@ function fetchGoogleBooks() {
             } else {
                 return {};
             }
-
         }
-
     };
 
     function extractGoogleDataForListOfBooks(bookList) {
         //argument: an array of objects
         let extractedBookListData = [];
-
         for (let book of bookList) {
             extractedBookListData.push(extractGoogleDataForOneBook(book));
         }
-
         return extractedBookListData;
     }
 
     function extractGoogleDataForOneBook(data) {
-
-        //access external function to format data
         let extractedData = {};
 
         extractedData.id = data.id;
@@ -80,13 +72,10 @@ function fetchGoogleBooks() {
 
         return extractedData;
     }
-
     return publicAPI;
 }
 
 if (!(typeof module === "undefined")) {
-
     exports.fetchBooks = fetchBooks;
     exports.fetchGoogleBooks = fetchGoogleBooks;
 }
-//exports.fetchBooks = fetchBooks;
