@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "jest --detectOpenHandles --maxWorkers=1"
   },
   "jest": {
