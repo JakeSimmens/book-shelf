@@ -45,6 +45,11 @@ function dropDownForSearchResults(books) {
     searchDropDown.setAttribute("class", "is-active");
     for (let i = 0; i < books.length && i < MAX_SEARCH_RESULT; i++) {
         createOneDropDownItem(books[i]);
+        if(i < MAX_SEARCH_RESULT-1){
+            let dividerLine = document.createElement("hr");
+            dividerLine.setAttribute("class", "dropdown-divider");
+            searchResults.appendChild(dividerLine);
+        }
     }
     clickAwayToClose(searchResults, searchInput);
 }
@@ -61,6 +66,7 @@ function clickAwayToClose(...ignoreElements) {
             if (clickedElement.target === element) return;
         }
         searchDropDown.removeAttribute("is-active");
+        searchDropDown.setAttribute("class", "dropdown-menu");
         clearChildrenOf(searchResults);
         window.removeEventListener("click", listenWindowClick);
     }
@@ -75,7 +81,7 @@ function createOneDropDownItem(book) {
     let title = document.createElement("p");
     let authors = document.createElement("p");
 
-    link.setAttribute("class", "dropdown-item"); //searchResult
+    link.setAttribute("class", "searchResult dropdown-item"); //searchResult
     link.setAttribute("href", `/findBook/${book.id}`);
 
     if (book.imageLinks !== undefined) {
