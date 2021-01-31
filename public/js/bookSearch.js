@@ -6,6 +6,7 @@ const MAX_SEARCH_RESULT = 10;
 const searchInput = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 const searchResults = document.querySelector(".searchResults");
+const searchDropDown = document.querySelector("#searchDropDown");
 
 document.addEventListener("DOMContentLoaded", () => {
     //DOMContentLoaded used for jest test:  call after dom is loaded to avoid error
@@ -41,6 +42,7 @@ function searchBox(term) {
 
 function dropDownForSearchResults(books) {
     clearChildrenOf(searchResults);
+    searchDropDown.setAttribute("class", "is-active");
     for (let i = 0; i < books.length && i < MAX_SEARCH_RESULT; i++) {
         createOneDropDownItem(books[i]);
     }
@@ -58,6 +60,7 @@ function clickAwayToClose(...ignoreElements) {
         for (let element of ignoreElements) {
             if (clickedElement.target === element) return;
         }
+        searchDropDown.removeAttribute("is-active");
         clearChildrenOf(searchResults);
         window.removeEventListener("click", listenWindowClick);
     }
@@ -72,7 +75,7 @@ function createOneDropDownItem(book) {
     let title = document.createElement("p");
     let authors = document.createElement("p");
 
-    link.setAttribute("class", "searchResult");
+    link.setAttribute("class", "dropdown-item"); //searchResult
     link.setAttribute("href", `/findBook/${book.id}`);
 
     if (book.imageLinks !== undefined) {

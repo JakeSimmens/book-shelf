@@ -77,18 +77,9 @@
     visibility: collapse;
 }
 
-.searchResults {
-    margin-top: 0;
-    padding-left: 3px;
-}
-
-li {
-    list-style: none;
-}
-
-.searchResults a {
-    color: black;
-    text-decoration-line: none;
+.search {
+    flex-direction: column;
+    position: relative;
 }
 
 .search input {
@@ -96,28 +87,11 @@ li {
     margin-left: 4px;
 }
 
-.searchResult {
-    /* position places results on top of content */
-    position: relative;  
-    display: inline-flex;
-    justify-content: left;
-    margin-left: 1px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    width: 298px;
-    height: 50px;
-    border: solid rgb(200, 200, 200) 1px;
-    background-color: white;
-    border-top: 0px;
-    white-space: nowrap;
-
-
-
+.searchResults {
+    position: absolute;  /*parent needs to be position relative to overlay*/
+    width: 300px;
 }
 
-.searchResult div {
-    width: 256px;
-}
 
 .searchImage {
     width: 32px;
