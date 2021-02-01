@@ -72,7 +72,6 @@
     
 }
 
-
 .hideMe {
     visibility: collapse;
 }
@@ -89,23 +88,32 @@
 
 .searchResults {
     position: absolute;  /*parent needs to be position relative to overlay*/
-    width: 300px;
+    width: 400px;
 }
 
+.searchResults .dropdown-item {
+    padding: 3px;
+}
+
+.searchResults .dropdown-divider {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.searchResults .content {
+    margin-left: 5px;
+}
 
 .searchImage {
-    width: 32px;
-    min-width: 32px;
+    min-height: 60px;
+    min-width: 40px;
     margin: 5px;
 }
 
 .searchTitle {
- 
     font-weight: 600;
     font-size: 1em;
-    margin: 5px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: black;
 
 }
 
@@ -113,7 +121,6 @@
     font-weight: 400;
     font-size: .8em;
     margin: 5px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: black;
 
 }

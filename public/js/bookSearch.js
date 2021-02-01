@@ -74,15 +74,20 @@ function clickAwayToClose(...ignoreElements) {
 }
 
 function createOneDropDownItem(book) {
-    let bookInfo = document.createElement("li");
+    let bookItem = document.createElement("li");
     let link = document.createElement("a");
+    let media = document.createElement("div");
+    let mediaLeft = document.createElement("div");
     let image = document.createElement("img");
-    let caption = document.createElement("div");
+    let mediaContent = document.createElement("div");
+    let content = document.createElement("div");
     let title = document.createElement("p");
     let authors = document.createElement("p");
 
-    link.setAttribute("class", "searchResult dropdown-item"); //searchResult
+    bookItem.setAttribute("class", "dropdown-item")
+    link.setAttribute("class", "searchResult"); //searchResult
     link.setAttribute("href", `/findBook/${book.id}`);
+    media.setAttribute("class", "media");
 
     if (book.imageLinks !== undefined) {
         image.setAttribute("src", book.imageLinks.smallThumbnail);
@@ -95,14 +100,20 @@ function createOneDropDownItem(book) {
     }
 
     image.setAttribute("class", "searchImage");
+    mediaContent.setAttribute("class", "media-content");
+    content.setAttribute("class", "content");
     title.setAttribute("class", "searchTitle");
     authors.setAttribute("class", "searchAuthors");
-    bookInfo.appendChild(link);
-    link.appendChild(image);
-    link.appendChild(caption);
-    caption.appendChild(title);
-    caption.appendChild(authors);
-    searchResults.appendChild(bookInfo);
+
+    bookItem.appendChild(link);
+    link.appendChild(media);
+    media.appendChild(mediaLeft);
+    mediaLeft.appendChild(image);
+    media.appendChild(mediaContent);
+    mediaContent.appendChild(content);
+    content.appendChild(title);
+    content.appendChild(authors);
+    searchResults.appendChild(bookItem);
 }
 
 function formatAuthorList(authorList) {
