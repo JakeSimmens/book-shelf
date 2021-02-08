@@ -83,14 +83,24 @@ This is my first project where I have focused on figuring out how to test using 
 
 <img src="./public/images/homeScreen020721.png">
 
-My love for reading drove me to create a site to track and discuss books people are reading.  Implementing user authentication,  you may sign up and begin adding book titles to your personal library.
+Reading personal growth and fiction books have been a big part of my life.  Inspired by [goodreads](https://www.goodreads.com/), jReads is for multiple users to track and discuss books they have read.
 
-The books and data are initially searched for and found using the Google Books API.  Any books you add to your library, are saved to a seperate database for easy reference in the future.
+The focus is on the backend by putting in place a variety of elements such as:
+
+<ul>
+  <li>User authentication</li>
+  <li>Managing user comments</li>
+  <li>Creating an API to interact with any database API</li>
+  <li>Unit testing</li>
+  <li>RESTful routes</li>
+</ul>
+
+The books and data are initially searched for and found using the Google Books API.  Any books a user adds to their own library are saved to a seperate database for easy reference in the future.
 
 ### Built With
 
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* JavaScript
+* [JavaScript](https://www.ecma-international.org/technical-committees/tc39/)
 * [Node.js](https://nodejs.org)
 * [Express](https://expressjs.com)
 * [MongoDB](https://mongodb.com)
