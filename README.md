@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <h3 align="center">jReads</h3>
+  <h1 align="center">jReads</h1>
 
   <p align="center">
     Track and Discuss Your Books
@@ -34,17 +34,19 @@
 
 Reading personal growth and fiction books have been a big part of my life.  Inspired by [goodreads](https://www.goodreads.com/), jReads is for multiple users to track and discuss books they have read.
 
-The focus is on the backend by putting in place a variety of elements such as:
+Areas of focus:
 
 <ul>
+  <li>Creating an API to interact with any database API</li>
   <li>User authentication</li>
   <li>Managing user comments</li>
-  <li>Creating an API to interact with any database API</li>
   <li>Unit testing</li>
   <li>RESTful routes</li>
 </ul>
 
-The books and data are initially searched for and found using the Google Books API.  Any books a user adds to their own library are saved to a seperate database for easy reference in the future.
+Creating an abstract layer to interact with the database API and the jReads code was the step I was most exicted about.  I went into it with the mindset of using MongoDB now and being able to swap it out with a SQL database in the future.
+
+For the book data used, I wanted manage a user's stored book data in a local database while making it easy to add new titles to a library.  The books and data are initially searched for and found using the Google Books API.  Any books a user adds to their own library are then saved to a seperate database for easy reference in the future.
 
 ### Built With
 
@@ -71,24 +73,3 @@ Jake Simmens - [LinkedIn](https://linkedin.com/in/jakesimmens) - jake@jakesimmen
 * [Othneil Drew](https://github.com/othneildrew/Best-README-Template) - Readme template
 * [bcrypt](https://www.npmjs.com/package/bcrypt) - Hash and salt
 * [Jest](https://jestjs.io/) - testing
-
-
-
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
