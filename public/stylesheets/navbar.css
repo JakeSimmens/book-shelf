@@ -1,0 +1,49 @@
+.search {
+    flex-direction: column;
+    position: relative;
+}
+
+.search input {
+    width: 250px;
+    max-width: 60%;
+    margin-left: 4px;
+}
+
+.searchResults {
+    position: absolute;  /*parent needs to be position relative to overlay*/
+    width: 400px;
+}
+
+.searchResults .dropdown-item {
+    padding: 3px;
+}
+
+.searchResults .dropdown-divider {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.searchResults .content {
+    margin-left: 5px;
+}
+
+.searchImage {
+    min-height: 60px;
+    min-width: 40px;
+    margin: 5px;
+}
+
+.searchTitle {
+    font-weight: 600;
+    font-size: 1em;
+    color: black;
+
+}
+
+.searchAuthors {
+    font-weight: 400;
+    font-size: .8em;
+    margin: 5px;
+    color: black;
+
+}
