@@ -50,6 +50,7 @@ function formatBookDataFromGoogle(data) {
 
     let extractedData = {};
 
+    extractedData.id = data.id;
     extractedData.title = data.volumeInfo.title;
     extractedData.subtitle = data.volumeInfo.subtitle;
     extractedData.authors = data.volumeInfo.authors;

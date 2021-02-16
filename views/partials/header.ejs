@@ -6,27 +6,27 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="/stylesheets/home.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
     <title>jReads</title>
 </head>
 <body>
-    <!-- <section class="menuBar">
-        <div class="barItem">
-            <div class="search">
-                <label for="search"></label>
-                <input name="search" type="text" placeholder="Find a book">
-                <button>Go</button>
-                <ul class="searchResults"></ul>
-            </div>
-        </div>
-    </section> -->
-
-
     <section>
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
               <a class="navbar-item" href="/">
                 <strong>jReads</strong>
               </a>
+              <div class="navbar-item">
+                <div class="search">
+                  <label for="search"></label>
+                  <input name="search" type="text" placeholder="Find a book">
+                  <button>Go</button>
+                  <div id="searchDropDown"  class="dropdown-menu">
+                    <ul class="searchResults dropdown-content">
+                    </ul>
+                  </div>
+                </div>
+            </div>
 
               <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
@@ -37,22 +37,7 @@
           
             <div class="navbar-menu">
               <div class="navbar-start">
-                <div class="navbar-item">
-                    <div class="search">
-                      <div>
-                        <label for="search"></label>
-                        <input name="search" type="text" placeholder="Find a book">
-                        <button>Go</button>
-                      </div>
-                      <div class="dropdown">
-                        <div id="searchDropDown"  class="dropdown-menu">
-                          <ul class="searchResults dropdown-content">
 
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                </div>
               </div>
           
               <div class="navbar-end">
