@@ -16,6 +16,10 @@
     .search input {
         width: 180px;
     }
+
+    .search {
+        padding-left: 0;
+    }
 }
 
 .searchResults {
