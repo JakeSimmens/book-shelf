@@ -62,3 +62,11 @@
     visibility: collapse;
 }
 
+.googleBookLink {
+    background-image: url("../images/gbs_preview_button1.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    width: 90px;
+}
+
