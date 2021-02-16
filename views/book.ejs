@@ -24,6 +24,9 @@
             <h1><%= bookData.title %></h1>
             <h2><%= bookData.subtitle%></h2>
             <p><strong>Author:</strong>  <%= bookData.authors %></p>
+
+            <a href="<%='https://books.google.com/books?id='.concat(bookData.id) %>" target="_blank" rel="noopener noreferrer">Google Books Link</a>
+
             <p>Rating: <%= bookData.averageRating%> out of 5</p>
             <p class="description"><%- bookData.description %></p>
             <p><%= bookData.publisher%></p>

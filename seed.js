@@ -40,6 +40,7 @@ var users = [
 
 var books = [
     {
+        id: "V5s14nks9I8C",
         title: "Jurassic Park",
         subtitle: "Prequel to Two",
         authors: ["Bob Bill", "Ray Bob", "Tracy Fred"],
@@ -56,6 +57,7 @@ var books = [
         }
     },
     {
+        id: "T9M0F8eiNvMC",
         title: "The Lost World",
         subtitle: "JP Part 2",
         authors: ["One Bob", "Four Fred"],
@@ -72,6 +74,7 @@ var books = [
         }
     },
     {
+        id: "wOkqDwAAQBAJ",
         title: "The Gunslinger",
         subtitle: "Another one",
         authors: ["One Bob"],
