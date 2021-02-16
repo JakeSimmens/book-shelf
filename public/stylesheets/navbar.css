@@ -1,21 +1,27 @@
 .search {
+    padding-left: 20px;
     flex-direction: column;
     position: relative;
 }
 
 .search input {
-    width: 250px;
-    max-width: 60%;
+    width: 300px;
     margin-left: 4px;
     background-image: url("../images/google_watermark.gif");
-    background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
+}
+
+@media ( width <= 500px) {
+    .search input {
+        width: 180px;
+    }
 }
 
 .searchResults {
     position: absolute;  /*parent needs to be position relative to overlay*/
     width: 400px;
+    margin-top: -11px;  /*align to lower part of search box */
 }
 
 .searchResults .dropdown-item {
