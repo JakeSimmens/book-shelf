@@ -11,58 +11,49 @@
 </head>
 <body>
     <section>
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-              <a class="navbar-item" href="/">
-                <strong>jReads</strong>
-              </a>
-              <div class="navbar-item">
-                <div class="search">
-                  <div>
-                    <label for="search"></label>
-                    <input name="search" type="text" placeholder="Find a book">
-                    <button>Go</button>
-                  </div>
-                  <div class="dropdown">
-                    <div id="searchDropDown"  class="dropdown-menu">
-                      <ul class="searchResults dropdown-content">
-                      </ul>
-                    </div>
-                  </div>
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            <strong>jReads</strong>
+          </a>
+          <div class="navbar-item">
+            <div class="search">
+              <div>
+                <label for="search"></label>
+                <input name="search" type="text" placeholder="Find a book">
+                <button>Go</button>
+              </div>
+              <div class="dropdown">
+                <div id="searchDropDown"  class="dropdown-menu">
+                  <ul class="searchResults dropdown-content">
+                  </ul>
                 </div>
+              </div>
             </div>
-
-              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="burgerOptions">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-              </a>
-            </div>
+          </div>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="burgerOptions">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>  
           
-
-            <div class="navbar-menu" id="burgerOptions">
-              <div class="navbar-start">
-
-              </div>
-
-              <div class="navbar-item">
-                <% if(currentUser){ %>
-                    <p>Welcome, <%=currentUser%></p>
-                <% } %>
-              </div>
-              <div class="navbar-end">
-                  <div class="buttons">
-                    <a class="button is-primary" href="/register">
-                      <strong>Sign up</strong>
-                    </a>
-                    <a class="button is-light" href="/login">
-                      Log in
-                    </a>
-                    <a class="button is-light" href="/logout">
-                      Log out
-                    </a>
-                  </div>
-              </div>
-            </div>
-          </nav>
+        <div class="navbar-menu" id="burgerOptions">
+          <div class="navbar-end">
+            <% if(currentUser){ %>
+              <p class="has-text-right pr-3">Welcome, <%=currentUser%></p>
+              <a class="navbar-item is-light has-text-right" href="/logout">
+                  Log out
+              </a>
+            <% } else { %>
+              <a class="navbar-item is-primary has-text-right" href="/register">
+                  <strong>Sign up</strong>
+              </a>
+              <a class="navbar-item is-light has-text-right" href="/login">
+                  Log in
+              </a>
+            <% } %>
+          </div>
+        </div>
+      </nav>
     </section>
