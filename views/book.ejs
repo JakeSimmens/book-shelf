@@ -1,44 +1,49 @@
 <%- include("./partials/header") %>
 
 
-    <section class = "mainFrame container">
-        <div class="leftFrame">
-            <p>
-                <a class="googleBookLink button" href="<%='https://books.google.com/books?id='.concat(bookData.id) %>" target="_blank" rel="noopener noreferrer"></a>
-            </p>
-            <img src="<%=bookData.imageLinks.thumbnail%>" 
-            alt="Book cover for <%=bookData.title%>">
-
-            <%if(!inMyLibrary){ %>
-                <form action="/findBook" method="POST">
-                    <input hidden type="text" name="bookID" value=<%=googleBookID%> >
-                    <button class="btnAdd">Add to Library</button>
-                </form>
-            <%} %>
-            <%if(inMyLibrary){ %>
-                <form action="/myBook/<%=bookData._id%>?_method=DELETE" method="POST">
-                    <button class="btnDelete">Remove from Library</button>
-                </form>
-            <%} %>
-
-        
-        </div>
-        <div class="rightFrame">
-            <h1><%= bookData.title %></h1>
-            <h2><%= bookData.subtitle%></h2>
-            <p><strong>Author:</strong>  <%= bookData.authors %></p>
-
-            <p>Rating: <%= bookData.averageRating%> out of 5</p>
-            <p class="description"><%- bookData.description %></p>
-            <p><%= bookData.publisher%></p>
-            <p><%= bookData.publishedDate%></p>
-            <p>Page count: <%= bookData.pageCount%></p>
-
+    <section class = "section">
+        <div class="columns">
+            <div class="column is-one-quarter-tablet">
+                <p>
+                    <a class="googleBookLink button" href="<%='https://books.google.com/books?id='.concat(bookData.id) %>" target="_blank" rel="noopener noreferrer"></a>
+                </p>
+                <img src="<%=bookData.imageLinks.thumbnail%>" 
+                alt="Book cover for <%=bookData.title%>">
+    
+                <%if(!inMyLibrary){ %>
+                    <form action="/findBook" method="POST">
+                        <input hidden type="text" name="bookID" value=<%=googleBookID%> >
+                        <button class="btnAdd">Add to Library</button>
+                    </form>
+                <%} %>
+                <%if(inMyLibrary){ %>
+                    <form action="/myBook/<%=bookData._id%>?_method=DELETE" method="POST">
+                        <button class="btnDelete">Remove from Library</button>
+                    </form>
+                <%} %>
+            </div>
+            <div class="column is-three-quarters-tablet is-half-desktop">
+                <h1><%= bookData.title %></h1>
+                <h2><%= bookData.subtitle%></h2>
+                <p><strong>Author:</strong>  <%= bookData.authors %></p>
+    
+                <p>Rating: <%= bookData.averageRating%> out of 5</p>
+                <p class="description"><%- bookData.description %></p>
+                <p><%= bookData.publisher%></p>
+                <p><%= bookData.publishedDate%></p>
+                <p>Page count: <%= bookData.pageCount%></p>
+    
+            </div>
         </div>
 
     </section>
-    <section class="container">
-        <h3>Reviews</h3>
+    <section class="section">
+        <div class="columns">
+            <div class="column">
+                <hr class="hr">
+                <h3>Reviews</h3>
+            </div>
+        </div>
     </section>
 
 <%- include("./partials/footer") %>
