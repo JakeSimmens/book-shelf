@@ -1,34 +1,38 @@
 <%- include("./partials/header") %>
 
-    <section class="mainFrame">
-        <div class="leftFrame">
-            <h2>Left Frame</h2>
-
-        </div>
-        <div class="rightFrame">
-            <div class="container">
-                <h2>My Bookshelf</h2>
-                <div class="shelves">
-
-                <% for(let i = 0; i < myLibrary.length; i++){ %>
-                    <% if( i % maxBooksPerShelf == 0){ %>
-                        <div class="shelf">
-                    <%} %>
-                            <a href="/myBook/<%=myLibrary[i]._id%>">
-                                <figure>
-                                    <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="Book cover for <%=myLibrary[i].title%>">
-                                    <figcaption>
-                                        <%=myLibrary[i].title%>
-                                    </figcaption>
-                                </figure>
-                            </a>
-                    <% if( i % maxBooksPerShelf == maxBooksPerShelf-1 || i == myLibrary.length - 1){ %>
-                        </div>
-                    <%} %>
-
-                <% } %>       
+    <section class="section">
+        <div class="columns">
+            <div class="column">
+                <h2>Left Frame</h2>
+            </div>
+            <div class="column is-three-quarters is-four-fifths-desktop">
+                <div class="container">
+                    <h2>My Bookshelf</h2>
+                    <div class="shelves">
+    
+                    <% for(let i = 0; i < myLibrary.length; i++){ %>
+                        <% if( i % maxBooksPerShelf == 0){ %>
+                            <div class="shelf">
+                        <%} %>
+                                <a href="/myBook/<%=myLibrary[i]._id%>">
+                                    <figure>
+                                        <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="Book cover for <%=myLibrary[i].title%>">
+                                        <figcaption>
+                                            <%=myLibrary[i].title%>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                        <% if( i % maxBooksPerShelf == maxBooksPerShelf-1 || i == myLibrary.length - 1){ %>
+                            </div>
+                        <%} %>
+    
+                    <% } %>       
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="rightFrame">
+
         </div>
     </section>
 
