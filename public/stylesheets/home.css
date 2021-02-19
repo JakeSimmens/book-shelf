@@ -58,6 +58,18 @@
     
 }
 
+.bookCard a figure figcaption{
+    text-align: center;
+    
+}
+
+.bookCard a figure img{
+    text-align: center;
+    margin: auto;
+    max-width: 175px;
+    
+}
+
 .hideMe {
     visibility: collapse;
 }
