@@ -3,28 +3,32 @@
     <section class="section">
         <div class="columns">
             <div class="column is-one-quarter-tablet is-one-fifth-desktop">
-                <h2>Left Frame</h2>
+                <% if(currentUser){ %>
+                    <h3 class="is-3"><strong>Welcome, <%=currentUser%></strong></h3>
+                <% } else { %>
+                    <h3 class="is-3"><strong>Welcome!</strong></h3>
+                    <p>Please <a href="/register">sign up</a> or <a href="/login">log in</a> to create your own book list.</p>
+                <% } %>
+
             </div>
             <div class="column is-three-quarters is-four-fifths-desktop">
-                <div class="container">
-                    <div class="shelves">
-                        <div class="columns is-multiline">
-                            <% for(let i = 0; i < myLibrary.length; i++){ %>
-                                <div class="column is-one-third-mobile is-one-quarter-tablet is-one-fifth-desktop">
-                                    <a href="/myBook/<%=myLibrary[i]._id%>">
-                                        <figure>
-                                            <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="Book cover for <%=myLibrary[i].title%>">
-                                            <figcaption>
+                <div class="container shelves">
+                    <div class="columns is-centered is-multiline is-mobile">
+                        <% for(let i = 0; i < myLibrary.length; i++){ %>
+                            <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
+                                 <a href="/myBook/<%=myLibrary[i]._id%>">
+                                    <figure>
+                                        <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="Book cover for <%=myLibrary[i].title%>">
+                                        <figcaption>
                                                 <%=myLibrary[i].title%>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </div>
-                            <% } %>       
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </div>
+                        <% } %>       
                     </div>
                 </div>
             </div>
-        </div>
         <div class="rightFrame">
 
         </div>

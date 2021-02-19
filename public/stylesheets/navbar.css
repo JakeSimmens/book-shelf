@@ -14,7 +14,7 @@
 
 @media ( width <= 500px) {
     .search input {
-        width: 180px;
+        width: 160px;
     }
 
     .search {
