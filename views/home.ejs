@@ -16,14 +16,16 @@
                     <div class="columns is-centered is-multiline is-mobile">
                         <% for(let i = 0; i < myLibrary.length; i++){ %>
                             <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
-                                 <a href="/myBook/<%=myLibrary[i]._id%>">
-                                    <figure>
-                                        <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="Book cover for <%=myLibrary[i].title%>">
-                                        <figcaption>
+                                <div class="box bookCard">
+                                    <a href="/myBook/<%=myLibrary[i]._id%>">
+                                        <figure class="image">
+                                            <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="Book cover for <%=myLibrary[i].title%>">
+                                            <figcaption>
                                                 <%=myLibrary[i].title%>
-                                        </figcaption>
-                                    </figure>
-                                </a>
+                                            </figcaption>
+                                        </figure>
+                                     </a>
+                                </div>
                             </div>
                         <% } %>       
                     </div>
