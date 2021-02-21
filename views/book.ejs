@@ -2,36 +2,45 @@
 
 <div class="wrapper">
     <section class = "section">
-        <div class="columns">
+        <div class="columns is-centered">
             <div class="column is-one-quarter-tablet">
-                <p>
-                    <a class="googleBookLink button" href="<%='https://books.google.com/books?id='.concat(bookData.id) %>" target="_blank" rel="noopener noreferrer"></a>
-                </p>
-                <img src="<%=bookData.imageLinks.thumbnail%>" 
-                alt="Book cover for <%=bookData.title%>">
-    
-                <%if(!inMyLibrary){ %>
-                    <form action="/findBook" method="POST">
-                        <input hidden type="text" name="bookID" value=<%=googleBookID%> >
-                        <button class="btnAdd">Add to Library</button>
-                    </form>
-                <%} %>
-                <%if(inMyLibrary){ %>
-                    <form action="/myBook/<%=bookData._id%>?_method=DELETE" method="POST">
-                        <button class="btnDelete">Remove from Library</button>
-                    </form>
-                <%} %>
+                <div class="box bookCover">
+                    <figure class="image">
+                        <img src= <%=bookData.imageLinks.thumbnail%> alt="Book cover for <%=bookData.title%>">
+
+                    </figure>
+                    <figcaption>
+                         <p>
+                            <a class="googleBookLink button" href="<%='https://books.google.com/books?id='.concat(bookData.id) %>" target="_blank" rel="noopener noreferrer"></a>
+                        </p>
+                        <%if(!inMyLibrary){ %>
+                            <form action="/findBook" method="POST">
+                                <input hidden type="text" name="bookID" value=<%=googleBookID%> >
+                                <button class="button is-success is-small btnAdd">Add Book</button>
+                            </form>
+                        <%} %>
+                        <%if(inMyLibrary){ %>
+                            <form action="/myBook/<%=bookData._id%>?_method=DELETE" method="POST">
+                                <button class="button is-danger is-small btnDelete">Remove Book</button>
+                            </form>
+                        <%} %>
+                    </figcaption>  
+
+                </div>
             </div>
             <div class="column is-three-quarters-tablet is-half-desktop">
-                <h1><%= bookData.title %></h1>
-                <h2><%= bookData.subtitle%></h2>
-                <p><strong>Author:</strong>  <%= bookData.authors %></p>
-    
-                <p>Rating: <%= bookData.averageRating%> out of 5</p>
-                <p class="description"><%- bookData.description %></p>
-                <p><%= bookData.publisher%></p>
-                <p><%= bookData.publishedDate%></p>
-                <p>Page count: <%= bookData.pageCount%></p>
+                <div class="box">
+                    <h1><%= bookData.title %></h1>
+                    <h2><%= bookData.subtitle%></h2>
+                    <p><strong>Author:</strong>  <%= bookData.authors %></p>
+        
+                    <p>Rating: <%= bookData.averageRating%> out of 5</p>
+                    <p class="description"><%- bookData.description %></p>
+                    <p><%= bookData.publisher%></p>
+                    <p><%= bookData.publishedDate%></p>
+                    <p>Page count: <%= bookData.pageCount%></p>
+                </div>
+
     
             </div>
         </div>
@@ -39,9 +48,23 @@
     </section>
     <section class="section">
         <div class="columns">
-            <div class="column">
-                <hr class="hr">
+            <div class="column box shelves">
                 <h3>Reviews</h3>
+                <div class="box">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel blanditiis reiciendis suscipit saepe minus ipsa quis quaerat ipsum incidunt iusto placeat distinctio sapiente alias, explicabo ullam iure fugit illo dignissimos, fuga expedita. Ut tempore eius ad, animi amet commodi, labore illum recusandae velit inventore quia tenetur minus hic. Nemo, dicta!
+                    </p>
+                </div>
+                <div class="box">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis minus fugit atque neque quidem suscipit maiores dolor quae iste asperiores!
+                    </p>
+                </div>
+                <div class="box">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt eius, quia culpa odit quisquam blanditiis asperiores reiciendis eveniet assumenda excepturi consectetur odio sunt reprehenderit facere.
+                    </p>
+                </div>
             </div>
         </div>
     </section>

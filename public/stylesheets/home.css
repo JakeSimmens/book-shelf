@@ -88,6 +88,29 @@
     
 }
 
+.bookCover {
+    /* height: 100%; */
+    background-color: rgba(255, 255, 255, 1);
+    padding: 1rem;
+    border-radius: 3px;
+    /* max-width: 90%; */
+}
+
+.bookCover figure img{
+    text-align: center;
+    margin: auto;
+    max-width: 175px;
+    border-radius: 1px;
+}
+
+.bookCover figcaption{
+    text-align: center;
+}
+
+.bookCover figcaption p{
+    margin-bottom: 5px;
+}
+
 .hideMe {
     visibility: collapse;
 }
@@ -100,6 +123,8 @@
     border: none;
     width: 90px;
 }
+
+
 
 .wrapper {
     /* used to push footer to bottom of screen */
