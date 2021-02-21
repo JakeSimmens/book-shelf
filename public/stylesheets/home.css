@@ -1,3 +1,11 @@
+.parallax {
+    background-image: url("../images/whiteLibraryCeiling.jpg");
+    background-position: center;
+    position: fixed;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+}
 .container {
     margin: 5px;
 
@@ -28,7 +36,7 @@
 .shelves {
     padding: 20px;
     background-color: rgba(32, 32, 32, 0.815);
-    border-radius: 3px;
+    border-radius: 20px;
     
     
 }
@@ -62,6 +70,9 @@
 
 .bookCard {
     height: 100%;
+    background-color: rgba(255, 255, 255, 0.986);
+    padding: 1rem;
+    border-radius: 3px;
 }
 
 .bookCard a figure figcaption{
@@ -73,7 +84,31 @@
     text-align: center;
     margin: auto;
     max-width: 175px;
+    border-radius: 1px;
     
+}
+
+.bookCover {
+    /* height: 100%; */
+    background-color: rgba(255, 255, 255, 1);
+    padding: 1rem;
+    border-radius: 3px;
+    /* max-width: 90%; */
+}
+
+.bookCover figure img{
+    text-align: center;
+    margin: auto;
+    max-width: 175px;
+    border-radius: 1px;
+}
+
+.bookCover figcaption{
+    text-align: center;
+}
+
+.bookCover figcaption p{
+    margin-bottom: 5px;
 }
 
 .hideMe {
@@ -84,7 +119,23 @@
     background-image: url("../images/gbs_preview_button1.gif");
     background-repeat: no-repeat;
     background-position: center;
+    background-color: transparent;
     border: none;
     width: 90px;
+}
+
+
+
+.wrapper {
+    /* used to push footer to bottom of screen */
+    min-height: calc(100vh - 112px);
+}
+
+footer {
+    background-color: rgba(255, 255, 255, 0.85);
+    position: static;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
 }
 
