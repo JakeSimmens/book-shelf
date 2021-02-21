@@ -27,7 +27,9 @@
 
 .shelves {
     padding: 20px;
-    background-color: rgb(210, 210, 210);
+    background-color: rgba(32, 32, 32, 0.815);
+    border-radius: 3px;
+    
     
 }
 
@@ -56,6 +58,10 @@
     color: white;
     text-decoration: none;
     
+}
+
+.bookCard {
+    height: 100%;
 }
 
 .bookCard a figure figcaption{
