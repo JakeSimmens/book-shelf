@@ -70,6 +70,9 @@
 
 .bookCard {
     height: 100%;
+    background-color: rgba(255, 255, 255, 0.986);
+    padding: 1rem;
+    border-radius: 3px;
 }
 
 .bookCard a figure figcaption{
@@ -81,6 +84,7 @@
     text-align: center;
     margin: auto;
     max-width: 175px;
+    border-radius: 1px;
     
 }
 
