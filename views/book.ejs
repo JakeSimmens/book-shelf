@@ -30,15 +30,54 @@
             </div>
             <div class="column is-three-quarters-tablet is-half-desktop">
                 <div class="box">
-                    <h1><%= bookData.title %></h1>
-                    <h2><%= bookData.subtitle%></h2>
-                    <p><strong>Author:</strong>  <%= bookData.authors %></p>
-        
-                    <p>Rating: <%= bookData.averageRating%> out of 5</p>
-                    <p class="description"><%- bookData.description %></p>
-                    <p><%= bookData.publisher%></p>
-                    <p><%= bookData.publishedDate%></p>
-                    <p>Page count: <%= bookData.pageCount%></p>
+                    <h1 class="title"><%= bookData.title %></h1>
+                    <h2 class="subtitle"><%= bookData.subtitle%></h2>
+                    <% let authors = bookData.authors; %>
+                    <% if(authors){ %>
+                        <h3 class="subtitle is-6">Author<%if(authors.length > 1){%>s<%}%>:  <%= authors %></h3>
+                    <% } else {%>
+                        <h3 class="subtitle is-6">Author:  N/A</h3>
+                    <% } %>
+                    
+                    <hr class="hr">
+                    <div class="content">
+                        <% if(bookData.description){ %>
+                            <p><%- bookData.description %></p>
+                        <% } else {%>
+                            <p>No description available.</p>
+                        <% } %>
+                    </div>
+
+                    <table class="table mt-5">
+                        <tbody>
+                            <% if(bookData.averageRating){ %>
+                                <tr>
+                                    <td class="has-text-right">Rating:</td>
+                                    <td><%= bookData.averageRating%> of 5</td>
+                                </tr>
+                            <% } %>
+                            <% if(bookData.publisher){ %>
+                                <tr>
+                                    <td class="has-text-right">Publisher:</td>
+                                    <td><%= bookData.publisher%></td>
+                                </tr>
+                            <% } %>
+                            <% if(bookData.publishedDate){ %>
+                                <tr>
+                                    <td class="has-text-right">Date published:</td>
+                                    <td><%= bookData.publishedDate%></td>
+                                </tr>
+                            <% } %>
+                            <% if(bookData.pageCount){ %>
+                                <tr>
+                                    <td class="has-text-right">Page count:</td>
+                                    <td><%= bookData.pageCount%></td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                    
+
                 </div>
 
     
@@ -47,7 +86,7 @@
 
     </section>
     <section class="section">
-        <div class="columns">
+        <div class="columns is-mobile">
             <div class="column box shelves">
                 <h3>Reviews</h3>
                 <div class="box">
