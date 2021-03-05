@@ -9,63 +9,42 @@
 }
 .container {
     margin: 5px;
-
 }
 
-.mainFrame {
-    display: flex;
+.leftDisplayFrame{
+    font-weight: 500;
+    font-size: 1.25em;
+    background-color: rgba(32, 32, 32, .98);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.leftDisplayFrame h3 {
+    font-weight: 700;
+    font-size: 1.25em;
+    color: white;
+    padding-bottom: 10px;
+}
+
+.leftDisplayFrame a{
+    font-weight: 500;
+    font-size: 1em;
+    color: lightblue;
+    text-decoration: underline;
 }
 
 @media (max-width: 1008px){
     .mainFrame{
         flex-wrap: wrap;
+        font-size: 1em;
     }
 }
-
-.leftFrame {
-    flex: 1;
-    min-width: 200px;
-    
-}
-
-.rightFrame {
-    flex: 3;
-}
-
-
 
 .shelves {
     padding: 20px;
     background-color: rgba(32, 32, 32, 0.815);
     border-radius: 20px;
     
-    
-}
-
-.shelf {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    border: solid white 1px;
-    padding: 10px;
-
-}
-
-.shelf figure {
-    margin: 10px;
-}
-
-.shelf img {
-    width: 100px;
-    margin-left: 1px;
-    margin-right: 1px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.shelf figcaption {
-    color: white;
-    text-decoration: none;
     
 }
 
