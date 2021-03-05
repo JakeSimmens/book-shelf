@@ -7,7 +7,6 @@
                 <div class="box bookCover">
                     <figure class="image">
                         <img src= <%=bookData.imageLinks.thumbnail%> alt="Book cover for <%=bookData.title%>">
-
                     </figure>
                     <figcaption>
                          <p>
@@ -29,7 +28,7 @@
                 </div>
             </div>
             <div class="column is-three-quarters-tablet is-half-desktop">
-                <div class="box">
+                <div class="box has-background-light">
                     <h1 class="title"><%= bookData.title %></h1>
                     <h2 class="subtitle"><%= bookData.subtitle%></h2>
                     <% let authors = bookData.authors; %>
@@ -48,7 +47,7 @@
                         <% } %>
                     </div>
 
-                    <table class="table mt-5">
+                    <table class="table mt-5 has-background-light">
                         <tbody>
                             <% if(bookData.averageRating){ %>
                                 <tr>
@@ -89,17 +88,17 @@
         <div class="columns is-mobile">
             <div class="column box shelves">
                 <h3>Reviews</h3>
-                <div class="box">
+                <div class="box has-background-light">
                     <p>
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel blanditiis reiciendis suscipit saepe minus ipsa quis quaerat ipsum incidunt iusto placeat distinctio sapiente alias, explicabo ullam iure fugit illo dignissimos, fuga expedita. Ut tempore eius ad, animi amet commodi, labore illum recusandae velit inventore quia tenetur minus hic. Nemo, dicta!
                     </p>
                 </div>
-                <div class="box">
+                <div class="box has-background-light">
                     <p>
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis minus fugit atque neque quidem suscipit maiores dolor quae iste asperiores!
                     </p>
                 </div>
-                <div class="box">
+                <div class="box has-background-light">
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt eius, quia culpa odit quisquam blanditiis asperiores reiciendis eveniet assumenda excepturi consectetur odio sunt reprehenderit facere.
                     </p>

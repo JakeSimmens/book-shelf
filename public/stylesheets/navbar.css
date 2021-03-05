@@ -12,13 +12,9 @@
     background-repeat: no-repeat;
 }
 
-@media ( width <= 500px) {
+@media ( max-width: 550px) {
     .search input {
-        width: 160px;
-    }
-
-    .search {
-        padding-left: 0;
+        width: 230px;
     }
 }
 
