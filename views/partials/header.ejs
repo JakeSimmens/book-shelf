@@ -10,9 +10,9 @@
     <title>jReads</title>
 </head>
 <body class="has-navbar-fixed-top">
-  <section>
+  <!-- <section> -->
     <div class="parallax"></div>
-  </section>
+  <!-- </section> -->
 
   <section>
       <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
@@ -47,7 +47,6 @@
         <div class="navbar-menu" id="burgerOptions">
           <div class="navbar-end pr-4">
             <% if(currentUser){ %>
-              <!-- <p class="pr-6 pt-5 is-capitalized has-text-centered">Welcome, <%=currentUser%>!</p> -->
               <a class="navbar-item is-light is-capitalized has-text-centered" href="/logout">
                   Logout (<%=currentUser%>)
               </a>
