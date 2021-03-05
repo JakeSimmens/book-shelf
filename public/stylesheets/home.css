@@ -1,5 +1,6 @@
 .parallax {
-    background-image: url("../images/whiteLibraryCeiling.jpg");
+    /* background-image: url("../images/whiteLibraryCeiling.jpg"); */
+    background-image: url("../images/darkLibraryBulbs-janko-ferlic.jpg");
     background-position: center;
     position: fixed;
     z-index: -1;
