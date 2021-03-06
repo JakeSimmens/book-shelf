@@ -1,39 +1,69 @@
 <%- include("./partials/header") %>
 
 <div class="wrapper">
-    <section class="section">
-        <div class="columns is-centered">
-            <div class="column is-8 is-offest-4">
-                <div class="container shelves">
-                    <h1 class="title is-1 has-text-light has-text-centered">Sign Up</h1>
-                    <form action="/register" method="POST">
-                        <div class="field">
-                            <label for="username" class="label has-text-light">Username</label>
-                            <div class="control">
-                                <input type="text" placeholder="username" name="username">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="password" class="label has-text-light">Password</label>
-                            <div class="control">
-                                <input type="password" placeholder="password" name="password">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="confirmPassword" class="label has-text-light">Confirm Password</label>
-                            <div class="control">
-                                <input type="confirmPassword" placeholder="password" name="confirmPassword">
-                            </div>
-                        </div>
-                        <div class="control">
-                            <button class="button is-success">Sign Up</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+  <section class="section">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="container shelves">
+          <h1 class="title is-1 has-text-light has-text-centered">Sign Up</h1>
 
-    </section>
+          <form action="/register" method="POST">
+            <div class="field is-horizontal">
+              <div class="field-label is-medium">
+                <label for="username" class="label has-text-light">Username</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-medium" type="text" name="username" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-medium">
+                <label for="password" class="label has-text-light ">Password</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-medium" type="password" name="password" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-medium">
+                <label for="confirmPassword" class="label has-text-light">Confirm</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-medium" type="password" name="confirmPassword" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-grouped is-grouped-centered">
+                  <div class="control">
+                    <button class="button is-success is-medium">Sign Up</button>
+                  </div>
+                  <div class="control">
+                    <a href="/" class="button is-danger is-medium">Cancel</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <%- include("./partials/footer") %>

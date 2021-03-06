@@ -1,35 +1,55 @@
 <%- include("./partials/header") %>
 <div class="wrapper">
-    <section class="section">
-        <div class="columns is-centered">
-            <div class="column is-8 is-offest-4">
-                <div class="container shelves">
-                    <h1 class="title is-1 has-text-light has-text-centered">Login</h1>
-                
-                    <form action="/login" method="POST">
-                        <div class="field">
-                            <label for="username" class="label has-text-light">Username</label>
-                            <div class="control">
-                                <input type="text" placeholder="username" name="username">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="password" class="label has-text-light">Password</label>
-                            <div class="control">
-                                <input type="password" placeholder="password" name="password">
-                            </div>
-                        </div>
-                        <div class="control">
-                            <button class="button is-success">Login</button>
-                        </div>
-                    </form>
+  <section class="section">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="container shelves">
+          <h1 class="title is-1 has-text-light has-text-centered">Login</h1>
+
+          <form action="/login" method="POST">
+            <div class="field is-horizontal">
+              <div class="field-label is-medium">
+                <label for="username" class="label has-text-light">Username</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-medium" type="text" name="username" required>
+                  </div>
                 </div>
+              </div>
             </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-medium">
+                <label for="password" class="label has-text-light">Password</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-medium" type="password" name="password" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-grouped is-grouped-centered">
+                  <div class="control">
+                    <button class="button is-success is-medium">Login</button>
+                  </div>
+                  <div class="control">
+                    <a href="/" class="button is-danger is-medium">Cancel</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-
-    </section>
+      </div>
+    </div>
+  </section>
 </div>
-
-
 
 <%- include("./partials/footer") %>
