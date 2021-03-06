@@ -46,35 +46,39 @@
                             <p>No description available.</p>
                         <% } %>
                     </div>
+                    <div class="columns">
+                        <div class="column is-10 is-offset-2">
+                            <table class="table mt-5 has-background-light">
+                                <tbody>
+                                    <% if(bookData.averageRating){ %>
+                                        <tr>
+                                            <td class="has-text-right">Rating:</td>
+                                            <td><%= bookData.averageRating%> of 5</td>
+                                        </tr>
+                                    <% } %>
+                                    <% if(bookData.publisher){ %>
+                                        <tr>
+                                            <td class="has-text-right">Publisher:</td>
+                                            <td><%= bookData.publisher%></td>
+                                        </tr>
+                                    <% } %>
+                                    <% if(bookData.publishedDate){ %>
+                                        <tr>
+                                            <td class="has-text-right">Date published:</td>
+                                            <td><%= bookData.publishedDate%></td>
+                                        </tr>
+                                    <% } %>
+                                    <% if(bookData.pageCount){ %>
+                                        <tr>
+                                            <td class="has-text-right">Page count:</td>
+                                            <td><%= bookData.pageCount%></td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-                    <table class="table mt-5 has-background-light">
-                        <tbody>
-                            <% if(bookData.averageRating){ %>
-                                <tr>
-                                    <td class="has-text-right">Rating:</td>
-                                    <td><%= bookData.averageRating%> of 5</td>
-                                </tr>
-                            <% } %>
-                            <% if(bookData.publisher){ %>
-                                <tr>
-                                    <td class="has-text-right">Publisher:</td>
-                                    <td><%= bookData.publisher%></td>
-                                </tr>
-                            <% } %>
-                            <% if(bookData.publishedDate){ %>
-                                <tr>
-                                    <td class="has-text-right">Date published:</td>
-                                    <td><%= bookData.publishedDate%></td>
-                                </tr>
-                            <% } %>
-                            <% if(bookData.pageCount){ %>
-                                <tr>
-                                    <td class="has-text-right">Page count:</td>
-                                    <td><%= bookData.pageCount%></td>
-                                </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
                     
 
                 </div>
