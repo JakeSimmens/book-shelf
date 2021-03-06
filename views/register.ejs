@@ -1,13 +1,39 @@
 <%- include("./partials/header") %>
 
-<div class="container">
-    <h1>Register</h1>
+<div class="wrapper">
+    <section class="section">
+        <div class="columns is-centered">
+            <div class="column is-8 is-offest-4">
+                <div class="container shelves">
+                    <h1 class="has-text-light">Register</h1>
+                    <form action="/register" method="POST">
+                        <div class="field">
+                            <label for="username" class="label has-text-light">Username</label>
+                            <div class="control">
+                                <input type="text" placeholder="username" name="username">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="password" class="label has-text-light">Password</label>
+                            <div class="control">
+                                <input type="password" placeholder="password" name="password">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="confirmPassword" class="label has-text-light">Confirm Password</label>
+                            <div class="control">
+                                <input type="confirmPassword" placeholder="password" name="confirmPassword">
+                            </div>
+                        </div>
+                        <div class="control">
+                            <button class="button is-success">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-    <form action="/register" method="POST">
-        <input type="text" placeholder="username" name="username">
-        <input type="password" placeholder="password" name="password">
-        <button>Register</button>
-    </form>
+    </section>
 </div>
 
 <%- include("./partials/footer") %>
