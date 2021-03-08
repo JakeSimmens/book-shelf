@@ -3,7 +3,7 @@ const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 const assert = require("assert");
 
-function createMongoAPI(database, collection){
+async function createMongoAPI(database, collection){
 
     const DATABASE = database;
     const COLLECTION = collection;
@@ -13,11 +13,11 @@ function createMongoAPI(database, collection){
     let options = { useUnifiedTopology: true };
 
     //setup database
-    // let connect = async function() {
-    //   let db = await MongoClient.connect(url, options);
-    //   return db;
-    // }
-    // let dbConnection = await connect();
+    let connect = async function() {
+      let db = await MongoClient.connect(url, options);
+      return db;
+    }
+    let dbConnection = await connect();
     // dbConnection.close(()=> {
     //   console.log("database closed");
     // });
