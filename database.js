@@ -3,7 +3,7 @@ const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 const assert = require("assert");
 
-function createMongoAPI(database, collection){
+async function createMongoAPI(database, collection){
 
     const DATABASE = database;
     const COLLECTION = collection;
@@ -12,7 +12,19 @@ function createMongoAPI(database, collection){
     let url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@jreads.ccxgi.mongodb.net/${DATABASE}?retryWrites=true&w=majority`;
     let options = { useUnifiedTopology: true };
 
+    //setup database
+    let connect = async function() {
+      let db = await MongoClient.connect(url, options);
+      return db;
+    }
+    let dbConnection = await connect();
+    dbConnection.close(()=> {
+      console.log("database closed");
+    });
+
     //FUNCTIONS
+
+
 
     let setForTesting = function() {
         isTestRun = true;

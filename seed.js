@@ -3,18 +3,31 @@ const {createMongoAPI} = require("./database.js");
 const DATABASE = "jReads";
 const BOOKS_COLLECTION = "books";
 const USERS_COLLECTION = "users";
-const PASSWORD_COLLECTION = "passwords";
 
-let booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);
-let usersDB = createMongoAPI(DATABASE, USERS_COLLECTION);
-let passwordDB = createMongoAPI(DATABASE, PASSWORD_COLLECTION);
+// let booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);
+// let usersDB = createMongoAPI(DATABASE, USERS_COLLECTION);
+let booksDB;
+let usersDB;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 //DATABASE
-function seed(){
-    booksDB.clearDB(populateBooks);
-    usersDB.clearDB(populateUsers);
+async function seed(){
+  try{
+    await connectDatabases();
+    //booksDB.clearDB(populateBooks);
+    //usersDB.clearDB(populateUsers);
+  }
+    catch (error) {
+      console.log(error);
+  }
+
+
+}
+
+async function connectDatabases(){
+  booksDB = await createMongoAPI(DATABASE, BOOKS_COLLECTION);
+  usersDB = await createMongoAPI(DATABASE, USERS_COLLECTION);
 }
 
 async function populateUsers(){
