@@ -58,6 +58,14 @@ This section should list any major frameworks that you built your project using.
 * [MongoDB](https://mongodb.com)
 * [Bulma](https://bulma.io)
 
+
+
+## Challenges
+
+### Pooling Connections
+One thing I discovered learning MongoDB is that many sites teach you how to incorporate Mongo into your project, but they skim over how to optimize the performance.  Shortly after finishing the interface with the API, the opened connections with Mongo went sky high with very few users.  After a day of research, I came to the conclusion that a connection pool was needed and went forward with the implementation.  I found that making this change reduced the number of connections and also increased the speed of the website.
+
+
 <!-- CONTACT -->
 ## Contact
 
