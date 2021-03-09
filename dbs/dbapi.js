@@ -60,29 +60,22 @@ async function createMongoAPI(dbConnection, collection){
 
     }
 
-    // let findOne = function(term, callback){
+    let findOne = async function(term, callback){
     
-    //     MongoClient.connect(url, options, async (err, client) => {
-    //         assert.strictEqual(null, err);
-        
-    //         const db = client.db(DB);
-    //         const collection = db.collection(COLLECTION);
-    
-    //         try {
-    //             let cursor = collection.find(term).limit(1);
+            try {
+                let cursor = COLLECTION.find(term).limit(1);
 
-    //             if(!cursor.hasNext()){
-    //                 throw err;
-    //             } else {
-    //                 let item = await cursor.next();
-    //                 callback(err, item);
-    //             }
+                if(!cursor.hasNext()){
+                    throw err;
+                } else {
+                    let item = await cursor.next();
+                    callback(null, item);
+                }
                 
-    //         } catch (err) {
-    //             callback(err, {});
-    //         }
-    //     });
-    // }
+            } catch (err) {
+                callback(err, {});
+            }
+    }
 
     let findMany = function(term, callback){
     
@@ -119,33 +112,27 @@ async function createMongoAPI(dbConnection, collection){
 
     }
 
-    // let clearDB = function (callback){
+    let clearDB = async function (callback){
 
-    //     MongoClient.connect(url, options, async (err, client) => {
+        try {
 
-    //         const db = client.db(DB);
-    //         const collection = db.collection(COLLECTION);
-            
-    //         try {
-    //             assert.strictEqual(null, err);
+            let result = await COLLECTION.deleteMany({});
+            //await client.close();
+            callback(result);
+        } catch (err) {
+            console.log("Error clearing database: ", err);
+        }
 
-    //             let result = await collection.deleteMany({});
-    //             await client.close();
-    //             callback(result);
-    //         } catch (err) {
-    //             console.log("Error clearing database: ", err);
-    //         }
-    //     });
-    // }
+    }
 
     let publicAPI = {
         //setForTesting,
         insert,
         findById,
-        //findOne,
+        findOne,
         findMany,
-        deleteOne
-        //clearDB
+        deleteOne,
+        clearDB
     };
 
     return publicAPI;

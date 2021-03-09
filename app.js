@@ -42,9 +42,10 @@ initDatabases().then( async databases => {
   console.log("databases initialized");
 
   let booksColl = await testCreateMongoAPI(databases.jReads, "books");
+  let usersColl = await testCreateMongoAPI(databases.jReads, "users");
 
   const indexRoutes = require("./routes/index");
-  const connectedIndexRoutes = indexRoutes(booksColl);
+  const connectedIndexRoutes = indexRoutes(booksColl, usersColl);
   app.use("/", connectedIndexRoutes);
 
   const myBookRoutes = require("./routes/myBook");
