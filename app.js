@@ -44,32 +44,36 @@ initDatabases().then( async databases => {
   let testdb = await testCreateMongoAPI(databases.jReads, "books");
   console.log("testdb: ", testdb);
   
+  const myBookRoutes = require("./routes/myBook");
+  console.log("myBookRoutes: ", myBookRoutes);
+  const connectedMyBookRoutes = myBookRoutes(testdb);
+  console.log("connectedMyBookRoutes: ", connectedMyBookRoutes);
+  app.use("/myBook", connectedMyBookRoutes);
 
   //mybook
   //show my library book
-  app.get('/myBook/:id', (req, res) => {
-    testdb.findById(req.params.id,
-        function renderBookPage(data){
-          console.log("in new code");
-            if(data.length == 0){
-                res.redirect("/");
-            } else {
-                res.render("book", {
-                    bookData: data[0],
-                    inMyLibrary: true
-                    });
-            }
-        });
-  });
+  // app.get('/myBook/:id', (req, res) => {
+  //   testdb.findById(req.params.id,
+  //       function renderBookPage(data){
+  //           if(data.length == 0){
+  //               res.redirect("/");
+  //           } else {
+  //               res.render("book", {
+  //                   bookData: data[0],
+  //                   inMyLibrary: true
+  //                   });
+  //           }
+  //       });
+  // });
 
   //delete
-  app.delete('/myBook/:id', (req, res) => {
-    testdb.deleteOne(req.params.id,
-        function redirecToLibrary()
-        {
-            res.redirect("/");
-        });
-  });
+  // app.delete('/myBook/:id', (req, res) => {
+  //   testdb.deleteOne(req.params.id,
+  //       function redirecToLibrary()
+  //       {
+  //           res.redirect("/");
+  //       });
+  // });
 
 
   const port = process.env.PORT || 3000;
