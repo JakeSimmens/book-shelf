@@ -1,15 +1,11 @@
-const {createMongoAPI} = require("../database.js");
-
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
-const DATABASE = "jReads";
-const BOOKS_COLLECTION = "books";
-let db = createMongoAPI(DATABASE, BOOKS_COLLECTION);
+let dbSetupForRoutes = function(dbConnection){
 
-//show google book
-router.get('/:id', async (req, res) => {
+  //show google book
+  router.get('/:id', async (req, res) => {
     const googleBookID = req.params.id;
     const url = `https://www.googleapis.com/books/v1/volumes/${googleBookID}`;
 
@@ -23,10 +19,10 @@ router.get('/:id', async (req, res) => {
         res.redirect("/");
     }
 
-});
+  });
 
-//write
-router.post('/', async (req, res) => {
+  //write
+  router.post('/', async (req, res) => {
     const googleBookID = req.body.bookID;
     const url = `https://www.googleapis.com/books/v1/volumes/${googleBookID}`;
 
@@ -34,7 +30,7 @@ router.post('/', async (req, res) => {
         let response = await axios.get(url);
         let bookData = formatBookDataFromGoogle(response.data);
 
-        db.insert(bookData,
+        dbConnection.insert(bookData,
             function redirectToLibrary()
             {
                 res.redirect("/");
@@ -44,7 +40,10 @@ router.post('/', async (req, res) => {
         console.log("Error inserting book. ", err.message);
         res.redirect("/");
     }
-});
+  });
+
+  return router;
+}
 
 function formatBookDataFromGoogle(data) {
 
@@ -66,4 +65,5 @@ function formatBookDataFromGoogle(data) {
     return extractedData;
 }
 
-module.exports = {router, formatBookDataFromGoogle};
+module.exports = dbSetupForRoutes;
+//module.exports = {router, formatBookDataFromGoogle};

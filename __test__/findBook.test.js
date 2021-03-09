@@ -113,7 +113,7 @@ describe("Route /findBook", () => {
     describe("formatBookDataFromGoogle", () => {
         it("should reformat object from GoogleBooks", ()=>{
             let data = formatBookDataFromGoogle(dataOfBook);
-            expect(data.id).toBeUndefined();
+            expect(data.id).toBe(dataOfBook.id);
             expect(data.title).toBe(dataOfBook.volumeInfo.title);
             expect(data.subtitle).toBe(dataOfBook.volumeInfo.subtitle);
             expect(data.authors).toBe(dataOfBook.volumeInfo.authors);
