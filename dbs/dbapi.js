@@ -84,28 +84,21 @@ async function createMongoAPI(dbConnection, collection){
     //     });
     // }
 
-    // let findMany = function(term, callback){
+    let findMany = function(term, callback){
     
-    //     MongoClient.connect(url, options, (err, client) => {
-    //         assert.strictEqual(null, err);
-        
-    //         const db = client.db(DB);
-    //         const collection = db.collection(COLLECTION);
-    
-    //         try {
-    //             collection.find(term).toArray((err, items) => {
-    //                 if(err){
-    //                     console.log(err);
-    //                     throw err;
-    //                 }
-    //                 callback(items);
-    //             });
-    //         } catch (err) {
-    //             console.log(err);
-    //             callback([]);
-    //         }
-    //     });
-    // }
+            try {
+                COLLECTION.find(term).toArray((err, items) => {
+                    if(err){
+                        console.log(err);
+                        throw err;
+                    }
+                    callback(items);
+                });
+            } catch (err) {
+                console.log(err);
+                callback([]);
+            }
+    }
 
     let deleteOne = async function (deleteID, callback){
 
@@ -150,7 +143,7 @@ async function createMongoAPI(dbConnection, collection){
         insert,
         findById,
         //findOne,
-        //findMany,
+        findMany,
         deleteOne
         //clearDB
     };

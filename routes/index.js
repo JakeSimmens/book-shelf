@@ -9,11 +9,11 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 
 const DATABASE = "jReads";
-const BOOKS_COLLECTION = "books";
+//const BOOKS_COLLECTION = "books";
 const USERS_COLLECTION = "users";
 
 const MAX_BOOKS_PER_SHELF = 5;
-const booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);  //need to mock
+//const booksDB = createMongoAPI(DATABASE, BOOKS_COLLECTION);  //need to mock
 const userDB = createMongoAPI(DATABASE, USERS_COLLECTION);
 const saltRounds = 10;
 
@@ -65,10 +65,13 @@ router.use((req, res, next) => {
     next();
 });
 
-//index
-router.get("/", (req, res) => {
+
+let dbSetupForRoutes = function(dbConnection){
+
+  //index
+  router.get("/", (req, res) => {
     req.flash("info", "welcome");
-    booksDB.findMany({},
+    dbConnection.findMany({},
         function renderLibraryPage(data){
             res.render("home", {
                 myLibrary: data,
@@ -76,13 +79,13 @@ router.get("/", (req, res) => {
                 message: req.flash("info")
             });
         });
-});
+  });
 
-router.get("/register", (req, res) => {
+  router.get("/register", (req, res) => {
     res.render("register");
-})
+  })
 
-router.post("/register", (req, res) => {
+  router.post("/register", (req, res) => {
     if(!req.body.username){
         res.redirect("/");
     }
@@ -111,22 +114,89 @@ router.post("/register", (req, res) => {
                 });
             }
         });
-});
+  });
 
-router.get("/login", (req, res) => {
+  router.get("/login", (req, res) => {
     res.render("login");
-});
+  });
 
-router.post("/login", passport.authenticate("local",
+  router.post("/login", passport.authenticate("local",
     {
         successRedirect: "/",
         failureRedirect: "/login"
     }));
 
-router.get("/logout", middleware.isLoggedIn, (req, res) => {
+  router.get("/logout", middleware.isLoggedIn, (req, res) => {
     req.logOut();
     req.flash("You logged out");
     res.redirect("/");
-});
+  });
 
-module.exports = router;
+  return router;
+}
+
+// //index
+// router.get("/", (req, res) => {
+//     req.flash("info", "welcome");
+//     booksDB.findMany({},
+//         function renderLibraryPage(data){
+//             res.render("home", {
+//                 myLibrary: data,
+//                 maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+//                 message: req.flash("info")
+//             });
+//         });
+// });
+
+// router.get("/register", (req, res) => {
+//     res.render("register");
+// })
+
+// router.post("/register", (req, res) => {
+//     if(!req.body.username){
+//         res.redirect("/");
+//     }
+
+//     let username = req.body.username;
+//     let pw = req.body.password;
+//     username = username.trim();
+    
+//     userDB.findOne({username: username},
+//         function checkForNoMatch(err, data){
+//             if(data.username !== undefined){
+//                 res.redirect("/login");
+//             } else {
+//                 bcrypt.hash(pw, saltRounds, (err, hash)=>{
+//                     if(err){
+//                         return res.redirect("/login");
+//                     }
+//                     userDB.insert({username: username, password: hash}, (user) => {
+//                         req.login(user, (err)=>{
+//                             if(err){
+//                                 return next(err);
+//                             }
+//                             return res.redirect("/");
+//                         });
+//                     });
+//                 });
+//             }
+//         });
+// });
+
+// router.get("/login", (req, res) => {
+//     res.render("login");
+// });
+
+// router.post("/login", passport.authenticate("local",
+//     {
+//         successRedirect: "/",
+//         failureRedirect: "/login"
+//     }));
+
+// router.get("/logout", middleware.isLoggedIn, (req, res) => {
+//     req.logOut();
+//     req.flash("You logged out");
+//     res.redirect("/");
+// });
+
+module.exports = dbSetupForRoutes;

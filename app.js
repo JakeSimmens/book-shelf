@@ -26,11 +26,11 @@ app.use(session({
 app.use(flash());
 
   //ROUTES
-  const indexRoutes = require("./routes/index");
+  //const indexRoutes = require("./routes/index");
   //const myBookRoutes = require("./routes/myBook");
   //const findBookRoutes = require("./routes/findBook").router;
 
-  app.use("/", indexRoutes);
+  //app.use("/", indexRoutes);
   //app.use("/myBook", myBookRoutes);
   //app.use("/findBook", findBookRoutes);
 
@@ -43,6 +43,10 @@ initDatabases().then( async databases => {
 
   let booksColl = await testCreateMongoAPI(databases.jReads, "books");
 
+  const indexRoutes = require("./routes/index");
+  const connectedIndexRoutes = indexRoutes(booksColl);
+  app.use("/", connectedIndexRoutes);
+
   const myBookRoutes = require("./routes/myBook");
   const connectedMyBookRoutes = myBookRoutes(booksColl);
   app.use("/myBook", connectedMyBookRoutes);
@@ -50,6 +54,8 @@ initDatabases().then( async databases => {
   const findBookRoutes = require("./routes/findBook");
   const connectedFindBookRoutes = findBookRoutes(booksColl);
   app.use("/findBook", connectedFindBookRoutes);
+
+
 
   const port = process.env.PORT || 3000;
   app.server = app.listen(port, function startServer() {
