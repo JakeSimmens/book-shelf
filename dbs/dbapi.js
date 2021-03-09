@@ -16,29 +16,25 @@ async function createMongoAPI(dbConnection, collection){
     // }
 
 
-    // let insert = async function(newData, callback){
+    let insert = async function(newData, callback){
 
-    //   let response;
-    //   const db = dbConnection.db(DB);
-    //   const collection = db.collection(COLLECTION);
+      let response;
 
-    //   try {
-    //       assert.strictEqual(null, err);
+      try {
+          if(!newData.length){
+              response = await COLLECTION.insertOne(newData);
+          } else {
+              response = await COLLECTION.insertMany(newData);
+          }
 
-    //       if(!newData.length){
-    //           response = await collection.insertOne(newData);
-    //       } else {
-    //           response = await collection.insertMany(newData);
-    //       }
+          //await dbConnection.close();
+          callback(newData);
 
-    //       //await dbConnection.close();
-    //       callback(newData);
-
-    //   } catch (err) {
-    //       console.log("Error inserting: ", err);
-    //   }
+      } catch (err) {
+          console.log("Error inserting: ", err);
+      }
         
-    // }
+    }
 
     let findById = function (id, callback){
 
@@ -151,7 +147,7 @@ async function createMongoAPI(dbConnection, collection){
 
     let publicAPI = {
         //setForTesting,
-        //insert,
+        insert,
         findById,
         //findOne,
         //findMany,

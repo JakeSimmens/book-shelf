@@ -28,11 +28,11 @@ app.use(flash());
   //ROUTES
   const indexRoutes = require("./routes/index");
   //const myBookRoutes = require("./routes/myBook");
-  const findBookRoutes = require("./routes/findBook").router;
+  //const findBookRoutes = require("./routes/findBook").router;
 
   app.use("/", indexRoutes);
   //app.use("/myBook", myBookRoutes);
-  app.use("/findBook", findBookRoutes);
+  //app.use("/findBook", findBookRoutes);
 
   //seed database
   //seed();
@@ -41,40 +41,15 @@ app.use(flash());
 initDatabases().then( async databases => {
   console.log("databases initialized");
 
-  let testdb = await testCreateMongoAPI(databases.jReads, "books");
-  console.log("testdb: ", testdb);
-  
+  let booksColl = await testCreateMongoAPI(databases.jReads, "books");
+
   const myBookRoutes = require("./routes/myBook");
-  console.log("myBookRoutes: ", myBookRoutes);
-  const connectedMyBookRoutes = myBookRoutes(testdb);
-  console.log("connectedMyBookRoutes: ", connectedMyBookRoutes);
+  const connectedMyBookRoutes = myBookRoutes(booksColl);
   app.use("/myBook", connectedMyBookRoutes);
 
-  //mybook
-  //show my library book
-  // app.get('/myBook/:id', (req, res) => {
-  //   testdb.findById(req.params.id,
-  //       function renderBookPage(data){
-  //           if(data.length == 0){
-  //               res.redirect("/");
-  //           } else {
-  //               res.render("book", {
-  //                   bookData: data[0],
-  //                   inMyLibrary: true
-  //                   });
-  //           }
-  //       });
-  // });
-
-  //delete
-  // app.delete('/myBook/:id', (req, res) => {
-  //   testdb.deleteOne(req.params.id,
-  //       function redirecToLibrary()
-  //       {
-  //           res.redirect("/");
-  //       });
-  // });
-
+  const findBookRoutes = require("./routes/findBook");
+  const connectedFindBookRoutes = findBookRoutes(booksColl);
+  app.use("/findBook", connectedFindBookRoutes);
 
   const port = process.env.PORT || 3000;
   app.server = app.listen(port, function startServer() {
