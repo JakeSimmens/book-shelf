@@ -8,7 +8,7 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const initDatabases = require("./dbs");
-const {testCreateMongoAPI} = require("./dbs/dbapi.js");
+const {createMongoAPI} = require("./dbs/dbapi.js");
 const flash = require("connect-flash");
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,24 +25,15 @@ app.use(session({
 }));
 app.use(flash());
 
-  //ROUTES
-  //const indexRoutes = require("./routes/index");
-  //const myBookRoutes = require("./routes/myBook");
-  //const findBookRoutes = require("./routes/findBook").router;
-
-  //app.use("/", indexRoutes);
-  //app.use("/myBook", myBookRoutes);
-  //app.use("/findBook", findBookRoutes);
-
-  //seed database
-  //seed();
-
 //initialize databases
 initDatabases().then( async databases => {
   console.log("databases initialized");
 
-  let booksColl = await testCreateMongoAPI(databases.jReads, "books");
-  let usersColl = await testCreateMongoAPI(databases.jReads, "users");
+  let booksColl = await createMongoAPI(databases.jReads, "books");
+  let usersColl = await createMongoAPI(databases.jReads, "users");
+
+  //seed database
+  //seed();
 
   const indexRoutes = require("./routes/index");
   const connectedIndexRoutes = indexRoutes(booksColl, usersColl);
@@ -56,14 +47,10 @@ initDatabases().then( async databases => {
   const connectedFindBookRoutes = findBookRoutes(booksColl);
   app.use("/findBook", connectedFindBookRoutes);
 
-
-
   const port = process.env.PORT || 3000;
   app.server = app.listen(port, function startServer() {
       console.log("jReads running");
   });
 });
-
-
 
 module.exports = app;

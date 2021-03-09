@@ -1,4 +1,4 @@
-const db = require("../database.js");
+const db = require("../dbs/dbapi.js");
 const MongoClient = require("mongodb").MongoClient;
 
 const DATABASE = "jReads";

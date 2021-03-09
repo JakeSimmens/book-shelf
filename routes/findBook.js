@@ -1,13 +1,6 @@
-//const {createMongoAPI} = require("../database.js");
-
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-
-// const DATABASE = "jReads";
-// const BOOKS_COLLECTION = "books";
-// let db = createMongoAPI(DATABASE, BOOKS_COLLECTION);
-
 
 let dbSetupForRoutes = function(dbConnection){
 
@@ -51,43 +44,6 @@ let dbSetupForRoutes = function(dbConnection){
 
   return router;
 }
-//show google book
-// router.get('/:id', async (req, res) => {
-//     const googleBookID = req.params.id;
-//     const url = `https://www.googleapis.com/books/v1/volumes/${googleBookID}`;
-
-//     try {
-//         let response = await axios.get(url);
-//         let bookData = formatBookDataFromGoogle(response.data);
-//         res.render("book", { bookData: bookData, googleBookID: googleBookID,inMyLibrary: false });
-
-//     } catch (err) {
-//         console.log("HTTP error, bad ID for url. ", err.message);
-//         res.redirect("/");
-//     }
-
-// });
-
-//write
-// router.post('/', async (req, res) => {
-//     const googleBookID = req.body.bookID;
-//     const url = `https://www.googleapis.com/books/v1/volumes/${googleBookID}`;
-
-//     try {
-//         let response = await axios.get(url);
-//         let bookData = formatBookDataFromGoogle(response.data);
-
-//         db.insert(bookData,
-//             function redirectToLibrary()
-//             {
-//                 res.redirect("/");
-//             });
-
-//     } catch (err) {
-//         console.log("Error inserting book. ", err.message);
-//         res.redirect("/");
-//     }
-// });
 
 function formatBookDataFromGoogle(data) {
 
