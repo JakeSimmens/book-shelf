@@ -1,17 +1,15 @@
-//const {MONGO_USERNAME, MONGO_PASSWORD} = require("./secrets.js");
-const {seed} = require("./seed.js");
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
-const methodOverride = require("method-override");
-const session = require("express-session");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const initDatabases = require("./dbs");
-const {createMongoAPI} = require("./dbs/dbapi.js");
-const flash = require("connect-flash");
+const {seed}            = require("./seed.js");
+const express           = require("express");
+const app               = express();
+const methodOverride    = require("method-override");
+const session           = require("express-session");
+const passport          = require("passport");
+const LocalStrategy     = require("passport-local").Strategy;
+const initDatabases     = require("./dbs");
+const {createMongoAPI}  = require("./dbs/dbapi.js");
+const flash             = require("connect-flash");
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(methodOverride("_method"))
@@ -36,16 +34,11 @@ initDatabases().then( async databases => {
   //seed();
 
   const indexRoutes = require("./routes/index");
-  const connectedIndexRoutes = indexRoutes(booksColl, usersColl);
-  app.use("/", connectedIndexRoutes);
-
   const myBookRoutes = require("./routes/myBook");
-  const connectedMyBookRoutes = myBookRoutes(booksColl);
-  app.use("/myBook", connectedMyBookRoutes);
-
   const findBookRoutes = require("./routes/findBook");
-  const connectedFindBookRoutes = findBookRoutes(booksColl);
-  app.use("/findBook", connectedFindBookRoutes);
+  app.use("/", indexRoutes(booksColl, usersColl));
+  app.use("/myBook", myBookRoutes(booksColl));
+  app.use("/findBook", findBookRoutes(booksColl));
 
   const port = process.env.PORT || 3000;
   app.server = app.listen(port, function startServer() {
