@@ -2,10 +2,10 @@
 const ObjectId = require("mongodb").ObjectId;
 //const assert = require("assert");
 
-async function createMongoAPI(dbConnection, collection){
+async function createMongoAPI(dbConnection, nameOfCollection){
 
-    const DB = dbConnection;
-    const COLLECTION = DB.collection(collection);
+    const db = dbConnection;
+    const collection = db.collection(nameOfCollection);
     //let isTestRun = false;
 
 
@@ -21,9 +21,9 @@ async function createMongoAPI(dbConnection, collection){
 
       try {
           if(!newData.length){
-              response = await COLLECTION.insertOne(newData);
+              response = await collection.insertOne(newData);
           } else {
-              response = await COLLECTION.insertMany(newData);
+              response = await collection.insertMany(newData);
           }
 
           //await dbConnection.close();
@@ -38,7 +38,7 @@ async function createMongoAPI(dbConnection, collection){
     let findById = function (id, callback){
    
       try {
-          COLLECTION.find(ObjectId(id)).toArray((errorFinding, items) => {
+          collection.find(ObjectId(id)).toArray((errorFinding, items) => {
               if(errorFinding){
                   console.log(errorFinding);
                   throw "Error thrown from findById";
@@ -59,7 +59,7 @@ async function createMongoAPI(dbConnection, collection){
     let findOne = async function(term, callback){
     
       try {
-          let cursor = COLLECTION.find(term).limit(1);
+          let cursor = collection.find(term).limit(1);
 
           if(!cursor.hasNext()){
               throw err;
@@ -76,7 +76,7 @@ async function createMongoAPI(dbConnection, collection){
     let findMany = function(term, callback){
     
       try {
-          COLLECTION.find(term).toArray((err, items) => {
+          collection.find(term).toArray((err, items) => {
               if(err){
                   console.log(err);
                   throw err;
@@ -94,7 +94,7 @@ async function createMongoAPI(dbConnection, collection){
       try {
             let objId = new ObjectId(deleteID);
 
-          let result = await COLLECTION.deleteOne({_id: objId});
+          let result = await collection.deleteOne({_id: objId});
           //await client.close();
           callback(result);
       } catch (err) {
@@ -107,7 +107,7 @@ async function createMongoAPI(dbConnection, collection){
 
       try {
 
-          let result = await COLLECTION.deleteMany({});
+          let result = await collection.deleteMany({});
           //await client.close();
           callback(result);
       } catch (err) {
