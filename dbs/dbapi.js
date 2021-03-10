@@ -89,6 +89,25 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       }
     }
 
+    let updateOne = async function(term, updates, callback){
+      //term is an object key:value pair
+      //updates object of key:vale pairs
+
+      let response;
+      let formattedUpdates = updates; //{ $set: updates};
+
+      try {
+
+          response = await collection.updateOne(term, formattedUpdates);
+
+          callback(response);
+
+      } catch (err) {
+          console.log("Error inserting: ", err);
+      }
+        
+    }
+
     let deleteOne = async function (deleteID, callback){
       
       try {
@@ -122,6 +141,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
         findById,
         findOne,
         findMany,
+        updateOne,
         deleteOne,
         clearDB
     };

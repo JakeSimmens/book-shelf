@@ -25,11 +25,29 @@ let connectToDb = function(booksDbConnection){
       });
   });
 
-  //get comment
+  //add comment
   router.post('/:id/comments', (req, res) => {
-    //booksDbConnection.update();
-    res.send("comment received");
+    console.log("req id: ", req.params.id);
+    booksDbConnection.updateOne(
+      {id: req.params.id},
+      {
+        $push: {
+          comments: {
+            username: req.currentUser,
+            message: req.body.message,
+            date: "1/1/2021"
+          }
+        }
+      },
+      (result) => {
+
+        console.log("comment updated");
+
+      });
+
+    res.redirect("/");
   });
+
   //add comment
   //delete comment
   //get reply
