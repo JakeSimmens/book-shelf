@@ -29,6 +29,7 @@ initDatabases().then( async databases => {
 
   let booksColl = await createMongoAPI(databases.jReads, "books");
   let usersColl = await createMongoAPI(databases.jReads, "users");
+  //let commentsColl = await createMongoAPI(databases.jReads, "comments");
 
   //seed database
   //seed();
