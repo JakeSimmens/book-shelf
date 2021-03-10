@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
-let dbSetupForRoutes = function(dbConnection){
+let connectToDb = function(dbConnection){
 
   //show google book
   router.get('/:id', async (req, res) => {
@@ -65,5 +65,5 @@ function formatBookDataFromGoogle(data) {
     return extractedData;
 }
 
-module.exports = dbSetupForRoutes;
+module.exports = connectToDb;
 //module.exports = {router, formatBookDataFromGoogle};
