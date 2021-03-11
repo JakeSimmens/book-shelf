@@ -33,7 +33,7 @@ let connectToDb = function(booksDbConnection){
       {
         $push: {
           comments: {
-            username: req.currentUser,
+            username: req.body.username,
             message: req.body.message,
             date: middleware.getDateAndTime()
           }
