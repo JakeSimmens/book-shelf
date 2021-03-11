@@ -96,7 +96,7 @@
           <article class="media">
             <div class="media-content">
               <div class="box content">
-                <form action="/myBook/<%=bookData.id%>/comments" method="POST">
+                <form action="/myBook/<%=bookData._id%>/comments?id=<%bookData.id%>" method="POST">
                   <div class="field">
                     <p class="control">
                       <textarea name="message" cols="30" rows="5" class="textarea" placeholder="Your thoughts..."></textarea>
