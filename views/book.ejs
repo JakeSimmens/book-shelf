@@ -97,7 +97,7 @@
             <div class="media-content">
               <div class="box content">
                 <% if(currentUser){ %>
-                  <form action="/myBook/<%=bookData._id%>/comments?id=<%bookData.id%>" method="POST">
+                  <form action="/myBook/<%=bookData._id%>/comments%>" method="POST">
                     <input name="username" type="text" value="<%=currentUser%>" hidden>
                     <div class="field">
                       <p class="control">
@@ -118,22 +118,30 @@
           </article>
           <% if(bookData.comments){ %>
             <% for(let i=bookData.comments.length-1; i>=0; i--){ %>
-              <article class="media">
-                <div class="media-content">
-                  <div class="box content">
-                    <p>
-                      <strong><%=bookData.comments[i].username%></strong>
-                      <small> · <%=bookData.comments[i].date%></small>
-                      <br>
-                      <%=bookData.comments[i].message%>
-                      <br>
-                      <% if(bookData.comments[i].replies){ %>
-                        <button class="button is-small">Show Replies</button>
-                      <% } %>
-                    </p>
+              <% if(!bookData.comments[i].deleted){ %>
+                <article class="media">
+                  <div class="media-content">
+                    <div class="box content">
+                      <p>
+                        <strong><%=bookData.comments[i].username%></strong>
+                        <small> · <%=bookData.comments[i].date%></small>
+                        <br>
+                        <%=bookData.comments[i].message%>
+                        <br>
+                        <% if(bookData.comments[i].replies){ %>
+                          <button class="button is-small">Show Replies</button>
+                        <% } %>
+                        <% if(currentUser === bookData.comments[i].username){ %>
+                          <form action="/myBook/<%=bookData._id%>/comments%>" method="DELETE">
+                            <button class="button is-small is-danger">Delete</button>
+                          </form>
+                        <% } %>
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              <% } %>
+
             <% } %>
           <% } %>
         </div>
