@@ -113,17 +113,17 @@
             </div>
           </article>
           <% if(bookData.comments){ %>
-            <% for(let comment of bookData.comments){ %>
+            <% for(let i=bookData.comments.length-1; i>=0; i--){ %>
               <article class="media">
                 <div class="media-content">
                   <div class="box content">
                     <p>
-                      <strong><%=comment.username%></strong>
-                      <small> · <%=comment.date%></small>
+                      <strong><%=bookData.comments[i].username%></strong>
+                      <small> · <%=bookData.comments[i].date%></small>
                       <br>
-                      <%=comment.message%>
+                      <%=bookData.comments[i].message%>
                       <br>
-                      <% if(comment.replies){ %>
+                      <% if(bookData.comments[i].replies){ %>
                         <button class="button is-small">Show Replies</button>
                       <% } %>
                     </p>
