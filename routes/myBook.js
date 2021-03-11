@@ -29,23 +29,23 @@ let connectToDb = function(booksDbConnection){
   router.post('/:id/comments', (req, res) => {
     console.log("req id: ", req.params.id);
     booksDbConnection.updateOne(
-      {id: req.params.id},
+      {_id: req.params.id},
       {
         $push: {
           comments: {
             username: req.currentUser,
             message: req.body.message,
-            date: "1/1/2021"
+            date: middleware.getDateAndTime()
           }
         }
       },
       (result) => {
 
-        console.log("comment updated");
+        console.log("Update result count:", result.modifiedCount);
 
       });
 
-    res.redirect("/");
+    res.redirect(`/myBook/${req.params.id}`);
   });
 
   //add comment

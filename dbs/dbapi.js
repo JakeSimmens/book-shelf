@@ -90,7 +90,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let updateOne = async function(term, updates, callback){
-      //term is an object key:value pair
+      //term is key:value pair
       //updates object of key:vale pairs
 
       let response;
@@ -98,7 +98,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       try {
 
-          response = await collection.updateOne(term, formattedUpdates);
+          response = await collection.updateOne({ _id: ObjectId(term._id)}, formattedUpdates);
 
           callback(response);
 

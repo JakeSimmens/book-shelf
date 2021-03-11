@@ -12,6 +12,8 @@ const debouncer = (callback, delay = 1000) => {
     };
 };
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Get all "navbar-burger" elements
