@@ -1,8 +1,57 @@
+const ObjectId = require("mongodb").ObjectId;
 const middleware = require("../middleware");
 const express = require("express");
 const router = express.Router();
 
 let connectToDb = function(booksDbConnection){
+
+  //add comment
+  router.post('/:id/comments', (req, res) => {
+    booksDbConnection.updateOne(
+      {_id: req.params.id},
+      {
+        $push: {
+          comments: {
+            username: req.body.username,
+            message: req.body.message,
+            date: middleware.getDateAndTime()
+          }
+        }
+      },
+      (result) => {
+
+        console.log("Update result count:", result.modifiedCount);
+
+      });
+
+    res.redirect(`/myBook/${req.params.id}`);
+  });
+
+  router.delete('/:id/comments/:commentId', (req, res) => {
+    booksDbConnection.findById(
+      req.params.id,
+      // {
+      //   $set: {
+      //     comments[req.params.commentId].deleted: true;
+      //     }
+      //   }
+      // },
+      (result) => {
+
+        console.log("Update result count:", result);
+
+      });
+
+    res.redirect(`/myBook/${req.params.id}`);
+  });
+
+  //add comment
+  //delete comment
+  //get reply
+  //add reply
+  //delete reply
+
+
   router.get('/:id', (req, res) => {
     booksDbConnection.findById(req.params.id,
       function renderBookPage(data){
@@ -25,34 +74,7 @@ let connectToDb = function(booksDbConnection){
       });
   });
 
-  //add comment
-  router.post('/:id/comments', (req, res) => {
-    console.log("req id: ", req.params.id);
-    booksDbConnection.updateOne(
-      {_id: req.params.id},
-      {
-        $push: {
-          comments: {
-            username: req.body.username,
-            message: req.body.message,
-            date: middleware.getDateAndTime()
-          }
-        }
-      },
-      (result) => {
 
-        console.log("Update result count:", result.modifiedCount);
-
-      });
-
-    res.redirect(`/myBook/${req.params.id}`);
-  });
-
-  //add comment
-  //delete comment
-  //get reply
-  //add reply
-  //delete reply
 
   return router;
 }

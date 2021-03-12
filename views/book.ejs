@@ -132,9 +132,9 @@
                           <button class="button is-small">Show Replies</button>
                         <% } %>
                         <% if(currentUser === bookData.comments[i].username){ %>
-                          <form action="/myBook/<%=bookData._id%>/comments%>" method="DELETE">
-                            <button class="button is-small is-danger">Delete</button>
-                          </form>
+                          <form action="/myBook/<%=bookData._id%>/comments/<%=i%>?_method=DELETE" method="POST">
+                            <button class="button is-danger is-small">Delete</button>
+                        </form>
                         <% } %>
                       </p>
                     </div>
