@@ -89,9 +89,30 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       }
     }
 
-    let updateOne = async function(query, valueToUpdate, callback){
+    let addComment = async function(bookId, comment, callback){
       //term is key:value pair
       //updates object of key:vale pairs
+
+      let query = {_id: ObjectId(bookId)};
+      let update = { $push: comment};
+
+      try {
+          let response = await collection.updateOne(query, update);
+          callback(response);
+      } catch (err) {
+          console.log("Error inserting: ", err);
+      }
+        
+    }
+
+    let deleteComment = async function(bookId, commentId, callback){
+      //term is key:value pair
+      //updates object of key:vale pairs
+
+      let query = {_id: ObjectId(bookId)};
+      let valueToUpdate = {
+        $set: {["comments."+commentId+".deleted"]: true}
+      };
 
       try {
           let response = await collection.updateOne(query, valueToUpdate);
@@ -136,7 +157,8 @@ async function createMongoAPI(dbConnection, nameOfCollection){
         findById,
         findOne,
         findMany,
-        updateOne,
+        addComment,
+        deleteComment,
         deleteOne,
         clearDB
     };

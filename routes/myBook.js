@@ -7,50 +7,30 @@ let connectToDb = function(booksDbConnection){
 
   //add comment
   router.post('/:id/comments', (req, res) => {
-    booksDbConnection.updateOne(
-      {_id: req.params.id},
-      {
-        $push: {
-          comments: {
-            username: req.body.username,
-            message: req.body.message,
-            date: middleware.getDateAndTime()
-          }
+    //need _id, and comment object to push
+
+    booksDbConnection.addComment(
+      req.params.id,
+      { comments: {
+          username: req.body.username,
+          message: req.body.message,
+          date: middleware.getDateAndTime()
         }
       },
       (result) => {
-
         console.log("Update result count:", result.modifiedCount);
-
+        res.redirect(`/myBook/${req.params.id}`);
       });
-
-    res.redirect(`/myBook/${req.params.id}`);
   });
 
   router.delete('/:id/comments/:commentId', (req, res) => {
-    // booksDbConnection.findById(
-    //   req.params.id,
-    //   // {
-    //   //   $set: {
-    //   //     comments[req.params.commentId].deleted: true;
-    //   //     }
-    //   //   }
-    //   // },
-    //   (result) => {
-    //     console.log("Update result count:", result[0].comments);
-    //   });
 
-      let updateField = "comments." + req.params.commentId;
-      let query = {_id: ObjectId(req.params.id)};
-      let update = {$set: {
-        ["comments."+req.params.commentId+".deleted"]: true
-      }};
-    
-      booksDbConnection.updateOne(query, update, (result) =>{
+      booksDbConnection.deleteComment(req.params.id, req.params.commentId, (result) =>{
         console.log("update done");
-        console.log(result);
-      });
+        //console.log(result);
+        res.redirect(`/myBook/${req.params.id}`);
 
+      });
   });
 
   //add comment
