@@ -96,40 +96,52 @@
           <article class="media">
             <div class="media-content">
               <div class="box content">
-                <form action="/myBook/<%=bookData._id%>/comments?id=<%bookData.id%>" method="POST">
-                  <div class="field">
-                    <p class="control">
-                      <textarea name="message" cols="30" rows="5" class="textarea" placeholder="Your thoughts..."></textarea>
-                    </p>
-                  </div>
-                  <div class="field">
-                    <p class="control">
-                      <button class="button">Post Comment</button>
-                    </p>
-                  </div>
-                </form>
-
+                <% if(currentUser){ %>
+                  <form action="/myBook/<%=bookData._id%>/comments%>" method="POST">
+                    <input name="username" type="text" value="<%=currentUser%>" hidden>
+                    <div class="field">
+                      <p class="control">
+                        <textarea name="message" cols="30" rows="5" class="textarea" placeholder="Your thoughts..."></textarea>
+                      </p>
+                    </div>
+                    <div class="field">
+                      <p class="control">
+                        <button class="button">Post Comment</button>
+                      </p>
+                    </div>
+                  </form>
+                <% } else { %>
+                  <p class="title is-5">Please <a href="/register">sign up</a> or <a href="/login">log in</a> to post a comment.</p>
+                <% } %>
               </div>
             </div>
           </article>
           <% if(bookData.comments){ %>
-            <% for(let comment of bookData.comments){ %>
-              <article class="media">
-                <div class="media-content">
-                  <div class="box content">
-                    <p>
-                      <strong><%=comment.username%></strong>
-                      <small> · <%=comment.date%></small>
-                      <br>
-                      <%=comment.message%>
-                      <br>
-                      <% if(comment.replies){ %>
-                        <button class="button is-small">Show Replies</button>
-                      <% } %>
-                    </p>
+            <% for(let i=bookData.comments.length-1; i>=0; i--){ %>
+              <% if(!bookData.comments[i].deleted){ %>
+                <article class="media">
+                  <div class="media-content">
+                    <div class="box content">
+                      <p>
+                        <strong><%=bookData.comments[i].username%></strong>
+                        <small> · <%=bookData.comments[i].date%></small>
+                        <br>
+                        <%=bookData.comments[i].message%>
+                        <br>
+                        <% if(bookData.comments[i].replies){ %>
+                          <button class="button is-small">Show Replies</button>
+                        <% } %>
+                        <% if(currentUser === bookData.comments[i].username){ %>
+                          <form action="/myBook/<%=bookData._id%>/comments/<%=i%>?_method=DELETE" method="POST">
+                            <button class="button is-danger is-small">Delete</button>
+                        </form>
+                        <% } %>
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              <% } %>
+
             <% } %>
           <% } %>
         </div>
