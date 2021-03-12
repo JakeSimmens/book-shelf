@@ -28,21 +28,29 @@ let connectToDb = function(booksDbConnection){
   });
 
   router.delete('/:id/comments/:commentId', (req, res) => {
-    booksDbConnection.findById(
-      req.params.id,
-      // {
-      //   $set: {
-      //     comments[req.params.commentId].deleted: true;
-      //     }
-      //   }
-      // },
-      (result) => {
+    // booksDbConnection.findById(
+    //   req.params.id,
+    //   // {
+    //   //   $set: {
+    //   //     comments[req.params.commentId].deleted: true;
+    //   //     }
+    //   //   }
+    //   // },
+    //   (result) => {
+    //     console.log("Update result count:", result[0].comments);
+    //   });
 
-        console.log("Update result count:", result);
-
+      let updateField = "comments." + req.params.commentId;
+      let query = {_id: ObjectId(req.params.id)};
+      let update = {$set: {
+        ["comments."+req.params.commentId+".deleted"]: true
+      }};
+    
+      booksDbConnection.updateOne(query, update, (result) =>{
+        console.log("update done");
+        console.log(result);
       });
 
-    res.redirect(`/myBook/${req.params.id}`);
   });
 
   //add comment
