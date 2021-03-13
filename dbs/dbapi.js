@@ -124,6 +124,21 @@ async function createMongoAPI(dbConnection, nameOfCollection){
         
     }
 
+    let addUserBook = async function(username, bookId){
+
+      let query = {username: username};
+      let idToAdd = {
+        $push: {library: ObjectId(bookId)}
+      };
+
+      try {
+          await collection.updateOne(query, idToAdd);
+
+      } catch (err) {
+          console.log("Error inserting: ", err);
+      }
+    }
+
     let deleteOne = async function (deleteID, callback){
       
       try {
@@ -157,6 +172,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
         findById,
         findOne,
         findMany,
+        addUserBook,
         addComment,
         deleteComment,
         deleteOne,
