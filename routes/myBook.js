@@ -7,8 +7,8 @@ let connectToDb = function(booksDbConnection){
 
   //add comment
   router.post('/:id/comments', (req, res) => {
-    //need _id, and comment object to push
-
+    
+    //needs id, and comment object to push
     booksDbConnection.addComment(
       req.params.id,
       { comments: {

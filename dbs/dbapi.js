@@ -18,17 +18,14 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     let insert = async function(newData, callback){
 
       let response;
-
       try {
           if(!newData.length){
               response = await collection.insertOne(newData);
           } else {
               response = await collection.insertMany(newData);
           }
-
-          //await dbConnection.close();
-          callback(newData);
-
+          callback(response);
+          
       } catch (err) {
           console.log("Error inserting: ", err);
       }
@@ -124,6 +121,21 @@ async function createMongoAPI(dbConnection, nameOfCollection){
         
     }
 
+    let addUserBook = async function(username, bookId){
+
+      let query = {username: username};
+      let idToAdd = {
+        $push: {library: ObjectId(bookId)}
+      };
+
+      try {
+          await collection.updateOne(query, idToAdd);
+
+      } catch (err) {
+          console.log("Error inserting: ", err);
+      }
+    }
+
     let deleteOne = async function (deleteID, callback){
       
       try {
@@ -157,6 +169,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
         findById,
         findOne,
         findMany,
+        addUserBook,
         addComment,
         deleteComment,
         deleteOne,

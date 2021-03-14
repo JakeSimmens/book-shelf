@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
-let connectToDb = function(dbConnection){
+let connectToDb = function(booksDbConn, usersDbConn){
 
   //show google book
   router.get('/:id', async (req, res) => {
@@ -30,16 +30,23 @@ let connectToDb = function(dbConnection){
         let response = await axios.get(url);
         let bookData = formatBookDataFromGoogle(response.data);
 
-        dbConnection.insert(bookData,
-            function redirectToLibrary()
+        if(req.user){
+          await booksDbConn.insert(bookData,
+            function addToUserLibrary(result)
             {
-                res.redirect("/");
+
+              usersDbConn.addUserBook(req.user, result.ops[0]._id);
             });
+        } else {
+          console.log("Book not added, need to log in");
+        }
+
 
     } catch (err) {
         console.log("Error inserting book. ", err.message);
-        res.redirect("/");
+
     }
+    res.redirect("/");
   });
 
   return router;
