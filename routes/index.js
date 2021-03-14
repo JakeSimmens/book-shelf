@@ -6,6 +6,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const bcrypt = require("bcrypt");
+const ObjectId = require("mongodb").ObjectId;
 
 const MAX_BOOKS_PER_SHELF = 5;
 const saltRounds = 10;
@@ -70,14 +71,41 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
   //index
   router.get("/", (req, res) => {
     req.flash("info", "welcome");
-    booksdbConnection.findMany({},
-      function renderLibraryPage(data){
-        res.render("home", {
-          myLibrary: data,
-          maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
-          message: req.flash("info")
+    if(req.user){
+      console.log("user signed in, get library");
+      usersdbConnection.findOne({username: req.user},
+        async function(err, user){
+          if(!user.library || err) {
+              res.render("home", {
+                  myLibrary: [],
+                  maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+                  message: req.flash("info")
+                });
+            
+          } else {
+            booksdbConnection.findMany({_id: { $in: user.library}},
+              function renderLibraryPage(data){
+                console.log("books found: ", data.length);
+                res.render("home", {
+                  myLibrary: data,
+                  maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+                  message: req.flash("info")
+                });
+            });
+          }
+
         });
-    });
+
+    } else {
+      booksdbConnection.findMany({},
+        function renderLibraryPage(data){
+          res.render("home", {
+            myLibrary: data,
+            maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+            message: req.flash("info")
+          });
+      });
+    }
   });
 
   router.get("/register", (req, res) => {
