@@ -32,9 +32,10 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
         if(req.user){
           await booksDbConn.insert(bookData,
-            function addToUserLibrary(bookId)
+            function addToUserLibrary(result)
             {
-              usersDbConn.addUserBook(req.user, bookId);
+
+              usersDbConn.addUserBook(req.user, result.ops[0]._id);
             });
         } else {
           console.log("Book not added, need to log in");

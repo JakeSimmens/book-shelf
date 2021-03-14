@@ -18,7 +18,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     let insert = async function(newData, callback){
 
       let response;
-
+      console.log(newData);
       try {
           if(!newData.length){
               response = await collection.insertOne(newData);
@@ -26,9 +26,10 @@ async function createMongoAPI(dbConnection, nameOfCollection){
               response = await collection.insertMany(newData);
           }
 
-          //console.log("Insert response: ", response.ops[0]._id);
-          callback(response.ops[0]._id);
-
+          console.log("Insert response: ", response);
+          //callback(response.ops[0]._id);
+          callback(response);
+          
       } catch (err) {
           console.log("Error inserting: ", err);
       }

@@ -100,8 +100,10 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
             if(err){
               return res.redirect("/login");
             }
-            usersdbConnection.insert({username: username, password: hash}, (user) => {
+            usersdbConnection.insert({username: username, password: hash}, (userData) => {
+              let user = userData.ops[0].username;
               req.login(user, (err)=>{
+                console.log("login err: ", err);
                 if(err){
                   return next(err);
                 }
