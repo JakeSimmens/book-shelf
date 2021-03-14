@@ -26,7 +26,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
               response = await collection.insertMany(newData);
           }
 
-          console.log("Insert response: ", response);
+          console.log("insert done");
           //callback(response.ops[0]._id);
           callback(response);
           
