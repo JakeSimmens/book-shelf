@@ -18,16 +18,12 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     let insert = async function(newData, callback){
 
       let response;
-      console.log(newData);
       try {
           if(!newData.length){
               response = await collection.insertOne(newData);
           } else {
               response = await collection.insertMany(newData);
           }
-
-          console.log("insert done");
-          //callback(response.ops[0]._id);
           callback(response);
           
       } catch (err) {
