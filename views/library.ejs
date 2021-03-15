@@ -5,37 +5,34 @@
         <div class="columns">
             <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame">
                 <% if(currentUser){ %>
-                    <h3 class="is-3 is-capitalized"><%=currentUser%>'s Book Collection</h3>
-                    <br><p><a href="/library">jReads Collection</a></p>
+                  <h3 class="is-3">jReads Collection</h3>
+                  <p>Every book listed in our users' libraries.</p><br>
+                  <h4 class="is-4 is-capitalized"><a href="/">Your Collection</a></h4>
                 <% } else { %>
-                    <h3 class="is-3">Welcome!</h3>
-                    <p>Please <a href="/register">sign up</a> or <a href="/login">log in</a> to create your own book list.</p>
+                  <h3 class="is-3">jReads Collection</h3>
+                  <p>Every book listed in our user's libraries.</p><br><br>
+                  <p>Please <a href="/register">sign up</a> or <a href="/login">log in</a> to create your own book list.</p>
                 <% } %>
+
             </div>
             <div class="column is-three-quarters is-four-fifths-desktop">
               <div class="container shelves">
                 <div class="columns is-centered is-multiline is-mobile">
-                  <% if(myLibrary.length === 0 ){ %>
+                  <% if(library.length === 0 ){ %>
                     <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
                       <div class="box bookCard is-primary">
                         <p>To add a book, use the search in the navbar.</p>
                       </div>
                     </div>
-                    <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
-                      <div class="box bookCard">
-                        <p>Get inspired by what other users have picked.</p>
-                        <p><a href="">Take a look.</a></p>
-                      </div>
-                    </div>
                   <% } %>
-                  <% for(let i = 0; i < myLibrary.length; i++){ %>
+                  <% for(let i = 0; i < library.length; i++){ %>
                     <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
                       <div class="box bookCard">
-                        <a href="/myBook/<%=myLibrary[i]._id%>">
+                        <a href="/myBook/<%=library[i]._id%>">
                           <figure class="image">
-                            <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="Book cover for <%=myLibrary[i].title%>">
+                            <img src= <%=library[i].imageLinks.thumbnail%> alt="Book cover for <%=library[i].title%>">
                             <figcaption>
-                                <%=myLibrary[i].title%>
+                                <%=library[i].title%>
                             </figcaption>
                           </figure>
                           </a>

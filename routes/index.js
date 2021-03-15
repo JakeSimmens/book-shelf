@@ -108,6 +108,17 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
     }
   });
 
+  router.get("/library", (req, res) => {
+    booksdbConnection.findMany({},
+      function renderLibraryPage(data){
+        res.render("library", {
+          library: data,
+          maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+          message: req.flash("info")
+        });
+    });
+  });
+
   router.get("/register", (req, res) => {
     res.render("register");
   })
