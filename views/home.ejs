@@ -13,24 +13,38 @@
 
             </div>
             <div class="column is-three-quarters is-four-fifths-desktop">
-                <div class="container shelves">
-                    <div class="columns is-centered is-multiline is-mobile">
-                        <% for(let i = 0; i < myLibrary.length; i++){ %>
-                            <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
-                                <div class="box bookCard">
-                                    <a href="/myBook/<%=myLibrary[i]._id%>">
-                                        <figure class="image">
-                                            <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="Book cover for <%=myLibrary[i].title%>">
-                                            <figcaption>
-                                                <%=myLibrary[i].title%>
-                                            </figcaption>
-                                        </figure>
-                                     </a>
-                                </div>
-                            </div>
-                        <% } %>       
+              <div class="container shelves">
+                <div class="columns is-centered is-multiline is-mobile">
+                  <% if(myLibrary.length === 0 ){ %>
+                    <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
+                      <div class="box bookCard is-primary">
+                        <p>To add a book, use the search in the navbar.</p>
+                      </div>
                     </div>
+                    <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
+                      <div class="box bookCard">
+                        <p>Get inspired by what other users have picked.</p>
+                        <p><a href="">Take a look.</a></p>
+                      </div>
+                    </div>
+                  <% } %>
+                  <% for(let i = 0; i < myLibrary.length; i++){ %>
+                    <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
+                      <div class="box bookCard">
+                        <a href="/myBook/<%=myLibrary[i]._id%>">
+                          <figure class="image">
+                            <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="Book cover for <%=myLibrary[i].title%>">
+                            <figcaption>
+                                <%=myLibrary[i].title%>
+                            </figcaption>
+                          </figure>
+                          </a>
+                      </div>
+                    </div>
+                  <% } %>  
+
                 </div>
+              </div>
             </div>
     </section>
 </div>

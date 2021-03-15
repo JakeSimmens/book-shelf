@@ -48,7 +48,9 @@ let connectToDb = function(booksDbConnection){
         } else {
           res.render("book", {
             bookData: data[0],
-            inMyLibrary: true
+            inMyLibrary: true,
+            showComments: true
+
             });
         }
       });

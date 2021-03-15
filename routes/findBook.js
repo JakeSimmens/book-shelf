@@ -12,7 +12,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
     try {
         let response = await axios.get(url);
         let bookData = formatBookDataFromGoogle(response.data);
-        res.render("book", { bookData: bookData, googleBookID: googleBookID,inMyLibrary: false });
+        res.render("book", { bookData: bookData, googleBookID: googleBookID,inMyLibrary: false, showComments: false });
 
     } catch (err) {
         console.log("HTTP error, bad ID for url. ", err.message);
@@ -32,10 +32,10 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
         if(req.user){
           await booksDbConn.insert(bookData,
-            function addToUserLibrary(result)
+            async function addToUserLibrary(result)
             {
 
-              usersDbConn.addUserBook(req.user, result.ops[0]._id);
+              await usersDbConn.addUserBook(req.user, result.ops[0]._id);
             });
         } else {
           console.log("Book not added, need to log in");
