@@ -31,12 +31,19 @@ let connectToDb = function(booksDbConn, usersDbConn){
         let bookData = formatBookDataFromGoogle(response.data);
 
         if(req.user){
-          await booksDbConn.insert(bookData,
-            async function addToUserLibrary(result)
-            {
 
-              await usersDbConn.addUserBook(req.user, result.ops[0]._id);
-            });
+          await booksDbConn.findOne({id: bookData.id}, async (err, bookInDb)=>{
+            if(bookInDb){
+              await usersDbConn.addUserBook(req.user, bookInDb._id);
+            } else {
+              await booksDbConn.insert(bookData,
+                async function addToUserLibrary(result)
+                {
+                  await usersDbConn.addUserBook(req.user, result.ops[0]._id);
+                });
+            }
+          });
+
         } else {
           console.log("Book not added, need to log in");
         }
