@@ -12,6 +12,17 @@ section {
     height: 100%;
     width: 100%;
 }
+
+.parallax-splash {
+    background-image: url("../images/libraryCurveCeiling-donatella-d-anniballe.jpg");
+    /* background-image: url("../images/darkLibraryBulbs-janko-ferlic.jpg"); */
+    background-position: right 48% bottom 0;
+    position: fixed;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+}
+
 .container {
     margin: 5px;
 }
@@ -129,6 +140,11 @@ section {
 .wrapper {
     /* used to push footer to bottom of screen */
     min-height: calc(100vh - 112px);
+}
+
+.wrapper-splash {
+    /* used to push footer to bottom of screen */
+    min-height: calc(100vh - 65px);
 }
 
 footer {

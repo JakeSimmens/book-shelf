@@ -68,6 +68,11 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
   //ROUTES
   ///////////////
 
+  router.get("/splash", (req, res) => {
+    res.render("splash");
+    //res.send("splash page");
+  });
+
   //index
   router.get("/", (req, res) => {
     req.flash("info", "welcome");

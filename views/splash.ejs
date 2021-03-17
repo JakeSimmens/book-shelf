@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="/stylesheets/home.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <title>jReads</title>
+</head>
+<body>
+
+  <div class="parallax-splash"></div>
+
+
+<div class="wrapper-splash">
+  <section class="section">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="container shelves">
+          <h1 class="title is-1 has-text-light has-text-centered">Welcome to jReads</h1>
+
+          <form action="/login" method="POST">
+            <div class="field is-horizontal">
+              <div class="field-label is-medium">
+                <label for="username" class="label has-text-light">Username</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-medium" type="text" name="username" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-medium">
+                <label for="password" class="label has-text-light">Password</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-medium" type="password" name="password" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-grouped is-grouped-centered">
+                  <div class="control">
+                    <button class="button is-success is-medium">Login</button>
+                  </div>
+                  <div class="control">
+                    <a href="/" class="button is-info is-medium">Guest</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+
+  <div class="container">
+    <span class="is-size-7">Photo by <a href="https://unsplash.com/@donapuntotella?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Donatella D'Anniballe</a> on <a href="/s/photos/library?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+    </span>
+  
+  </div>
+
+</footer>
+
+</body>
+</html>
