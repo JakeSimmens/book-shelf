@@ -31,7 +31,7 @@ section {
 @media (max-width: 768px){
   .parallax-splash{
     background-position: top left;
-    transition: background-position 2s;
+    transition: background-position 3s;
   }
 }
 
