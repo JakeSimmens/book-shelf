@@ -13,14 +13,31 @@ section {
     width: 100%;
 }
 
+.section-splash{
+  margin-top: 25%;
+}
+
 .parallax-splash {
-    background-image: url("../images/libraryCurveCeiling-donatella-d-anniballe.jpg");
-    /* background-image: url("../images/darkLibraryBulbs-janko-ferlic.jpg"); */
-    background-position: right 48% bottom 0;
+    /* background-image: url("../images/libraryCurveCeiling-donatella-d-anniballe.jpg"); */
+    background-image: url("../images/darkLibraryBulbs-janko-ferlic.jpg");
+    background-position: top center;
+    transition: background-position 3s;
     position: fixed;
     z-index: -1;
     height: 100%;
     width: 100%;
+}
+
+@media (max-width: 768px){
+  .parallax-splash{
+    background-position: top left;
+    transition: background-position 2s;
+  }
+}
+
+
+.button-splash{
+  width: 100px;
 }
 
 .container {
