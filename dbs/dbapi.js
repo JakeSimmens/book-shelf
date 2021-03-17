@@ -136,6 +136,19 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       }
     }
 
+    let deleteUserBook = async function(username, bookId, callback){
+
+      let query = {username: username};
+      let updateAction = { $pull: { library: ObjectId(bookId)}};
+
+      try{
+        let response = await collection.updateOne(query, updateAction);
+        callback(response);
+      } catch(err){
+        console.log("Error deleting user book: ", err);
+      }
+    }
+
     let deleteOne = async function (deleteID, callback){
       
       try {
@@ -172,6 +185,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
         addUserBook,
         addComment,
         deleteComment,
+        deleteUserBook,
         deleteOne,
         clearDB
     };

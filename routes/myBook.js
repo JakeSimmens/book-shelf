@@ -70,11 +70,18 @@ let connectToDb = function(booksDbConn, usersDbConn){
   });
 
   router.delete('/:id', middleware.isLoggedIn, (req, res) => {
-    booksDbConn.deleteOne(req.params.id,
-      function redirecToLibrary()
-      {
-        res.redirect("/");
-      });
+    //remove book from user library list
+    usersDbConn.deleteUserBook(req.user, req.params.id, (response)=>{
+      console.log("deleted: ", response);
+      res.redirect("/");
+    });
+
+    // delete book for book db
+    // booksDbConn.deleteOne(req.params.id,
+    //   function redirecToLibrary()
+    //   {
+    //     res.redirect("/");
+    //   });
   });
 
 
