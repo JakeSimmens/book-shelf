@@ -12,17 +12,20 @@
                          <p>
                             <a class="googleBookLink button" href="<%='https://books.google.com/books?id='.concat(bookData.id) %>" target="_blank" rel="noopener noreferrer"></a>
                         </p>
-                        <%if(!inMyLibrary){ %>
-                            <form action="/findBook" method="POST">
-                                <input hidden type="text" name="bookID" value=<%=googleBookID%> >
-                                <button class="button is-success is-small btnAdd">Add Book</button>
-                            </form>
-                        <%} %>
-                        <%if(inMyLibrary){ %>
+                        <%if(currentUser){ %>
+                          <%if(!isGoogleBook && inUserLibrary){ %>
                             <form action="/myBook/<%=bookData._id%>?_method=DELETE" method="POST">
                                 <button class="button is-danger is-small btnDelete">Remove Book</button>
                             </form>
-                        <%} %>
+                          <%} else { %>
+                            <form action="/findBook" method="POST">
+                                <input hidden type="text" name="bookID" value=<%=googleBookId%> >
+                                <button class="button is-success is-small btnAdd">Add Book</button>
+                            </form>
+                          <%} %>
+                        <% } %>
+
+
                     </figcaption>  
 
                 </div>

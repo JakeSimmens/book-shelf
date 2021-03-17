@@ -3,13 +3,13 @@ const middleware = require("../middleware");
 const express = require("express");
 const router = express.Router();
 
-let connectToDb = function(booksDbConnection){
+let connectToDb = function(booksDbConn, usersDbConn){
 
   //add comment
-  router.post('/:id/comments', (req, res) => {
+  router.post('/:id/comments', middleware.isLoggedIn, (req, res) => {
     
     //needs id, and comment object to push
-    booksDbConnection.addComment(
+    booksDbConn.addComment(
       req.params.id,
       { comments: {
           username: req.body.username,
@@ -23,41 +23,54 @@ let connectToDb = function(booksDbConnection){
       });
   });
 
-  router.delete('/:id/comments/:commentId', (req, res) => {
-
-      booksDbConnection.deleteComment(req.params.id, req.params.commentId, (result) =>{
+  router.delete('/:id/comments/:commentId', middleware.isLoggedIn, (req, res) => {
+      booksDbConn.deleteComment(req.params.id, req.params.commentId, (result) =>{
         console.log("update done");
-        //console.log(result);
         res.redirect(`/myBook/${req.params.id}`);
 
       });
   });
 
-  //add comment
-  //delete comment
-  //get reply
-  //add reply
-  //delete reply
-
-
   router.get('/:id', (req, res) => {
-    booksDbConnection.findById(req.params.id,
+    booksDbConn.findById(req.params.id,
       function renderBookPage(data){
         if(data.length == 0){
           res.redirect("/");
         } else {
-          res.render("book", {
-            bookData: data[0],
-            inMyLibrary: true,
-            showComments: true
 
+          if(req.user){
+            let bookFound = false;
+            usersDbConn.findOne({username: req.user}, (err, userData)=>{
+              for(let id of userData.library){
+                if(id == req.params.id){
+                  bookFound = true;
+                  break;
+                }
+              }
+              res.render("book", {
+                bookData: data[0],
+                googleBookId: data[0].id,
+                isGoogleBook: false,
+                inUserLibrary: bookFound,
+                showComments: true
+                });
             });
+
+          } else {
+            res.render("book", {
+              bookData: data[0],
+              googleBookId: data[0].id,
+              isGoogleBook: false,
+              inUserLibrary: false,
+              showComments: true
+              });
+          }
         }
       });
   });
 
-  router.delete('/:id', (req, res) => {
-    booksDbConnection.deleteOne(req.params.id,
+  router.delete('/:id', middleware.isLoggedIn, (req, res) => {
+    booksDbConn.deleteOne(req.params.id,
       function redirecToLibrary()
       {
         res.redirect("/");
