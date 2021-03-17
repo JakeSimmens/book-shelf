@@ -38,7 +38,7 @@ initDatabases().then( async databases => {
   const myBookRoutes = require("./routes/myBook");
   const findBookRoutes = require("./routes/findBook");
   app.use("/", indexRoutes(booksColl, usersColl));
-  app.use("/myBook", myBookRoutes(booksColl));
+  app.use("/myBook", myBookRoutes(booksColl, usersColl));
   app.use("/findBook", findBookRoutes(booksColl, usersColl));
 
   const port = process.env.PORT || 3000;

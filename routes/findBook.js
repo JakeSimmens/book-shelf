@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const middleware = require("../middleware");
 
 let connectToDb = function(booksDbConn, usersDbConn){
 
@@ -12,7 +13,14 @@ let connectToDb = function(booksDbConn, usersDbConn){
     try {
         let response = await axios.get(url);
         let bookData = formatBookDataFromGoogle(response.data);
-        res.render("book", { bookData: bookData, googleBookID: googleBookID,inMyLibrary: false, showComments: false });
+
+        res.render("book", { 
+          bookData: bookData, 
+          googleBookId: googleBookID,
+          isGoogleBook: true,
+          inUserLibrary: false, 
+          showComments: false
+        });
 
     } catch (err) {
         console.log("HTTP error, bad ID for url. ", err.message);
@@ -22,7 +30,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
   });
 
   //write
-  router.post('/', async (req, res) => {
+  router.post('/', middleware.isLoggedIn, async (req, res) => {
     const googleBookID = req.body.bookID;
     const url = `https://www.googleapis.com/books/v1/volumes/${googleBookID}`;
 
