@@ -35,7 +35,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
     booksDbConn.findById(req.params.id,
       function renderBookPage(data){
         if(data.length == 0){
-          res.redirect("/");
+          res.redirect("/home");
         } else {
 
           if(req.user){
@@ -73,7 +73,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
     //remove book from user library list
     usersDbConn.deleteUserBook(req.user, req.params.id, (response)=>{
       console.log("deleted: ", response);
-      res.redirect("/");
+      res.redirect("/home");
     });
 
     // delete book for book db

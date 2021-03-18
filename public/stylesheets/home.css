@@ -126,6 +126,14 @@ section {
     margin-bottom: 5px;
 }
 
+.bookCover figcaption p a{
+    color: lightblue;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+
+
 .hideMe {
     visibility: collapse;
 }

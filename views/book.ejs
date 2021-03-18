@@ -25,6 +25,12 @@
                           <%} %>
                         <% } %>
 
+                        <% if(currentUser){ %>
+                          <p class="is-size-5 is-capitalized pt-5 mb-5"><a href="/home">Your Collection</a></p>
+                          <p class="is-size-5 is-capitalized"><a href="/library">jReads Collection</a></p>
+                        <% } else { %>
+                          <p class="is-size-5 is-capitalized pt-5"><a href="/home">jReads Collection</a></p>
+                        <% } %>
 
                     </figcaption>  
 

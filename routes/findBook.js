@@ -24,7 +24,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
     } catch (err) {
         console.log("HTTP error, bad ID for url. ", err.message);
-        res.redirect("/");
+        res.redirect("/home");
     }
 
   });
@@ -61,7 +61,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
         console.log("Error inserting book. ", err.message);
 
     }
-    res.redirect("/");
+    res.redirect("/home");
   });
 
   return router;
