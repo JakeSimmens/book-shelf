@@ -19,13 +19,14 @@ let connectToDb = function(booksDbConn, usersDbConn){
       },
       (result) => {
         console.log("Update result count:", result.modifiedCount);
+        req.flash("info", "Your comment is posted.");
         res.redirect(`/myBook/${req.params.id}`);
       });
   });
 
   router.delete('/:id/comments/:commentId', middleware.isLoggedIn, (req, res) => {
       booksDbConn.deleteComment(req.params.id, req.params.commentId, (result) =>{
-        console.log("update done");
+        req.flash("info", "Your comment was deleted.");
         res.redirect(`/myBook/${req.params.id}`);
 
       });
@@ -52,7 +53,8 @@ let connectToDb = function(booksDbConn, usersDbConn){
                 googleBookId: data[0].id,
                 isGoogleBook: false,
                 inUserLibrary: bookFound,
-                showComments: true
+                showComments: true,
+                messages: req.flash("info")
                 });
             });
 
@@ -62,7 +64,8 @@ let connectToDb = function(booksDbConn, usersDbConn){
               googleBookId: data[0].id,
               isGoogleBook: false,
               inUserLibrary: false,
-              showComments: true
+              showComments: true,
+              messages: req.flash("info")
               });
           }
         }
@@ -73,6 +76,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
     //remove book from user library list
     usersDbConn.deleteUserBook(req.user, req.params.id, (response)=>{
       console.log("deleted: ", response);
+      req.flash("info", "The book has been removed from your library.");
       res.redirect("/home");
     });
 

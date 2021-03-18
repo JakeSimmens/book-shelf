@@ -1,4 +1,6 @@
+const {SESSION_SECRET} = require("./secrets.js");
 const {seed}            = require("./seed.js");
+const flash             = require("connect-flash");
 const express           = require("express");
 const app               = express();
 const methodOverride    = require("method-override");
@@ -7,7 +9,6 @@ const passport          = require("passport");
 const LocalStrategy     = require("passport-local").Strategy;
 const initDatabases     = require("./dbs");
 const {createMongoAPI}  = require("./dbs/dbapi.js");
-const flash             = require("connect-flash");
 
 app.use(express.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -16,12 +17,13 @@ app.use(methodOverride("_method"))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({
-    secret: "Rise of Skywalker is better than Last Jedi",
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false
     //cookie: { secure: true }  //need to setup https
 }));
 app.use(flash());
+
 
 //initialize databases
 initDatabases().then( async databases => {

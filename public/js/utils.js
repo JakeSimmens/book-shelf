@@ -40,4 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   
+    //event listeners for notification messages
+    let notifications = document.querySelectorAll('.notification .delete');
+    for(let entry of notifications){
+      let displayBox = entry.parentNode;
+
+      entry.addEventListener("click", () => {
+        displayBox.parentNode.removeChild(displayBox);
+      });
+    }
+
   });
+

@@ -19,7 +19,8 @@ let connectToDb = function(booksDbConn, usersDbConn){
           googleBookId: googleBookID,
           isGoogleBook: true,
           inUserLibrary: false, 
-          showComments: false
+          showComments: false,
+          messages: req.flash("info")
         });
 
     } catch (err) {
@@ -41,27 +42,35 @@ let connectToDb = function(booksDbConn, usersDbConn){
         if(req.user){
 
           await booksDbConn.findOne({id: bookData.id}, async (err, bookInDb)=>{
+
             if(bookInDb){
               await usersDbConn.addUserBook(req.user, bookInDb._id);
+              req.flash("info", `${bookData.title} has been added to your library.`);
+              res.redirect(`/myBook/${bookInDb._id}`);
             } else {
               await booksDbConn.insert(bookData,
                 async function addToUserLibrary(result)
                 {
                   await usersDbConn.addUserBook(req.user, result.ops[0]._id);
+                  req.flash("info", `${bookData.title} has been added to your library.`);
+                  res.redirect(`/myBook/${result.ops[0]._id}`);
                 });
             }
           });
 
         } else {
-          console.log("Book not added, need to log in");
+          req.flash("info", "Please login to add a book to your library.");
+          res.redirect("/home");
         }
 
 
     } catch (err) {
-        console.log("Error inserting book. ", err.message);
+      req.flash("info", "Error.  Unable to add book to library.");
+      console.log("Error inserting book. ", err.message);
+      res.redirect("/home");
 
     }
-    res.redirect("/home");
+    
   });
 
   return router;
