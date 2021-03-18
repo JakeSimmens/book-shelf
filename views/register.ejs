@@ -1,6 +1,13 @@
 <%- include("./partials/header") %>
 
 <div class="wrapper">
+  <% if(messages.length > 0){ %>
+    <div class="notification is-link mt-4">
+      <button class="delete mr-2"></button>
+        <p class="has-text-centered has-text-weight-semibold is-size-5"><%=messages[0]%></p>
+    </div>
+  <%}%>
+  
   <section class="section">
     <div class="columns is-centered">
       <div class="column is-8">
