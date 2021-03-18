@@ -17,7 +17,6 @@ app.use(methodOverride("_method"))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({
-    //secret: "Rise of Skywalker is better than Last Jedi",
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false

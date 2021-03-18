@@ -75,7 +75,6 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
 
   //index
   router.get("/home", (req, res) => {
-    req.flash("info", "welcome");
     if(req.user){
       console.log("user signed in, get library");
       usersdbConnection.findOne({username: req.user},
@@ -84,7 +83,7 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
               res.render("home", {
                   myLibrary: [],
                   maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
-                  message: req.flash("info")
+                  messages: req.flash("info")
                 });
             
           } else {
@@ -94,7 +93,7 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
                 res.render("home", {
                   myLibrary: data,
                   maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
-                  message: req.flash("info")
+                  messages: req.flash("info")
                 });
             });
           }
@@ -107,7 +106,7 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
           res.render("home", {
             myLibrary: data,
             maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
-            message: req.flash("info")
+            messages: req.flash("info")
           });
       });
     }
@@ -119,7 +118,7 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
         res.render("library", {
           library: data,
           maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
-          message: req.flash("info")
+          messages: req.flash("info")
         });
     });
   });
@@ -163,7 +162,7 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
   });
 
   router.get("/login", (req, res) => {
-    res.render("login");
+    res.render("login", {messages: req.flash("info")});
   });
 
   router.post("/login", passport.authenticate("local",
@@ -174,7 +173,7 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
 
   router.get("/logout", middleware.isLoggedIn, (req, res) => {
     req.logOut();
-    req.flash("You logged out");
+    req.flash("info","You logged out");
     res.redirect("/home");
   });
 
