@@ -68,8 +68,13 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
   //ROUTES
   ///////////////
 
-  //index
   router.get("/", (req, res) => {
+    res.render("splash");
+    //res.send("splash page");
+  });
+
+  //index
+  router.get("/home", (req, res) => {
     req.flash("info", "welcome");
     if(req.user){
       console.log("user signed in, get library");
@@ -125,7 +130,7 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
 
   router.post("/register", (req, res) => {
     if(!req.body.username){
-        res.redirect("/");
+        res.redirect("/home");
     }
 
     let username = req.body.username;
@@ -149,7 +154,7 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
                 if(err){
                   return next(err);
                 }
-                return res.redirect("/");
+                return res.redirect("/home");
               });
             });
           });
@@ -163,14 +168,14 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
 
   router.post("/login", passport.authenticate("local",
     {
-      successRedirect: "/",
+      successRedirect: "/home",
       failureRedirect: "/login"
     }));
 
   router.get("/logout", middleware.isLoggedIn, (req, res) => {
     req.logOut();
     req.flash("You logged out");
-    res.redirect("/");
+    res.redirect("/home");
   });
 
   return router;

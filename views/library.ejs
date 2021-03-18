@@ -3,13 +3,13 @@
 <div class="wrapper">
     <section class="section">
         <div class="columns">
-            <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame">
+            <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame has-text-centered">
                 <% if(currentUser){ %>
-                  <h3 class="is-3">jReads Collection</h3>
+                  <h3 class="is-3 pb-6">jReads Collection</h3>
                   <p>Every book listed in our users' libraries.</p><br>
-                  <h4 class="is-4 is-capitalized"><a href="/">Your Collection</a></h4>
+                  <p class="is-4 is-capitalized"><a href="/home">Your Collection</a></p>
                 <% } else { %>
-                  <h3 class="is-3">jReads Collection</h3>
+                  <h3 class="is-3 pb-6">jReads Collection</h3>
                   <p>Every book listed in our user's libraries.</p><br><br>
                   <p>Please <a href="/register">sign up</a> or <a href="/login">log in</a> to create your own book list.</p>
                 <% } %>
