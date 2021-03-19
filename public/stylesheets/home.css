@@ -1,3 +1,11 @@
+header body footer {
+  font-family: 'Raleway', sans-serif;
+}
+
+.logo-style {
+  font-family: 'Abril Fatface', cursive;
+}
+
 section {
     max-width: 1215px;
     margin: auto;
