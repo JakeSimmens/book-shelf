@@ -16,7 +16,11 @@
             <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame has-text-centered">
               
                 <% if(currentUser){ %>
-                  <h3 class="is-3 is-capitalized pb-6"><%=currentUser%>'s Book Collection</h3>
+                  <% if(currentUser.charAt(currentUser.length-1)=== "s"){ %>
+                    <h3 class="is-3 is-capitalized pb-6"><%=currentUser%>' Collection</h3>
+                    <% } else { %>
+                    <h3 class="is-3 is-capitalized pb-6"><%=currentUser%>'s Collection</h3>
+                    <% } %>
                   <br><p><a href="/library">jReads Collection</a></p>
               <% } else { %>
                   <h3 class="is-3 pb-6">Welcome!</h3>
