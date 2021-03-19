@@ -142,15 +142,16 @@
                         <strong><%=bookData.comments[i].username%></strong>
                         <small> · <%=bookData.comments[i].date%></small>
                         <br>
-                        <%=bookData.comments[i].message%>
+                        <p><%=bookData.comments[i].message%></p>
                         <br>
                         <% if(bookData.comments[i].replies){ %>
                           <button class="button is-small">Show Replies</button>
                         <% } %>
                         <% if(currentUser === bookData.comments[i].username){ %>
+                          <a class="button is-info is-small" href="/myBook/<%=bookData._id%>/comments/<%=i%>/edit">Edit</a>
                           <form action="/myBook/<%=bookData._id%>/comments/<%=i%>?_method=DELETE" method="POST">
                             <button class="button is-danger is-small">Delete</button>
-                        </form>
+                          </form>
                         <% } %>
                       </p>
                     </div>
