@@ -108,9 +108,9 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       let query = {_id: ObjectId(bookId)};
       let valueToUpdate = {
-        $set: {["comments."+comment.id+".message"]: true},
-        $set: {["comments."+comment.id+".date"]: true},
-        $set: {["comments."+comment.id+".edited"]: true},
+        $set: {["comments."+comment.id+".message"]: comment.message},
+        $set: {["comments."+comment.id+".date"]: comment.date},
+        $set: {["comments."+comment.id+".edited"]: comment.edited},
       };
 
       try {

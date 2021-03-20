@@ -27,16 +27,19 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
   //GET COMMENT TO EDIT
   router.get('/:id/comments/:commentId/edit', middleware.isLoggedIn, (req, res) => {
-    res.render("edit", {
-      comment: {
-        id: 1,
-        message: "hello"
-      },
-      bookId: req.params.id,
-      messages: req.flash("info")
+    booksDbConn.findById(req.params.id, (bookData)=> {
+      let editComment = bookData[0].comments[req.params.commentId];
+      console.log("find comment: ", editComment);
+
+      res.render("edit", {
+        comment: {
+          id: editComment.id,
+          message: editComment.message
+        },
+        bookId: req.params.id,
+        messages: req.flash("info")
+      });
     });
-
-
   });
 
   //UPDATE COMMENT
@@ -55,6 +58,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
     });
   });
 
+  //DELETE COMMENT
   router.delete('/:id/comments/:commentId', middleware.isLoggedIn, (req, res) => {
       booksDbConn.deleteComment(req.params.id, req.params.commentId, (result) =>{
         req.flash("info", "Your comment was deleted.");
