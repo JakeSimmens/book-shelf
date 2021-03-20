@@ -1,7 +1,8 @@
 const ObjectId = require("mongodb").ObjectId;
 const middleware = require("../middleware");
 const express = require("express");
-const router = express.Router();
+//use mergeParams to allow req.params.id to pass thru
+const router = express.Router({mergeParams: true});
 //router.use(express.urlencoded({extended: true}));
 
 let connectToDb = function(booksDbConn, usersDbConn){
@@ -26,14 +27,14 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
 
   //GET COMMENT TO EDIT
-  router.get('/:id/comments/:commentId/edit', middleware.isLoggedIn, (req, res) => {
+  router.get('/:id/comments/:comment_id/edit', middleware.isLoggedIn, (req, res) => {
     booksDbConn.findById(req.params.id, (bookData)=> {
-      let editComment = bookData[0].comments[req.params.commentId];
+      let editComment = bookData[0].comments[req.params.comment_id];
       console.log("find comment: ", editComment);
 
       res.render("edit", {
         comment: {
-          id: editComment.id,
+          id: req.params.comment_id,
           message: editComment.message
         },
         bookId: req.params.id,
@@ -43,14 +44,12 @@ let connectToDb = function(booksDbConn, usersDbConn){
   });
 
   //UPDATE COMMENT
-  router.put('/:id/comments/:commentId', middleware.isLoggedIn, (req, res) => {
+  router.put('/:id/comments/:comment_id', middleware.isLoggedIn, (req, res) => {
     booksDbConn.updateComment(req.params.id,  {
-      comment: {
-        id: req.params.commentId,
-        message: req.body.message,
-        date: middleware.getDateAndTime(),
-        edited: true
-      }
+      id: req.params.comment_id,
+      message: req.body.message,
+      date: middleware.getDateAndTime(),
+      edited: true
     }, (result) =>{
       req.flash("info", "Your comment was updated.");
       res.redirect(`/myBook/${req.params.id}`);
