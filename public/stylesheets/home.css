@@ -25,6 +25,12 @@ section {
   margin-top: 25%;
 }
 
+.login-splash {
+  padding: 20px;
+  background-color: rgba(32, 32, 32, 0.98);
+  border-radius: 20px;
+}
+
 .parallax-splash {
     /* background-image: url("../images/libraryCurveCeiling-donatella-d-anniballe.jpg"); */
     background-image: url("../images/darkLibraryBulbs-janko-ferlic.jpg");
@@ -85,8 +91,6 @@ section {
     padding: 20px;
     background-color: rgba(32, 32, 32, 0.815);
     border-radius: 20px;
-    
-    
 }
 
 .bookCard {

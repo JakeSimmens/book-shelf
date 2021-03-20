@@ -24,8 +24,11 @@
 
 .searchResults {
     position: absolute;  /*parent needs to be position relative to overlay*/
-    width: 400px;
+    width: 325px;
     margin-top: -11px;  /*align to lower part of search box */
+    margin-left: 4px;
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
 .searchResults .dropdown-item {
