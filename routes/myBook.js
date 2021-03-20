@@ -9,8 +9,6 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
   //add comment
   router.post('/:id/comments', middleware.isLoggedIn, (req, res) => {
-    console.log(req.body);
-    //needs id, and comment object to push
     booksDbConn.addComment(
       req.params.id,
       { comments: {
@@ -25,12 +23,10 @@ let connectToDb = function(booksDbConn, usersDbConn){
       });
   });
 
-
   //GET COMMENT TO EDIT
   router.get('/:id/comments/:comment_id/edit', middleware.isLoggedIn, (req, res) => {
     booksDbConn.findById(req.params.id, (bookData)=> {
       let editComment = bookData[0].comments[req.params.comment_id];
-      console.log("find comment: ", editComment);
 
       res.render("edit", {
         comment: {
@@ -109,20 +105,10 @@ let connectToDb = function(booksDbConn, usersDbConn){
   router.delete('/:id', middleware.isLoggedIn, (req, res) => {
     //remove book from user library list
     usersDbConn.deleteUserBook(req.user, req.params.id, (response)=>{
-      console.log("deleted: ", response);
       req.flash("info", "The book has been removed from your library.");
       res.redirect("/home");
     });
-
-    // delete book for book db
-    // booksDbConn.deleteOne(req.params.id,
-    //   function redirecToLibrary()
-    //   {
-    //     res.redirect("/");
-    //   });
   });
-
-
 
   return router;
 }

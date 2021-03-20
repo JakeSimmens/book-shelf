@@ -6,7 +6,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const bcrypt = require("bcrypt");
-const ObjectId = require("mongodb").ObjectId;
+//const ObjectId = require("mongodb").ObjectId;
 
 const MAX_BOOKS_PER_SHELF = 5;
 const saltRounds = 10;
@@ -18,7 +18,6 @@ router.use(session({
 }));
 router.use(passport.initialize());
 router.use(passport.session());
-
 
 let connectToDb = function(booksdbConnection, usersdbConnection){
 
@@ -59,8 +58,6 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
 
   router.use((req, res, next) => {
     res.locals.currentUser = req.user;
-    //res.locals.error = req.flash("error");  //error refers to ejs code
-    //res.locals.success = req.flash("success");  //success refers to ejs code
     next();
   });
 
@@ -78,16 +75,14 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
       usersdbConnection.findOne({username: req.user},
         async function(err, user){
           if(!user.library || err) {
-              res.render("home", {
-                  myLibrary: [],
-                  maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
-                  messages: req.flash("info")
-                });
-            
+            res.render("home", {
+              myLibrary: [],
+              maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+              messages: req.flash("info")
+            });
           } else {
             booksdbConnection.findMany({_id: { $in: user.library}},
               function renderLibraryPage(data){
-                console.log("books found: ", data.length);
                 res.render("home", {
                   myLibrary: data,
                   maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
@@ -95,9 +90,7 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
                 });
             });
           }
-
         });
-
     } else {
       booksdbConnection.findMany({},
         function renderLibraryPage(data){
