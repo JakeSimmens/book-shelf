@@ -1,13 +1,15 @@
 const ObjectId = require("mongodb").ObjectId;
 const middleware = require("../middleware");
 const express = require("express");
-const router = express.Router();
+//use mergeParams to allow req.params.id to pass thru
+const router = express.Router({mergeParams: true});
+//router.use(express.urlencoded({extended: true}));
 
 let connectToDb = function(booksDbConn, usersDbConn){
 
   //add comment
   router.post('/:id/comments', middleware.isLoggedIn, (req, res) => {
-    
+    console.log(req.body);
     //needs id, and comment object to push
     booksDbConn.addComment(
       req.params.id,
@@ -18,12 +20,44 @@ let connectToDb = function(booksDbConn, usersDbConn){
         }
       },
       (result) => {
-        console.log("Update result count:", result.modifiedCount);
         req.flash("info", "Your comment is posted.");
         res.redirect(`/myBook/${req.params.id}`);
       });
   });
 
+
+  //GET COMMENT TO EDIT
+  router.get('/:id/comments/:comment_id/edit', middleware.isLoggedIn, (req, res) => {
+    booksDbConn.findById(req.params.id, (bookData)=> {
+      let editComment = bookData[0].comments[req.params.comment_id];
+      console.log("find comment: ", editComment);
+
+      res.render("edit", {
+        comment: {
+          id: req.params.comment_id,
+          message: editComment.message
+        },
+        bookId: req.params.id,
+        messages: req.flash("info")
+      });
+    });
+  });
+
+  //UPDATE COMMENT
+  router.put('/:id/comments/:comment_id', middleware.isLoggedIn, (req, res) => {
+    booksDbConn.updateComment(req.params.id,  {
+      id: req.params.comment_id,
+      message: req.body.message,
+      date: middleware.getDateAndTime(),
+      edited: true
+    }, (result) =>{
+      req.flash("info", "Your comment was updated.");
+      res.redirect(`/myBook/${req.params.id}`);
+
+    });
+  });
+
+  //DELETE COMMENT
   router.delete('/:id/comments/:commentId', middleware.isLoggedIn, (req, res) => {
       booksDbConn.deleteComment(req.params.id, req.params.commentId, (result) =>{
         req.flash("info", "Your comment was deleted.");

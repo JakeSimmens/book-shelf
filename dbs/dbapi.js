@@ -102,6 +102,26 @@ async function createMongoAPI(dbConnection, nameOfCollection){
         
     }
 
+    let updateComment = async function(bookId, comment, callback){
+      //term is key:value pair
+      //updates object of key:vale pairs
+      console.log("bookId: ", bookId);
+      console.log("comment: ", comment);
+
+      let query = {_id: ObjectId(bookId)};
+      let valueToUpdate = {
+        $set: {["comments."+comment.id+".message"]: comment.message}
+      };
+
+      try {
+          let response = await collection.updateOne(query, valueToUpdate);
+          callback(response);
+
+      } catch (err) {
+          console.log("Error inserting: ", err);
+      }
+    }
+
     let deleteComment = async function(bookId, commentId, callback){
       //term is key:value pair
       //updates object of key:vale pairs
@@ -118,7 +138,6 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       } catch (err) {
           console.log("Error inserting: ", err);
       }
-        
     }
 
     let addUserBook = async function(username, bookId){
@@ -184,6 +203,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
         findMany,
         addUserBook,
         addComment,
+        updateComment,
         deleteComment,
         deleteUserBook,
         deleteOne,
