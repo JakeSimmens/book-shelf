@@ -12,7 +12,6 @@ section {
 }
 
 .parallax {
-    /* background-image: url("../images/whiteLibraryCeiling.jpg"); */
     background-image: url("../images/darkLibraryBulbs-janko-ferlic.jpg");
     background-position: center;
     position: fixed;
@@ -25,8 +24,13 @@ section {
   margin-top: 25%;
 }
 
+.login-splash {
+  padding: 20px;
+  background-color: rgba(32, 32, 32, 0.98);
+  border-radius: 20px;
+}
+
 .parallax-splash {
-    /* background-image: url("../images/libraryCurveCeiling-donatella-d-anniballe.jpg"); */
     background-image: url("../images/darkLibraryBulbs-janko-ferlic.jpg");
     background-position: top center;
     transition: background-position 3s;
@@ -42,7 +46,6 @@ section {
     transition: background-position 3s;
   }
 }
-
 
 .button-splash{
   width: 100px;
@@ -85,8 +88,6 @@ section {
     padding: 20px;
     background-color: rgba(32, 32, 32, 0.815);
     border-radius: 20px;
-    
-    
 }
 
 .bookCard {
@@ -98,7 +99,6 @@ section {
 
 .bookCard a figure figcaption{
     text-align: center;
-    
 }
 
 .bookCard a figure img{
@@ -106,7 +106,6 @@ section {
     margin: auto;
     max-width: 175px;
     border-radius: 1px;
-    
 }
 
 .bookCover {
@@ -116,8 +115,6 @@ section {
     background-color: rgba(32, 32, 32, 0.95);
     border-radius: 20px;
 }
-
-
 
 .bookCover figure img{
     text-align: center;
@@ -139,8 +136,6 @@ section {
     text-decoration: underline;
     font-weight: 500;
 }
-
-
 
 .hideMe {
     visibility: collapse;
@@ -181,7 +176,6 @@ section {
 }
 
 footer {
-
     background-color: rgba(245, 245, 245, 0.85);
     position: static;
     bottom: 0;
