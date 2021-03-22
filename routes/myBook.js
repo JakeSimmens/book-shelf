@@ -72,12 +72,15 @@ let connectToDb = function(booksDbConn, usersDbConn){
           if(req.user){
             let bookFound = false;
             usersDbConn.findOne({username: req.user}, (err, userData)=>{
-              for(let id of userData.library){
-                if(id == req.params.id){
-                  bookFound = true;
-                  break;
+              if(userData.library){
+                for(let id of userData.library){
+                  if(id == req.params.id){
+                    bookFound = true;
+                    break;
+                  }
                 }
               }
+
               res.render("book", {
                 bookData: data[0],
                 googleBookId: data[0].id,
