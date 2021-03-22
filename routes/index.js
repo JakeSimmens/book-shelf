@@ -6,7 +6,6 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const bcrypt = require("bcrypt");
-//const ObjectId = require("mongodb").ObjectId;
 
 const MAX_BOOKS_PER_SHELF = 5;
 const saltRounds = 10;
@@ -65,53 +64,20 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
   //ROUTES
   ///////////////
 
-  router.get("/", (req, res) => {
-    res.render("splash");
+  router.get("/login", (req, res) => {
+    res.render("login", {messages: req.flash("info")});
   });
 
-  //index
-  router.get("/home", (req, res) => {
-    if(req.user){
-      usersdbConnection.findOne({username: req.user},
-        async function(err, user){
-          if(!user.library || err) {
-            res.render("home", {
-              myLibrary: [],
-              maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
-              messages: req.flash("info")
-            });
-          } else {
-            booksdbConnection.findMany({_id: { $in: user.library}},
-              function renderLibraryPage(data){
-                res.render("home", {
-                  myLibrary: data,
-                  maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
-                  messages: req.flash("info")
-                });
-            });
-          }
-        });
-    } else {
-      booksdbConnection.findMany({},
-        function renderLibraryPage(data){
-          res.render("home", {
-            myLibrary: data,
-            maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
-            messages: req.flash("info")
-          });
-      });
-    }
-  });
+  router.post("/login", passport.authenticate("local",
+    {
+      successRedirect: "/home",
+      failureRedirect: "/login"
+    }));
 
-  router.get("/library", (req, res) => {
-    booksdbConnection.findMany({},
-      function renderLibraryPage(data){
-        res.render("library", {
-          library: data,
-          maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
-          messages: req.flash("info")
-        });
-    });
+  router.get("/logout", middleware.isLoggedIn, (req, res) => {
+    req.logOut();
+    req.flash("info","You have logged out");
+    res.redirect("/home");
   });
 
   router.get("/register", (req, res) => {
@@ -155,20 +121,54 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
       });
   });
 
-  router.get("/login", (req, res) => {
-    res.render("login", {messages: req.flash("info")});
+
+
+  router.get("/", (req, res) => {
+    res.render("splash");
   });
 
-  router.post("/login", passport.authenticate("local",
-    {
-      successRedirect: "/home",
-      failureRedirect: "/login"
-    }));
+  router.get("/home", (req, res) => {
+    if(req.user){
+      usersdbConnection.findOne({username: req.user},
+        async function(err, user){
+          if(!user.library || err) {
+            res.render("home", {
+              myLibrary: [],
+              maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+              messages: req.flash("info")
+            });
+          } else {
+            booksdbConnection.findMany({_id: { $in: user.library}},
+              function renderLibraryPage(data){
+                res.render("home", {
+                  myLibrary: data,
+                  maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+                  messages: req.flash("info")
+                });
+            });
+          }
+        });
+    } else {
+      booksdbConnection.findMany({},
+        function renderLibraryPage(data){
+          res.render("home", {
+            myLibrary: data,
+            maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+            messages: req.flash("info")
+          });
+      });
+    }
+  });
 
-  router.get("/logout", middleware.isLoggedIn, (req, res) => {
-    req.logOut();
-    req.flash("info","You have logged out");
-    res.redirect("/home");
+  router.get("/library", (req, res) => {
+    booksdbConnection.findMany({},
+      function renderLibraryPage(data){
+        res.render("library", {
+          library: data,
+          maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+          messages: req.flash("info")
+        });
+    });
   });
 
   return router;
