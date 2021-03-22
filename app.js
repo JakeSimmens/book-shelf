@@ -33,9 +33,11 @@ initDatabases().then( async databases => {
   //seed();
 
   const indexRoutes = require("./routes/index");
+  const usersRoutes = require("./routes/users");
   const myBookRoutes = require("./routes/myBook");
   const findBookRoutes = require("./routes/findBook");
   app.use("/", indexRoutes(booksColl, usersColl));
+  app.use("/users", usersRoutes(booksColl, usersColl));
   app.use("/myBook", myBookRoutes(booksColl, usersColl));
   app.use("/findBook", findBookRoutes(booksColl, usersColl));
 

@@ -32,21 +32,21 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
   //ROUTES
   ///////////////
 
-  router.get("/login", (req, res) => {
-    res.render("login", {messages: req.flash("info")});
-  });
+  // router.get("/login", (req, res) => {
+  //   res.render("login", {messages: req.flash("info")});
+  // });
 
-  router.post("/login", passport.authenticate("local",
-    {
-      successRedirect: "/home",
-      failureRedirect: "/login"
-    }));
+  // router.post("/login", passport.authenticate("local",
+  //   {
+  //     successRedirect: "/home",
+  //     failureRedirect: "/login"
+  //   }));
 
-  router.get("/logout", middleware.isLoggedIn, (req, res) => {
-    req.logOut();
-    req.flash("info","You have logged out");
-    res.redirect("/home");
-  });
+  // router.get("/logout", middleware.isLoggedIn, (req, res) => {
+  //   req.logOut();
+  //   req.flash("info","You have logged out");
+  //   res.redirect("/home");
+  // });
 
   router.get("/register", (req, res) => {
     res.render("register", {messages: req.flash("info")});
