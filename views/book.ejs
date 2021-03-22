@@ -141,17 +141,16 @@
                       <p>
                         <strong><%=bookData.comments[i].username%></strong>
                         <small> · <%=bookData.comments[i].date%></small>
-                        <br>
+                        <div class="block pl-3">
                         <p><%=bookData.comments[i].message%></p>
-                        <br>
-                        <% if(bookData.comments[i].replies){ %>
-                          <button class="button is-small">Show Replies</button>
-                        <% } %>
+                        </div>
                         <% if(currentUser === bookData.comments[i].username){ %>
-                          <a class="button is-info is-small" href="/myBook/<%=bookData._id%>/comments/<%=i%>/edit">Edit</a>
-                          <form action="/myBook/<%=bookData._id%>/comments/<%=i%>?_method=DELETE" method="POST">
-                            <button class="button is-danger is-small">Delete</button>
-                          </form>
+                          <div class="is-flex is-justify-content-flex-end">
+                            <a class="has-text-info commentBtn" href="/myBook/<%=bookData._id%>/comments/<%=i%>/edit">Edit</a>
+                            <form class="is-flex" action="/myBook/<%=bookData._id%>/comments/<%=i%>?_method=DELETE" method="POST">
+                              <button class="has-text-danger commentBtn">Delete</button>
+                            </form>
+                          </div>
                         <% } %>
                       </p>
                     </div>

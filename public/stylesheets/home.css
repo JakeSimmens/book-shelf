@@ -137,6 +137,18 @@ section {
     font-weight: 500;
 }
 
+.commentBtn {
+  border: none;
+  background-color: white;
+  text-decoration: underline;
+  font-size: .75em;
+  margin-left: 5px;
+}
+
+.commentBtn:hover{
+  cursor: pointer;
+}
+
 .hideMe {
     visibility: collapse;
 }
