@@ -23,41 +23,6 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
 
   setupPassportStrategy(passport, usersdbConnection);
 
-  // //PASSPORT AUTHENTICATION
-  // passport.use(new LocalStrategy(
-  //   async function(username, password, done){
-  //     await usersdbConnection.findOne({username: username},
-  //       async function(err, user){
-  //         if(err) {return done(err);}
-  //         if(!user){
-  //             return done(null, false, {message: "Incorrect username"});
-  //         }
-  //         let match = await bcrypt.compare(password, user.password);
-  //         if(!match){
-  //             return done(null, false, {message: "Incorrect password"});
-  //         }
-  //         //passes username to serializeUser
-  //         return done(null, user.username);
-  //       });
-  //     }
-  // ));
-
-  // passport.serializeUser( function(user, callback){
-  //   //passport saves the user in the session.  User only needs to be the username which is passsed from LocalStrategy
-  //   callback(null, user);
-  // });
-
-  // passport.deserializeUser( function(username, callback){
-  //   //uses username save in session to access user
-  //   usersdbConnection.findOne({username: username}, (err, user) => {
-  //     if(err){
-  //         return callback(err);
-  //     }
-  //     //user.username is saved in req.user
-  //     callback(null, user.username);
-  //   });
-  // });
-
   router.use((req, res, next) => {
     res.locals.currentUser = req.user;
     next();
@@ -123,8 +88,6 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
         }
       });
   });
-
-
 
   router.get("/", (req, res) => {
     res.render("splash");
