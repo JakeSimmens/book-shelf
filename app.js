@@ -1,4 +1,4 @@
-const {SESSION_SECRET} = require("./secrets.js");
+const {SESSION_SECRET}  = require("./secrets.js");
 const {seed}            = require("./seed.js");
 const flash             = require("connect-flash");
 const express           = require("express");
@@ -6,7 +6,6 @@ const app               = express();
 const methodOverride    = require("method-override");
 const session           = require("express-session");
 const passport          = require("passport");
-const LocalStrategy     = require("passport-local").Strategy;
 const initDatabases     = require("./dbs");
 const {createMongoAPI}  = require("./dbs/dbapi.js");
 
@@ -20,7 +19,6 @@ app.use(session({
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false
-    //cookie: { secure: true }  //need to setup https
 }));
 app.use(flash());
 
@@ -31,15 +29,15 @@ initDatabases().then( async databases => {
 
   let booksColl = await createMongoAPI(databases.jReads, "books");
   let usersColl = await createMongoAPI(databases.jReads, "users");
-  //let commentsColl = await createMongoAPI(databases.jReads, "comments");
 
-  //seed database
   //seed();
 
   const indexRoutes = require("./routes/index");
+  const usersRoutes = require("./routes/users");
   const myBookRoutes = require("./routes/myBook");
   const findBookRoutes = require("./routes/findBook");
   app.use("/", indexRoutes(booksColl, usersColl));
+  app.use("/users", usersRoutes(usersColl));
   app.use("/myBook", myBookRoutes(booksColl, usersColl));
   app.use("/findBook", findBookRoutes(booksColl, usersColl));
 
