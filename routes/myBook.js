@@ -3,7 +3,6 @@ const middleware = require("../middleware");
 const express = require("express");
 //use mergeParams to allow req.params.id to pass thru
 const router = express.Router({mergeParams: true});
-//router.use(express.urlencoded({extended: true}));
 
 let connectToDb = function(booksDbConn, usersDbConn){
 
@@ -68,7 +67,6 @@ let connectToDb = function(booksDbConn, usersDbConn){
         if(data.length == 0){
           res.redirect("/home");
         } else {
-
           if(req.user){
             let bookFound = false;
             usersDbConn.findOne({username: req.user}, (err, userData)=>{
@@ -80,7 +78,6 @@ let connectToDb = function(booksDbConn, usersDbConn){
                   }
                 }
               }
-
               res.render("book", {
                 bookData: data[0],
                 googleBookId: data[0].id,
@@ -90,7 +87,6 @@ let connectToDb = function(booksDbConn, usersDbConn){
                 messages: req.flash("info")
                 });
             });
-
           } else {
             res.render("book", {
               bookData: data[0],
