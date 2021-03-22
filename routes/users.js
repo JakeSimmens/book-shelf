@@ -4,13 +4,10 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 
-let connectToDb = function(booksdbConnection, usersdbConnection){
-
-  /////////////////////////
-  //ROUTES
-  ///////////////
+let connectToDb = function(usersdbConnection){
 
   router.get("/login", (req, res) => {
     res.render("login", {messages: req.flash("info")});
