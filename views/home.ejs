@@ -13,17 +13,17 @@
       
         <div class="columns">
 
-            <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame has-text-centered">
+            <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame has-text-centered m-4">
               
                 <% if(currentUser){ %>
                   <% if(currentUser.charAt(currentUser.length-1)=== "s"){ %>
-                    <h3 class="is-3 is-capitalized pb-6"><%=currentUser%>' Collection</h3>
+                    <h3 class="is-3 is-capitalized pb-2"><%=currentUser%>' Collection</h3>
                     <% } else { %>
-                    <h3 class="is-3 is-capitalized pb-6"><%=currentUser%>'s Collection</h3>
+                    <h3 class="is-3 is-capitalized pb-2"><%=currentUser%>'s Collection</h3>
                     <% } %>
                   <br><p><a href="/library">jReads Collection</a></p>
               <% } else { %>
-                  <h3 class="is-3 pb-6">Welcome!</h3>
+                  <h3 class="is-3 pb-4">Welcome!</h3>
                   <p>Please <a href="/users/register">sign up</a> or <a href="/users/login">login</a> to create your own book list.</p>
               <% } %>
               
