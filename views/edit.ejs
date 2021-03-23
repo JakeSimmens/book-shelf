@@ -22,19 +22,23 @@
                       <textarea name="message" cols="30" rows="5" class="textarea" ><%=comment.message%></textarea>
                     </p>
                   </div>
-                  <div class="field">
-                    <p class="control">
-                      <button class="button is-success">Update</button>
-                    </p>
+                  <div class="is-flex">
+                    <div class="field">
+                      <p class="control">
+                        <button class="button is-success is-small">Update</button>
+                      </p>
+                    </div>
+                    <form action="/myBook/<%=bookId%>" method="GET">
+                      <div class="field">
+                        <p class="control">
+                          <button class="button is-danger is-small ml-3">Cancel</button>
+                        </p>
+                      </div>
+                    </form>
                   </div>
+
                 </form>
-                <form action="/myBook/<%=bookId%>" method="GET">
-                  <div class="field">
-                    <p class="control">
-                      <button class="button is-danger">Cancel</button>
-                    </p>
-                  </div>
-                </form>
+
               </div>
             </div>
           </article>
