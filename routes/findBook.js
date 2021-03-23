@@ -37,7 +37,6 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
     try {
       let response = await axios.get(url);
-      //let bookData = formatBookDataFromGoogle(response.data);
       let bookData = middleware.formatBookDataFromGoogle(response.data);
 
       if(req.user){
