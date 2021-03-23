@@ -149,6 +149,19 @@ section {
   cursor: pointer;
 }
 
+.dangerBtn {
+  border: none;
+  background-color: rgba(32, 32, 32, 0.815);
+  color: white;
+  text-decoration: underline;
+  font-size: .75em;
+  margin-left: 5px;
+}
+
+.dangerBtn:hover{
+  cursor: pointer;
+}
+
 .hideMe {
     visibility: collapse;
 }

@@ -21,7 +21,7 @@
                         <%if(currentUser){ %>
                           <%if(!isGoogleBook && inUserLibrary){ %>
                             <form action="/myBook/<%=bookData._id%>?_method=DELETE" method="POST">
-                                <button class="button is-danger is-small btnDelete">Remove Book</button>
+                                <button class="dangerBtn">Remove</button>
                             </form>
                           <%} else { %>
                             <form action="/findBook" method="POST">
