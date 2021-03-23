@@ -1,4 +1,3 @@
-const ObjectId = require("mongodb").ObjectId;
 const middleware = require("../middleware");
 const express = require("express");
 //use mergeParams to allow req.params.id to pass thru

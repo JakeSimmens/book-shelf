@@ -1,22 +1,11 @@
-//const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
-//const assert = require("assert");
 
 async function createMongoAPI(dbConnection, nameOfCollection){
 
     const db = dbConnection;
     const collection = db.collection(nameOfCollection);
-    //let isTestRun = false;
-
-
-    // let setForTesting = function() {
-    //     isTestRun = true;
-    //     options = { useUnifiedTopology: false };
-    // }
-
 
     let insert = async function(newData, callback){
-
       let response;
       try {
           if(!newData.length){
@@ -29,11 +18,9 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       } catch (err) {
           console.log("Error inserting: ", err);
       }
-        
     }
 
     let findById = function (id, callback){
-   
       try {
           collection.find(ObjectId(id)).toArray((errorFinding, items) => {
               if(errorFinding){
@@ -50,11 +37,9 @@ async function createMongoAPI(dbConnection, nameOfCollection){
           console.log(err);
           callback([]);
       }
-
     }
 
     let findOne = async function(term, callback){
-    
       try {
           let cursor = collection.find(term).limit(1);
 
@@ -71,7 +56,6 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let findMany = function(term, callback){
-    
       try {
           collection.find(term).toArray((err, items) => {
               if(err){
@@ -99,7 +83,6 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       } catch (err) {
           console.log("Error inserting: ", err);
       }
-        
     }
 
     let updateComment = async function(bookId, comment, callback){
@@ -142,7 +125,6 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let addUserBook = async function(username, bookId){
-
       let query = {username: username};
       let idToAdd = {
         $push: {library: ObjectId(bookId)}
@@ -157,7 +139,6 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let deleteUserBook = async function(username, bookId, callback){
-
       let query = {username: username};
       let updateAction = { $pull: { library: ObjectId(bookId)}};
 
@@ -170,34 +151,27 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let deleteOne = async function (deleteID, callback){
-      
       try {
             let objId = new ObjectId(deleteID);
 
           let result = await collection.deleteOne({_id: objId});
-          //await client.close();
           callback(result);
       } catch (err) {
           console.log("Error deleting book: ", err);
       }
-
     }
 
     let clearDB = async function (callback){
-
       try {
 
           let result = await collection.deleteMany({});
-          //await client.close();
           callback(result);
       } catch (err) {
           console.log("Error clearing database: ", err);
       }
-
     }
 
     let publicAPI = {
-        //setForTesting,
         insert,
         findById,
         findOne,
