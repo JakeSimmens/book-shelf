@@ -16,7 +16,9 @@ let connectToDb = function(usersdbConnection){
   router.post("/login", passport.authenticate("local",
     {
       successRedirect: "/home",
-      failureRedirect: "/login"
+      failureRedirect: "/users/login",
+      successFlash: true,
+      failureFlash: true
     }));
 
   router.get("/logout", middleware.isLoggedIn, (req, res) => {

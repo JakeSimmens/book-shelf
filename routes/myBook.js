@@ -1,4 +1,3 @@
-const ObjectId = require("mongodb").ObjectId;
 const middleware = require("../middleware");
 const express = require("express");
 //use mergeParams to allow req.params.id to pass thru
@@ -8,6 +7,11 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
   //add comment
   router.post('/:id/comments', middleware.isLoggedIn, (req, res) => {
+    if(req.body.message.trim() === ""){
+      req.flash("info", "Whoops, your comment was blank.");
+      res.redirect(`/myBook/${req.params.id}`);
+      return;
+    }
     booksDbConn.addComment(
       req.params.id,
       { comments: {

@@ -7,11 +7,6 @@ const {setupPassportStrategy} = require("../authSetup.js");
 
 const MAX_BOOKS_PER_SHELF = 5;
 
-router.use(session({
-  secret: PASSPORT_SECRET,
-  resave: false,
-  saveUninitialized: false
-}));
 router.use(passport.initialize());
 router.use(passport.session());
 

@@ -1,5 +1,6 @@
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcrypt");
+const LocalStrategy  = require("passport-local").Strategy;
+const bcrypt         = require("bcrypt");
+const flash          = require("connect-flash");
 
 let setupPassport = (passport, usersdbConnection) => {
 
@@ -10,11 +11,11 @@ let setupPassport = (passport, usersdbConnection) => {
         async function(err, user){
           if(err) {return done(err);}
           if(!user){
-              return done(null, false, {message: "Incorrect username"});
+              return done(null, false, {message: "bad username"});
           }
           let match = await bcrypt.compare(password, user.password);
           if(!match){
-              return done(null, false, {message: "Incorrect password"});
+              return done(null, false, {message: "bad password"});
           }
           //passes username to serializeUser
           return done(null, user.username);
