@@ -127,7 +127,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       }
     }
 
-    let addUserBook = async function(username, bookId){
+    let addUserBook = async function(username, bookId, callback){
       let query = {username: username};
       let idToAdd = {
         $push: {library: ObjectId(bookId)}
@@ -135,9 +135,11 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       try {
           await collection.updateOne(query, idToAdd);
+          callback(null);
 
       } catch (err) {
-          console.log("Error inserting: ", err);
+          console.log("Error adding user book to user library: ", err);
+          callback(err);
       }
     }
 
