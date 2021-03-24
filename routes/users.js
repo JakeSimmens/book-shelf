@@ -45,15 +45,19 @@ let connectToDb = function(usersdbConnection){
       function checkForNoMatch(err, data){
         if(data.username !== undefined){
           req.flash("info", `${data.username} already exists, please pick a different username.`);
-          res.redirect("/login");
+          res.redirect("/users/login");
         } else {
           bcrypt.hash(pw, saltRounds, (err, hash)=>{
             if(err){
               req.flash("info", "Error signing up.  Please try again.")
-              return res.redirect("/login");
+              return res.redirect("/users/login");
             }
 
-            usersdbConnection.insert({username: username, password: hash}, (userData) => {
+            usersdbConnection.insert({username: username, password: hash}, (err, userData) => {
+              if(err){
+                req.flash("info", "Unable to add user.");
+                return res.redirect("/users/register");
+              }
               let user = userData.ops[0].username;
               req.login(user, (err)=>{
                 if(err){
