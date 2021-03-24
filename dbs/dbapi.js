@@ -13,10 +13,11 @@ async function createMongoAPI(dbConnection, nameOfCollection){
           } else {
               response = await collection.insertMany(newData);
           }
-          callback(response);
+          callback(null, response);
           
       } catch (err) {
           console.log("Error inserting: ", err);
+          callback(err);
       }
     }
 

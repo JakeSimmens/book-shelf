@@ -47,8 +47,13 @@ let connectToDb = function(booksDbConn, usersDbConn){
             res.redirect(`/myBook/${bookInDb._id}`);
           } else {
             await booksDbConn.insert(bookData,
-              async function addToUserLibrary(result)
+              async function addToUserLibrary(err, result)
               {
+                if(err){
+                  req.flash("info", `Your book could not be added.`);
+                  res.redirect("back");
+                  return;
+                }
                 await usersDbConn.addUserBook(req.user, result.ops[0]._id);
                 req.flash("info", `${bookData.title} has been added to your library.`);
                 res.redirect(`/myBook/${result.ops[0]._id}`);
