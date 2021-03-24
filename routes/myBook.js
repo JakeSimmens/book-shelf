@@ -84,6 +84,9 @@ let connectToDb = function(booksDbConn, usersDbConn){
           if(req.user){
             let bookFound = false;
             usersDbConn.findOne({username: req.user}, (err, userData)=>{
+              if(err){
+                console.log("Unable to locate user to check personal library");
+              }
               if(userData.library){
                 for(let id of userData.library){
                   if(id == req.params.id){

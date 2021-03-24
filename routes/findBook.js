@@ -41,6 +41,12 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
       if(req.user){
         await booksDbConn.findOne({id: bookData.id}, async (err, bookInDb)=>{
+          if(err){
+            console.log("Error searching for book in db");
+            req.flash("info", `Your book could not be added.`);
+            res.redirect("back");
+            return;
+          }
           if(bookInDb){
             await usersDbConn.addUserBook(req.user, bookInDb._id);
             req.flash("info", `${bookData.title} has been added to your library.`);
