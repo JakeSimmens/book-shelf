@@ -79,9 +79,10 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       try {
           let response = await collection.updateOne(query, update);
-          callback(response);
+          callback(null, response);
       } catch (err) {
-          console.log("Error inserting: ", err);
+          console.log("Error inserting comment: ", err);
+          callback(err);
       }
     }
 
@@ -99,10 +100,11 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       try {
           let response = await collection.updateOne(query, valueToUpdate);
-          callback(response);
+          callback(null, response);
 
       } catch (err) {
-          console.log("Error inserting: ", err);
+          console.log("Error updating comment: ", err);
+          callback(err);
       }
     }
 
@@ -117,14 +119,15 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       try {
           let response = await collection.updateOne(query, valueToUpdate);
-          callback(response);
+          callback(null, response);
 
       } catch (err) {
-          console.log("Error inserting: ", err);
+          console.log("Error deleting comment: ", err);
+          callback(err);
       }
     }
 
-    let addUserBook = async function(username, bookId){
+    let addUserBook = async function(username, bookId, callback){
       let query = {username: username};
       let idToAdd = {
         $push: {library: ObjectId(bookId)}
@@ -132,9 +135,11 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       try {
           await collection.updateOne(query, idToAdd);
+          callback(null);
 
       } catch (err) {
-          console.log("Error inserting: ", err);
+          console.log("Error adding user book to user library: ", err);
+          callback(err);
       }
     }
 
@@ -144,9 +149,10 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       try{
         let response = await collection.updateOne(query, updateAction);
-        callback(response);
+        callback(null, response);
       } catch(err){
         console.log("Error deleting user book: ", err);
+        callback(err);
       }
     }
 
@@ -155,9 +161,10 @@ async function createMongoAPI(dbConnection, nameOfCollection){
             let objId = new ObjectId(deleteID);
 
           let result = await collection.deleteOne({_id: objId});
-          callback(result);
+          callback(null, result);
       } catch (err) {
           console.log("Error deleting book: ", err);
+          callback(err);
       }
     }
 
@@ -165,9 +172,10 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       try {
 
           let result = await collection.deleteMany({});
-          callback(result);
+          callback(null, result);
       } catch (err) {
           console.log("Error clearing database: ", err);
+          callback(err);
       }
     }
 

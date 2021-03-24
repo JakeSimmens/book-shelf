@@ -48,9 +48,16 @@ let connectToDb = function(booksDbConn, usersDbConn){
             return;
           }
           if(bookInDb){
-            await usersDbConn.addUserBook(req.user, bookInDb._id);
-            req.flash("info", `${bookData.title} has been added to your library.`);
-            res.redirect(`/myBook/${bookInDb._id}`);
+            await usersDbConn.addUserBook(req.user, bookInDb._id, (err)=>{
+              if(err){
+                req.flash("info", `${bookData.title} unable to add to your library.`);
+              } else {
+                req.flash("info", `${bookData.title} has been added to your library.`);
+              }
+              res.redirect(`/myBook/${bookInDb._id}`);
+            });
+            
+
           } else {
             await booksDbConn.insert(bookData,
               async function addToUserLibrary(err, result)
@@ -60,9 +67,14 @@ let connectToDb = function(booksDbConn, usersDbConn){
                   res.redirect("back");
                   return;
                 }
-                await usersDbConn.addUserBook(req.user, result.ops[0]._id);
-                req.flash("info", `${bookData.title} has been added to your library.`);
-                res.redirect(`/myBook/${result.ops[0]._id}`);
+                await usersDbConn.addUserBook(req.user, result.ops[0]._id, (err) => {
+                  if(err){
+                    req.flash("info", `${bookData.title} has NOT been added to your library due to an error.`);
+                  } else {
+                    req.flash("info", `${bookData.title} has been added to your library.`);
+                  }
+                  res.redirect(`/myBook/${result.ops[0]._id}`);
+                });
               });
           }
         });

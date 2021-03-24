@@ -20,8 +20,12 @@ let connectToDb = function(booksDbConn, usersDbConn){
           date: middleware.getDateAndTime()
         }
       },
-      (result) => {
-        req.flash("info", "Your comment is posted.");
+      (err, response) => {
+        if(err){
+          req.flash("info", "Your comment was not posted due to an error.");
+        } else {
+          req.flash("info", "Your comment is posted.");
+        }
         res.redirect(`/myBook/${req.params.id}`);
       });
   });
@@ -54,19 +58,26 @@ let connectToDb = function(booksDbConn, usersDbConn){
       message: req.body.message,
       date: middleware.getDateAndTime(),
       edited: true
-    }, (result) =>{
-      req.flash("info", "Your comment was updated.");
-      res.redirect(`/myBook/${req.params.id}`);
+    }, (err, result) =>{
+      if(err){
+        req.flash("info", "Your comment was not updated due to an error.");
+      } else {
+        req.flash("info", "Your comment was updated.");
+      }
 
+      res.redirect(`/myBook/${req.params.id}`);
     });
   });
 
   //DELETE COMMENT
   router.delete('/:id/comments/:commentId', middleware.isLoggedIn, (req, res) => {
-      booksDbConn.deleteComment(req.params.id, req.params.commentId, (result) =>{
-        req.flash("info", "Your comment was deleted.");
+      booksDbConn.deleteComment(req.params.id, req.params.commentId, (err, result) =>{
+        if(err){
+          req.flash("info", "Your comment was NOT deleted due to an error.");
+        } else {
+          req.flash("info", "Your comment was deleted.");
+        }
         res.redirect(`/myBook/${req.params.id}`);
-
       });
   });
 
@@ -120,8 +131,12 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
   router.delete('/:id', middleware.isLoggedIn, (req, res) => {
     //remove book from user library list
-    usersDbConn.deleteUserBook(req.user, req.params.id, (response)=>{
-      req.flash("info", "The book has been removed from your library.");
+    usersDbConn.deleteUserBook(req.user, req.params.id, (err, response)=>{
+      if(err){
+        req.flash("info", "Unable to remove the book from your library.");
+      } else {
+        req.flash("info", "The book has been removed from your library.");
+      }
       res.redirect("/home");
     });
   });
