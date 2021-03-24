@@ -82,50 +82,42 @@ let connectToDb = function(booksDbConn, usersDbConn){
   });
 
   router.get('/:id', (req, res) => {
-    booksDbConn.findById(req.params.id,
-      function renderBookPage(err, data){
-        if(err){
-          req.flash("info", "Currently unable to access book.  Try searching for it in the navbar.");
-          res.redirect("back");
-          return;
-        }
-        if(data.length == 0){
-          res.redirect("/home");
-        } else {
-          if(req.user){
-            let bookFound = false;
-            usersDbConn.findOne({username: req.user}, (err, userData)=>{
-              if(err){
-                console.log("Unable to locate user to check personal library");
-              }
-              if(userData.library){
-                for(let id of userData.library){
-                  if(id == req.params.id){
-                    bookFound = true;
-                    break;
-                  }
-                }
-              }
-              res.render("book", {
-                bookData: data[0],
-                googleBookId: data[0].id,
-                isGoogleBook: false,
-                inUserLibrary: bookFound,
-                showComments: true,
-                messages: req.flash("info")
-                });
-            });
-          } else {
-            res.render("book", {
-              bookData: data[0],
-              googleBookId: data[0].id,
-              isGoogleBook: false,
-              inUserLibrary: false,
-              showComments: true,
-              messages: req.flash("info")
-              });
+    booksDbConn.findById(req.params.id, async (err, data) => {
+      if(err){
+        req.flash("info", "Currently unable to access book.  Try searching for it in the navbar.");
+        res.redirect("back");
+        return;
+      }
+      if(data.length == 0){
+        res.redirect("/home");
+        return;
+      }
+
+      let bookFound = false;
+      if(req.user){
+        await usersDbConn.findOne({username: req.user}, (err, userData)=>{
+          if(err){
+            console.log("Unable to locate user to check personal library");
           }
-        }
+          if(userData.library){
+            for(let id of userData.library){
+              if(id == req.params.id){
+                bookFound = true;
+                break;
+              }
+            }
+          }
+        });
+      }
+
+      res.render("book", {
+        bookData: data[0],
+        googleBookId: data[0].id,
+        isGoogleBook: false,
+        inUserLibrary: bookFound,
+        showComments: true,
+        messages: req.flash("info")
+        });
       });
   });
 
