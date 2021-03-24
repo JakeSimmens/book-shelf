@@ -25,18 +25,17 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       try {
           collection.find(ObjectId(id)).toArray((errorFinding, items) => {
               if(errorFinding){
-                  console.log(errorFinding);
                   throw "Error thrown from findById";
               } 
               if(items[0]){
-                  callback(items);
+                  callback(null, items);
               } else {
-                  callback([]);
+                  callback(null, []);
               }
           });
       } catch (err) {
-          console.log(err);
-          callback([]);
+          console.log("dbapi findById error:", err);
+          callback(err, []);
       }
     }
 

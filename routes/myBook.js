@@ -28,7 +28,12 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
   //GET COMMENT TO EDIT
   router.get('/:id/comments/:comment_id/edit', middleware.isLoggedIn, (req, res) => {
-    booksDbConn.findById(req.params.id, (bookData)=> {
+    booksDbConn.findById(req.params.id, (err, bookData)=> {
+      if(err){
+        req.flash("info", "Unable to retrieve comment to edit");
+        res.redirect(`/myBook/${req.params.id}`);
+        return;
+      }
       let editComment = bookData[0].comments[req.params.comment_id];
 
       res.render("edit", {
@@ -67,7 +72,12 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
   router.get('/:id', (req, res) => {
     booksDbConn.findById(req.params.id,
-      function renderBookPage(data){
+      function renderBookPage(err, data){
+        if(err){
+          req.flash("info", "Currently unable to access book.  Try searching for it in the navbar.");
+          res.redirect("back");
+          return;
+        }
         if(data.length == 0){
           res.redirect("/home");
         } else {
