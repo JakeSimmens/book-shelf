@@ -71,10 +71,13 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
   //DELETE COMMENT
   router.delete('/:id/comments/:commentId', middleware.isLoggedIn, (req, res) => {
-      booksDbConn.deleteComment(req.params.id, req.params.commentId, (result) =>{
-        req.flash("info", "Your comment was deleted.");
+      booksDbConn.deleteComment(req.params.id, req.params.commentId, (err, result) =>{
+        if(err){
+          req.flash("info", "Your comment was NOT deleted due to an error.");
+        } else {
+          req.flash("info", "Your comment was deleted.");
+        }
         res.redirect(`/myBook/${req.params.id}`);
-
       });
   });
 
