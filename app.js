@@ -36,10 +36,12 @@ initDatabases().then( async databases => {
   const usersRoutes = require("./routes/users");
   const myBookRoutes = require("./routes/myBook");
   const findBookRoutes = require("./routes/findBook");
+  const commentRoutes = require("./routes/comments")
   app.use("/", indexRoutes(booksColl, usersColl));
   app.use("/users", usersRoutes(usersColl));
-  app.use("/myBook", myBookRoutes(booksColl, usersColl));
   app.use("/findBook", findBookRoutes(booksColl, usersColl));
+  app.use("/myBook", myBookRoutes(booksColl, usersColl));
+  app.use("/myBook/:id/comments", commentRoutes(booksColl, usersColl));
 
   const port = process.env.PORT || 3000;
   app.server = app.listen(port, function startServer() {
