@@ -58,10 +58,14 @@ let connectToDb = function(booksDbConn, usersDbConn){
       message: req.body.message,
       date: middleware.getDateAndTime(),
       edited: true
-    }, (result) =>{
-      req.flash("info", "Your comment was updated.");
-      res.redirect(`/myBook/${req.params.id}`);
+    }, (err, result) =>{
+      if(err){
+        req.flash("info", "Your comment was not updated due to an error.");
+      } else {
+        req.flash("info", "Your comment was updated.");
+      }
 
+      res.redirect(`/myBook/${req.params.id}`);
     });
   });
 

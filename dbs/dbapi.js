@@ -79,7 +79,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       try {
           let response = await collection.updateOne(query, update);
-          callback(err, response);
+          callback(null, response);
       } catch (err) {
           console.log("Error inserting comment: ", err);
           callback(err);
@@ -100,10 +100,11 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       try {
           let response = await collection.updateOne(query, valueToUpdate);
-          callback(response);
+          callback(null, response);
 
       } catch (err) {
-          console.log("Error inserting: ", err);
+          console.log("Error updating comment: ", err);
+          callback(err);
       }
     }
 
