@@ -131,8 +131,12 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
   router.delete('/:id', middleware.isLoggedIn, (req, res) => {
     //remove book from user library list
-    usersDbConn.deleteUserBook(req.user, req.params.id, (response)=>{
-      req.flash("info", "The book has been removed from your library.");
+    usersDbConn.deleteUserBook(req.user, req.params.id, (err, response)=>{
+      if(err){
+        req.flash("info", "Unable to remove the book from your library.");
+      } else {
+        req.flash("info", "The book has been removed from your library.");
+      }
       res.redirect("/home");
     });
   });

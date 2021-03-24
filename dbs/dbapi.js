@@ -149,9 +149,10 @@ async function createMongoAPI(dbConnection, nameOfCollection){
 
       try{
         let response = await collection.updateOne(query, updateAction);
-        callback(response);
+        callback(null, response);
       } catch(err){
         console.log("Error deleting user book: ", err);
+        callback(err);
       }
     }
 
