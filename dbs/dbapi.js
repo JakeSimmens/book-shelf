@@ -6,6 +6,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     const collection = db.collection(nameOfCollection);
 
     let insert = async function(newData, callback){
+      //Input: a single object or an array of objects to insert
       let response;
       try {
           if(!newData.length){
@@ -22,6 +23,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let findById = function (id, callback){
+      //Input: _id to search by
       try {
           collection.find(ObjectId(id)).toArray((errorFinding, items) => {
               if(errorFinding){
@@ -40,6 +42,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let findOne = async function(term, callback){
+      //Input:  object as a search term
       try {
           let cursor = collection.find(term).limit(1);
 
@@ -56,6 +59,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let findMany = function(term, callback){
+      //Input:  object as a search term
       try {
           collection.find(term).toArray((err, items) => {
               if(err){
@@ -71,9 +75,8 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let addComment = async function(bookId, comment, callback){
-      //term is key:value pair
-      //updates object of key:vale pairs
-
+      //Input:  _id to search by
+      //Input:  commment object
       let query = {_id: ObjectId(bookId)};
       let update = { $push: comment};
 
@@ -87,8 +90,8 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let updateComment = async function(bookId, comment, callback){
-      //term is key:value pair
-      //updates object of key:vale pairs
+      //Input:  _id to search by
+      //Input:  commment object
       let query = {_id: ObjectId(bookId)};
       let valueToUpdate = {
         $set: {
@@ -109,8 +112,8 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let deleteComment = async function(bookId, commentId, callback){
-      //term is key:value pair
-      //updates object of key:vale pairs
+      //Input:  _id to search by
+      //Input:  commment object
 
       let query = {_id: ObjectId(bookId)};
       let valueToUpdate = {
@@ -128,6 +131,8 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let addUserBook = async function(username, bookId, callback){
+      //Input: username to search for user
+      //Input:  _id to search
       let query = {username: username};
       let idToAdd = {
         $push: {library: ObjectId(bookId)}
@@ -144,6 +149,8 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let deleteUserBook = async function(username, bookId, callback){
+      //Input: username to search for user
+      //Input:  _id to search
       let query = {username: username};
       let updateAction = { $pull: { library: ObjectId(bookId)}};
 
@@ -157,6 +164,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
     }
 
     let deleteOne = async function (deleteID, callback){
+      //Input:  _id to search
       try {
             let objId = new ObjectId(deleteID);
 
