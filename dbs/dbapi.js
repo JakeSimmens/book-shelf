@@ -161,9 +161,10 @@ async function createMongoAPI(dbConnection, nameOfCollection){
             let objId = new ObjectId(deleteID);
 
           let result = await collection.deleteOne({_id: objId});
-          callback(result);
+          callback(null, result);
       } catch (err) {
           console.log("Error deleting book: ", err);
+          callback(err);
       }
     }
 
@@ -171,9 +172,10 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       try {
 
           let result = await collection.deleteMany({});
-          callback(result);
+          callback(null, result);
       } catch (err) {
           console.log("Error clearing database: ", err);
+          callback(err);
       }
     }
 
