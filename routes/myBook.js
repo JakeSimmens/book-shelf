@@ -20,8 +20,12 @@ let connectToDb = function(booksDbConn, usersDbConn){
           date: middleware.getDateAndTime()
         }
       },
-      (result) => {
-        req.flash("info", "Your comment is posted.");
+      (err, response) => {
+        if(err){
+          req.flash("info", "Your comment was not posted due to an error.");
+        } else {
+          req.flash("info", "Your comment is posted.");
+        }
         res.redirect(`/myBook/${req.params.id}`);
       });
   });
