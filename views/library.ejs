@@ -7,7 +7,7 @@
         <p class="has-text-centered has-text-weight-semibold is-size-5"><%=messages[0]%></p>
     </div>
   <%}%>
-    <section class="section">
+    <section class="section px-6">
         <div class="columns">
             <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame has-text-centered m-4">
                 <% if(currentUser){ %>
@@ -25,21 +25,18 @@
               <div class="container shelves">
                 <div class="columns is-centered is-multiline is-mobile">
                   <% if(library.length === 0 ){ %>
-                    <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
+                    <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
                       <div class="box bookCard is-primary">
                         <p>To add a book, use the search in the navbar.</p>
                       </div>
                     </div>
                   <% } %>
                   <% for(let i = 0; i < library.length; i++){ %>
-                    <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop">
-                      <div class="box bookCard">
+                    <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+                      <div class="bookCard">
                         <a href="/myBook/<%=library[i]._id%>">
                           <figure class="image">
                             <img src= <%=library[i].imageLinks.thumbnail%> alt="Book cover for <%=library[i].title%>">
-                            <figcaption>
-                                <%=library[i].title%>
-                            </figcaption>
                           </figure>
                           </a>
                       </div>
