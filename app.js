@@ -30,8 +30,6 @@ initDatabases().then( async databases => {
   let booksColl = await createMongoAPI(databases.jReads, "books");
   let usersColl = await createMongoAPI(databases.jReads, "users");
 
-  //seed();
-
   const indexRoutes = require("./routes/index");
   const usersRoutes = require("./routes/users");
   const myBookRoutes = require("./routes/myBook");
