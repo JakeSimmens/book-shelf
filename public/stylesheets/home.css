@@ -90,23 +90,32 @@ section {
     border-radius: 20px;
 }
 
+/* BOOK CARD */
+
 .bookCard {
     height: 100%;
     background-color: rgba(255, 255, 255, 0.986);
     padding: 1rem;
     border-radius: 3px;
+    overflow: hidden;
+    /* max-height: 280px; */
 }
 
 .bookCard a figure figcaption{
+    padding-top: 5px;
     text-align: center;
+    max-height: 60px;
 }
 
 .bookCard a figure img{
     text-align: center;
     margin: auto;
     max-width: 175px;
+    max-height: 270px;
     border-radius: 1px;
 }
+
+/* BOOK COVER */
 
 .bookCover {
 
