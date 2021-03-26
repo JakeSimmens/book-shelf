@@ -97,27 +97,18 @@ section {
     height: 225px;
     max-width: 200px;
     margin: auto;
-    /* background-color: rgba(0, 0, 0, 0); */
     padding: .5em;
     border-radius: 3px;
-    overflow: hidden;
 }
 
 .bookCard img{
 
     border-radius: 1px;
     position: absolute;
-    top: 210px;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    bottom: -220px;
     width: auto;
     height: auto;
     margin: auto auto 0;
-    /* display: flex; */
-    /* align-items: flex-end; */
-
-
 }
 
 /* BOOK COVER */
