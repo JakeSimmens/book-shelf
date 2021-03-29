@@ -32,7 +32,7 @@
 
 <img src="./public/images/bookAppHome.jpg">
 
-Reading personal growth and fiction books have been a big part of my life.  Inspired by [goodreads](https://www.goodreads.com/), jReads is for multiple users to track and discuss books they have read.  Users may add books by browsing thru books in the current jReads database or by searching Google Book's vast selection of titles.
+Reading personal growth and fiction books have been a big part of my life.  Inspired by [goodreads](https://www.goodreads.com/), jReads is for multiple users to track and discuss books they are interested in.  Users may add books by browsing thru books in the current jReads database or by searching Google Book's vast selection of titles.  Each book has it's own comment section associated with it.
 
 Areas of focus:
 
@@ -47,7 +47,7 @@ Areas of focus:
 
 Creating an abstract layer to interact with the database API and the jReads code was the step I was most excited about.  I went into it with the mindset of using MongoDB now and being able to swap it out with a SQL database in the future.
 
-For the book data used, I wanted manage a user's stored book data in a local database while making it easy to add new titles to a library.  The books and data are initially searched for and found using the Google Books API.  Any books a user adds to their own library are then saved to a separate database for easy reference in the future.
+Each book is a user's collection is stored in the local database while making it easy to add new titles to the collection thru Google Books.  The books and data are initially searched for and found using the Google Books API.  Any books a user adds to their own library are then saved to a separate database for easy reference in the future.
 
 ### Built With
 
