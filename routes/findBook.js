@@ -1,3 +1,4 @@
+const {BASE_PATH} = require("../secrets");
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
@@ -25,7 +26,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
 
     } catch (err) {
       console.log("HTTP error, bad ID for url. ", err.message);
-      res.redirect("/home");
+      res.redirect(`${BASE_PATH}/home`);
     }
 
   });
@@ -54,7 +55,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
               } else {
                 req.flash("info", `${bookData.title} has been added to your library.`);
               }
-              res.redirect(`/myBook/${bookInDb._id}`);
+              res.redirect(`${BASE_PATH}/myBook/${bookInDb._id}`);
             });
             
 
@@ -73,20 +74,20 @@ let connectToDb = function(booksDbConn, usersDbConn){
                   } else {
                     req.flash("info", `${bookData.title} has been added to your library.`);
                   }
-                  res.redirect(`/myBook/${result.ops[0]._id}`);
+                  res.redirect(`${BASE_PATH}/myBook/${result.ops[0]._id}`);
                 });
               });
           }
         });
       } else {
         req.flash("info", "Please login to add a book to your library.");
-        res.redirect("/home");
+        res.redirect(`${BASE_PATH}/home`);
       }
 
     } catch (err) {
       req.flash("info", "Error.  Unable to add book to library.");
       console.log(err);
-      res.redirect("/home");
+      res.redirect(`${BASE_PATH}/home`);
     }
   });
 
