@@ -1,4 +1,6 @@
-const {SESSION_SECRET}  = require("./secrets.js");
+//const {SESSION_SECRET, BASE_PATH}  = require("./secrets.js");
+const {SESSION_SECRET, BASE_PATH}  = require("./config.js");
+
 const {seed}            = require("./seed.js");
 const flash             = require("connect-flash");
 const express           = require("express");
@@ -35,11 +37,11 @@ initDatabases().then( async databases => {
   const myBookRoutes = require("./routes/myBook");
   const findBookRoutes = require("./routes/findBook");
   const commentRoutes = require("./routes/comments")
-  app.use("/", indexRoutes(booksColl, usersColl));
-  app.use("/users", usersRoutes(usersColl));
-  app.use("/findBook", findBookRoutes(booksColl, usersColl));
-  app.use("/myBook", myBookRoutes(booksColl, usersColl));
-  app.use("/myBook/:id/comments", commentRoutes(booksColl, usersColl));
+  app.use(`${BASE_PATH}/`, indexRoutes(booksColl, usersColl));
+  app.use(`${BASE_PATH}/users`, usersRoutes(usersColl));
+  app.use(`${BASE_PATH}/findBook`, findBookRoutes(booksColl, usersColl));
+  app.use(`${BASE_PATH}/myBook`, myBookRoutes(booksColl, usersColl));
+  app.use(`${BASE_PATH}/myBook/:id/comments`, commentRoutes(booksColl, usersColl));
 
   const port = process.env.PORT || 3000;
   app.server = app.listen(port, function startServer() {

@@ -1,4 +1,5 @@
-const {PASSPORT_SECRET} = require("../secrets");
+// const {BASE_PATH} = require("../secrets");
+const {BASE_PATH}  = require("../config.js");
 const middleware = require("../middleware");
 const express = require("express");
 const router = express.Router();
@@ -15,8 +16,8 @@ let connectToDb = function(usersdbConnection){
 
   router.post("/login", passport.authenticate("local",
     {
-      successRedirect: "/home",
-      failureRedirect: "/users/login",
+      successRedirect: `${BASE_PATH}/home`,
+      failureRedirect: `${BASE_PATH}/users/login`,
       successFlash: true,
       failureFlash: true
     }));
@@ -24,7 +25,7 @@ let connectToDb = function(usersdbConnection){
   router.get("/logout", middleware.isLoggedIn, (req, res) => {
     req.logOut();
     req.flash("info","You have logged out");
-    res.redirect("/home");
+    res.redirect(`${BASE_PATH}/home`);
   });
 
   router.get("/register", (req, res) => {
@@ -34,7 +35,7 @@ let connectToDb = function(usersdbConnection){
   router.post("/register", (req, res) => {
     if(!req.body.username){
       req.flash("info", "Please enter a username to sign up.");
-      res.redirect("/home");
+      res.redirect(`${BASE_PATH}/home`);
     }
 
     let username = req.body.username;
@@ -45,18 +46,18 @@ let connectToDb = function(usersdbConnection){
       function checkForNoMatch(err, data){
         if(data.username !== undefined){
           req.flash("info", `${data.username} already exists, please pick a different username.`);
-          res.redirect("/users/login");
+          res.redirect(`${BASE_PATH}/users/login`);
         } else {
           bcrypt.hash(pw, saltRounds, (err, hash)=>{
             if(err){
               req.flash("info", "Error signing up.  Please try again.")
-              return res.redirect("/users/login");
+              return res.redirect(`${BASE_PATH}/users/login`);
             }
 
             usersdbConnection.insert({username: username, password: hash}, (err, userData) => {
               if(err){
                 req.flash("info", "Unable to add user.");
-                return res.redirect("/users/register");
+                return res.redirect(`${BASE_PATH}/users/register`);
               }
               let user = userData.ops[0].username;
               req.login(user, (err)=>{
@@ -64,7 +65,7 @@ let connectToDb = function(usersdbConnection){
                   return next(err);
                 }
                 req.flash("info", "Thank you for joining jReads.  You are signed in to your account.");
-                return res.redirect("/home");
+                return res.redirect(`${BASE_PATH}/home`);
               });
             });
           });

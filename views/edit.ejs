@@ -15,7 +15,7 @@
           <article class="media">
             <div class="media-content">
               <div class="box content">
-                <form action="/myBook/<%=bookId%>/comments/<%=comment.id%>?_method=PUT" method="POST">
+                <form action="<%=basePath%>/myBook/<%=bookId%>/comments/<%=comment.id%>?_method=PUT" method="POST">
                   <input name="username" type="text" value="<%=currentUser%>" hidden>
                   <div class="field">
                     <p class="control">
@@ -28,7 +28,7 @@
                         <button class="button is-success is-small">Update</button>
                       </p>
                     </div>
-                    <form action="/myBook/<%=bookId%>" method="GET">
+                    <form action="<%=basePath%>/myBook/<%=bookId%>" method="GET">
                       <div class="field">
                         <p class="control">
                           <button class="button is-danger is-small ml-3">Cancel</button>

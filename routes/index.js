@@ -1,4 +1,6 @@
-const {PASSPORT_SECRET} = require("../secrets");
+// const {BASE_PATH} = require("../secrets");
+const {BASE_PATH}  = require("../config.js");
+
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
@@ -16,6 +18,7 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
 
   router.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.basePath = BASE_PATH;
     next();
   });
 

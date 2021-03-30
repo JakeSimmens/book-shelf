@@ -1,3 +1,5 @@
+// const {BASE_PATH}  = require("../secrets.js");
+const {BASE_PATH}  = require("../config.js");
 let middlewareObj = {};
 
 middlewareObj.isLoggedIn = (req, res, next) => {
@@ -5,7 +7,7 @@ middlewareObj.isLoggedIn = (req, res, next) => {
         return next();
     }
     req.flash("info", "Please log in first.");
-    res.redirect("/login");
+    res.redirect(`${BASE_PATH}/login`);
 }
 
 //Get date and time

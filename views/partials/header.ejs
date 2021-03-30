@@ -18,7 +18,7 @@
   <section>
       <nav class="navbar is-fixed-top has-background-light" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-          <a class="navbar-item" href="/home">
+          <a class="navbar-item" href="<%=basePath%>/home">
             <img class="image is-48x48" src="/images/jReadsLogo.png" alt="jReads">
           </a>
           <div class="navbar-item">
@@ -48,17 +48,17 @@
         <div class="navbar-menu" id="burgerOptions">
           <div class="navbar-end pr-4">
             <% if(currentUser){ %>
-              <a class="navbar-item is-light has-text-centered" href="/library">jRead's Collection</a>
-              <a class="navbar-item is-light is-capitalized has-text-centered" href="/home">Your Books</a>
-              <a class="navbar-item is-light is-capitalized has-text-centered" href="/users/logout">
+              <a class="navbar-item is-light has-text-centered" href="<%=basePath%>/library">jRead's Collection</a>
+              <a class="navbar-item is-light is-capitalized has-text-centered" href="<%=basePath%>/home">Your Books</a>
+              <a class="navbar-item is-light is-capitalized has-text-centered" href="<%=basePath%>/users/logout">
                   Logout (<%=currentUser%>)
               </a>
             <% } else { %>
-              <a class="navbar-item is-light has-text-centered" href="/home">jRead's Collection</a>
-              <a class="navbar-item is-primary has-text-centered" href="/users/register">
+              <a class="navbar-item is-light has-text-centered" href="<%=basePath%>/home">jRead's Collection</a>
+              <a class="navbar-item is-primary has-text-centered" href="<%=basePath%>/users/register">
                   <strong>Sign up</strong>
               </a>
-              <a class="navbar-item is-light has-text-centered" href="/users/login">
+              <a class="navbar-item is-light has-text-centered" href="<%=basePath%>/users/login">
                   Login
               </a>
             <% } %>

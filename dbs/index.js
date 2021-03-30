@@ -1,6 +1,7 @@
 //Initialize databases
 
-const {MONGO_USERNAME, MONGO_PASSWORD} = require("../secrets.js");
+// const {MONGO_USERNAME, MONGO_PASSWORD} = require("../secrets.js");
+const {MONGO_USERNAME, MONGO_PASSWORD} = require("../config.js");
 const MongoClient = require('mongodb').MongoClient;
 const JREADS_DB = "jReads";
 

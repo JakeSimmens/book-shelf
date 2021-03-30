@@ -13,7 +13,7 @@
         <div class="container shelves">
           <h1 class="title is-1 has-text-light has-text-centered">Login</h1>
 
-          <form action="/users/login" method="POST">
+          <form action="<%=basePath%>/users/login" method="POST">
             <div class="field">
               <div class="label is-medium">
                 <label for="username" class="label has-text-light">Username</label>
@@ -47,7 +47,7 @@
                     <button class="button is-success is-medium">Login</button>
                   </div>
                   <div class="control">
-                    <a href="/home" class="button is-danger is-medium">Cancel</a>
+                    <a href="<%=basePath%>/home" class="button is-danger is-medium">Cancel</a>
                   </div>
                 </div>
               </div>

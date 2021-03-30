@@ -23,7 +23,7 @@
         <div class="container login-splash">
           <h1 class="title is-1 has-text-light has-text-centered"><span class="logo-style">jReads</span></h1>
 
-          <form action="/users/login" method="POST">
+          <form action="<%=basePath%>/users/login" method="POST">
             <div class="field">
               <div class="label is-medium">
                 <label for="username" class="label has-text-light">Username</label>
@@ -57,7 +57,7 @@
                     <button class="button button-splash is-success is-medium">Login</button>
                   </div>
                   <div class="control">
-                    <a href="/library" class="button button-splash is-info is-medium">Guest</a>
+                    <a href="<%=basePath%>/library" class="button button-splash is-info is-medium">Guest</a>
                   </div>
 
 
@@ -67,7 +67,7 @@
           <div class="level">
             <div class="level-item has-text-centered">
               <div class="control">
-                <a href="/users/register" class="has-text-light">Sign Me Up</a>
+                <a href="<%=basePath%>/users/register" class="has-text-light">Sign Me Up</a>
               </div>
             </div>
 

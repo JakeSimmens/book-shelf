@@ -1,3 +1,6 @@
+// const {BASE_PATH} = require("../secrets");
+const {BASE_PATH}  = require("../config.js");
+
 const middleware = require("../middleware");
 const express = require("express");
 //use mergeParams to allow req.params.id to pass thru
@@ -9,7 +12,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
   router.post('/', middleware.isLoggedIn, (req, res) => {
     if(req.body.message.trim() === ""){
       req.flash("info", "Whoops, your comment was blank.");
-      res.redirect(`/myBook/${req.params.id}`);
+      res.redirect(`${BASE_PATH}/myBook/${req.params.id}`);
       return;
     }
     booksDbConn.addComment(
@@ -26,7 +29,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
         } else {
           req.flash("info", "Your comment is posted.");
         }
-        res.redirect(`/myBook/${req.params.id}`);
+        res.redirect(`${BASE_PATH}/myBook/${req.params.id}`);
       });
   });
 
@@ -35,7 +38,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
     booksDbConn.findById(req.params.id, (err, bookData)=> {
       if(err){
         req.flash("info", "Unable to retrieve comment to edit");
-        res.redirect(`/myBook/${req.params.id}`);
+        res.redirect(`${BASE_PATH}/myBook/${req.params.id}`);
         return;
       }
       let editComment = bookData[0].comments[req.params.comment_id];
@@ -65,7 +68,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
         req.flash("info", "Your comment was updated.");
       }
 
-      res.redirect(`/myBook/${req.params.id}`);
+      res.redirect(`${BASE_PATH}/myBook/${req.params.id}`);
     });
   });
 
@@ -77,7 +80,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
         } else {
           req.flash("info", "Your comment was deleted.");
         }
-        res.redirect(`/myBook/${req.params.id}`);
+        res.redirect(`${BASE_PATH}/myBook/${req.params.id}`);
       });
   });
 

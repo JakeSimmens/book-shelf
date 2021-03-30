@@ -2,6 +2,7 @@ if (!(typeof module === "undefined")) {
     const fetchBooks = require("./bookapi.js");
 }
 
+const BASE_PATH  = "/jreads";
 const MAX_SEARCH_RESULT = 10;
 const searchInput = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
@@ -86,7 +87,7 @@ function createOneDropDownItem(book) {
 
     bookItem.setAttribute("class", "dropdown-item")
     link.setAttribute("class", "searchResult"); //searchResult
-    link.setAttribute("href", `/findBook/${book.id}`);
+    link.setAttribute("href", `${BASE_PATH}/findBook/${book.id}`);
     media.setAttribute("class", "media");
 
     if (book.imageLinks !== undefined) {
