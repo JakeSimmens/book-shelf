@@ -1,6 +1,6 @@
-if(!process.env){
+// if(!process.env){
   const {SESSION_SECRET, BASE_PATH, MONGO_PASSWORD, MONGO_USERNAME}  = require("./secrets.js");
-}
+// }
 
 
 module.exports = {

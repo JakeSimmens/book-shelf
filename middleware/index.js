@@ -1,4 +1,5 @@
-const {BASE_PATH}  = require("../secrets.js");
+// const {BASE_PATH}  = require("../secrets.js");
+const {BASE_PATH}  = require("../config.js");
 let middlewareObj = {};
 
 middlewareObj.isLoggedIn = (req, res, next) => {

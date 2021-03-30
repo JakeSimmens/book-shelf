@@ -1,4 +1,6 @@
-const {SESSION_SECRET, BASE_PATH}  = require("./secrets.js");
+//const {SESSION_SECRET, BASE_PATH}  = require("./secrets.js");
+const {SESSION_SECRET, BASE_PATH}  = require("./config.js");
+
 const {seed}            = require("./seed.js");
 const flash             = require("connect-flash");
 const express           = require("express");
