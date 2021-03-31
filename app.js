@@ -1,7 +1,6 @@
 //const {SESSION_SECRET, BASE_PATH}  = require("./secrets.js");
 const {SESSION_SECRET, BASE_PATH}  = require("./config.js");
 
-const {seed}            = require("./seed.js");
 const flash             = require("connect-flash");
 const express           = require("express");
 const app               = express();
@@ -9,11 +8,12 @@ const methodOverride    = require("method-override");
 const session           = require("express-session");
 const passport          = require("passport");
 const initDatabases     = require("./dbs");
+const path              = require("path");
 const {createMongoAPI}  = require("./dbs/dbapi.js");
 
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({extended: true}));
 app.set("view engine", "ejs");
-app.use(express.static("public"));
 app.use(methodOverride("_method"))
 app.use(passport.initialize());
 app.use(passport.session());
