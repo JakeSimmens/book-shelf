@@ -43,10 +43,8 @@ initDatabases().then( async databases => {
   app.use(`${BASE_PATH}/myBook`, myBookRoutes(booksColl, usersColl));
   app.use(`${BASE_PATH}/myBook/:id/comments`, commentRoutes(booksColl, usersColl));
 
-  const port = process.env.PORT || 3000;
-  app.server = app.listen(port, function startServer() {
-      console.log("jReads running");
-  });
+  //const port = process.env.PORT || 3000;
+  app.server = app.listen();
 });
 
 module.exports = app;
