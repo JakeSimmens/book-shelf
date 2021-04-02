@@ -1,4 +1,3 @@
-// const {BASE_PATH}  = require("../secrets.js");
 const {BASE_PATH}  = require("../config.js");
 let middlewareObj = {};
 
@@ -18,7 +17,7 @@ middlewareObj.getDateAndTime = () => {
   let year = date.getFullYear();
   let hours = date.getHours();
   let minutes = date.getMinutes();
-  let zero = minutes < 10 ? 0 : "";//if(minutes < 10){
+  let zero = minutes < 10 ? 0 : "";
  
   return `${month}/${day}/${year}  ${hours}:${zero}${minutes}`;
 }
@@ -38,6 +37,11 @@ middlewareObj.formatBookDataFromGoogle = (data) => {
   extractedData.averageRating = data.volumeInfo.averageRating;
   extractedData.ratingsCount = data.volumeInfo.ratingsCount;
   extractedData.imageLinks = data.volumeInfo.imageLinks;
+
+  for(link in extractedData.imageLinks){
+    let secureLink = extractedData.imageLinks[link].replace("http://", "https://");
+    extractedData.imageLinks[link] = secureLink;
+  }
 
   return extractedData;
 }

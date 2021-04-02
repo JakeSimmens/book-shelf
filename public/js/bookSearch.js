@@ -2,7 +2,7 @@ if (!(typeof module === "undefined")) {
     const fetchBooks = require("./bookapi.js");
 }
 
-const BASE_PATH  = "/jreads";
+const BASE_PATH  = ""; //"/jreads";
 const MAX_SEARCH_RESULT = 10;
 const searchInput = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");

@@ -70,6 +70,11 @@ function fetchGoogleBooks() {
         extractedData.ratingsCount = data.volumeInfo.ratingsCount;
         extractedData.imageLinks = data.volumeInfo.imageLinks;
 
+        for(link in extractedData.imageLinks){
+          let secureLink = extractedData.imageLinks[link].replace("http://", "https://");
+          extractedData.imageLinks[link] = secureLink;
+        }
+
         return extractedData;
     }
     return publicAPI;
