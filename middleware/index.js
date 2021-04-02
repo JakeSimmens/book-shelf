@@ -24,6 +24,7 @@ middlewareObj.getDateAndTime = () => {
 }
 
 middlewareObj.formatBookDataFromGoogle = (data) => {
+  console.log(data);
 
   let extractedData = {};
   extractedData.id = data.id;
@@ -39,6 +40,14 @@ middlewareObj.formatBookDataFromGoogle = (data) => {
   extractedData.ratingsCount = data.volumeInfo.ratingsCount;
   extractedData.imageLinks = data.volumeInfo.imageLinks;
 
+  for(link in extractedData.imageLinks){
+    //console.log("link:", extractedData.imageLinks[link]);
+    let secureLink = extractedData.imageLinks[link].replace("http://", "https://");
+    extractedData.imageLinks[link] = secureLink;
+    //link.replace("http://", "https://");
+  }
+
+  console.log("extracted data: ", extractedData);
   return extractedData;
 }
 
