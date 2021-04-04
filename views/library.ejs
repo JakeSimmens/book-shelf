@@ -7,21 +7,21 @@
         <p class="has-text-centered has-text-weight-semibold is-size-5"><%=messages[0]%></p>
     </div>
   <%}%>
-    <section class="section px-6">
+    <section class="px-2 py-6">
         <div class="columns">
-            <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame has-text-centered m-4">
+            <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame has-text-centered my-4">
                 <% if(currentUser){ %>
                   <h3 class="is-3 pb-4"><span class="logo-style">jReads Collection</span></h3>
                   <p>Every book listed in our users' libraries.</p><br>
                   <p class="is-4 is-capitalized"><a href="<%=basePath%>/home">Your Collection</a></p>
                 <% } else { %>
                   <h3 class="is-3 pb-4"><span class="logo-style">jReads Collection</span></h3>
-                  <p>Every book listed in our users' libraries.</p><br><br>
+                  <p>Every book listed in our users' libraries.</p><br>
                   <p>Please <a href="<%=basePath%>/users/register">sign up</a> or <a href="<%=basePath%>/users/login">log in</a> to create your own book list.</p>
                 <% } %>
 
             </div>
-            <div class="column is-three-quarters is-four-fifths-desktop">
+            <div class="column is-two-quarters is-four-fifths-desktop">
               <div class="container shelves">
                 <div class="columns is-centered is-multiline is-mobile">
                   <% if(library.length === 0 ){ %>

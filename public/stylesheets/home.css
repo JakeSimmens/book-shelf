@@ -40,12 +40,12 @@ section {
     width: 100%;
 }
 
-@media (max-width: 768px){
+/* @media (max-width: 768px){
   .parallax-splash{
     background-position: top left;
     transition: background-position 3s;
   }
-}
+} */
 
 .button-splash{
   width: 100px;
@@ -61,6 +61,8 @@ section {
     background-color: rgba(32, 32, 32, .95);
     border-radius: 20px;
     padding: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .leftDisplayFrame h3 {
@@ -75,13 +77,6 @@ section {
     font-size: 1em;
     color: lightblue;
     text-decoration: underline;
-}
-
-@media (max-width: 1008px){
-    .mainFrame{
-        flex-wrap: wrap;
-        font-size: 1em;
-    }
 }
 
 .shelves {

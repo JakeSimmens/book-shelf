@@ -3,7 +3,7 @@
 }
 
 .search {
-    padding-left: 20px;
+    padding-left: 0px;
     flex-direction: column;
     position: relative;
 }
@@ -16,11 +16,7 @@
     background-repeat: no-repeat;
 }
 
-@media ( max-width: 550px) {
-    .search input {
-        width: 230px;
-    }
-}
+
 
 .searchResults {
     position: absolute;  /*parent needs to be position relative to overlay*/
@@ -29,6 +25,16 @@
     margin-left: 4px;
     max-height: 500px;
     overflow-y: scroll;
+}
+
+@media ( max-width: 550px) {
+  .search input {
+      width: 175px;
+  }
+
+  .searchResults {
+    width: 250px;
+  }
 }
 
 .searchResults .dropdown-item {
