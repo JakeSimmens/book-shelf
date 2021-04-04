@@ -1,7 +1,6 @@
 <%- include("./partials/header") %>
 
 <div class="wrapper">
-
     <% if(messages.length > 0){ %>
       <div class="notification is-link mt-4">
         <button class="delete mr-2"></button>
@@ -9,11 +8,11 @@
       </div>
     <%}%>
 
-    <section class="section px-6">
+    <section class="px-2 py-6">
       
         <div class="columns">
 
-            <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame has-text-centered m-4">
+            <div class="column is-one-quarter-tablet is-one-fifth-desktop has-text-light leftDisplayFrame has-text-centered my-4">
               
                 <% if(currentUser){ %>
                   <% if(currentUser.charAt(currentUser.length-1)=== "s"){ %>
@@ -30,7 +29,7 @@
 
             </div>
 
-            <div class="column is-three-quarters is-four-fifths-desktop">
+            <div class="column is-two-quarters is-four-fifths-desktop">
               <div class="container shelves">
                 <div class="columns is-centered is-multiline is-mobile">
                   <% if(myLibrary.length === 0 ){ %>
