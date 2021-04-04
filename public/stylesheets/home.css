@@ -40,12 +40,12 @@ section {
     width: 100%;
 }
 
-@media (max-width: 768px){
+/* @media (max-width: 768px){
   .parallax-splash{
     background-position: top left;
     transition: background-position 3s;
   }
-}
+} */
 
 .button-splash{
   width: 100px;
