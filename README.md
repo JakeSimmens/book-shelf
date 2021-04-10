@@ -45,20 +45,19 @@ Areas of focus:
   <li>RESTful routes</li>
 </ul>
 
-Creating an abstract layer to interact with the database API and the jReads code was the step I was most excited about.  I went into it with the mindset of using MongoDB now and being able to swap it out with a SQL database in the future.
+Creating an abstract layer to interact with the database API and the jReads code was the step I was most excited about.  I went into it with the mindset of using MongoDB now and being able to swap it out with a SQL database in the future.  Building this additional layer enabled me to create a variety of different functions customized to the needs of application such as modifying user and book data.
 
-Each book is a user's collection is stored in the local database while making it easy to add new titles to the collection thru Google Books.  The books and data are initially searched for and found using the Google Books API.  Any books a user adds to their own library are then saved to a separate database for easy reference in the future.
+Each book in a user's collection is stored in the local database while making it easy to add new titles to the collection thru Google Books.  The books and data are initially searched for and found using the Google Books API.  Any books a user adds to their own library are then saved to a separate database for easy reference in the future.
+
 
 ### Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [JavaScript](https://www.ecma-international.org/technical-committees/tc39/)
 * [Node.js](https://nodejs.org)
 * [Express](https://expressjs.com)
 * [Passport](http://passportjs.org)
 * [MongoDB](https://mongodb.com)
 * [Bulma](https://bulma.io)
-
 
 
 ## Challenges
