@@ -6,6 +6,7 @@
   <p align="center">
     Track and Discuss Your Books
     <br />
+  <a href="https://jreads.jakesimmens.com">Visit Site</a>
   </p>
 </p>
 
