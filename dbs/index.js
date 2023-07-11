@@ -17,14 +17,11 @@ function connect(url) {
 }
  
 module.exports = async function() {
-  try{
-    let databases = await Promise.all([connect(jReadsUrl)]);
-  }
-  catch{
-    console.log("Did not connect to MONGODB.")
-  }
- 
+
+  let databases = await Promise.all([connect(jReadsUrl)]);
+
   return {
     jReads: databases[0]
   }
+
 }
