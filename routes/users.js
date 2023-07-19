@@ -23,7 +23,12 @@ let connectToDb = function(usersdbConnection){
     }));
 
   router.get("/logout", middleware.isLoggedIn, (req, res) => {
-    req.logOut();
+    req.logOut((err) => {
+      if(err){
+        req.flash("info","Unable to logout.");
+        res.redirect(`${BASE_PATH}/home`);
+      }
+    });
     req.flash("info","You have logged out");
     res.redirect(`${BASE_PATH}/home`);
   });
