@@ -115,6 +115,14 @@
                 <% if(currentUser){ %>
                   <form action="<%=basePath%>/myBook/<%=bookData._id%>/comments%>" method="POST">
                     <input name="username" type="text" value="<%=currentUser%>" hidden>
+                    <div>
+                      <span>What's your rating... </span>
+                      <a class="button one-star">&#10025</a>
+                      <a class="button two-star">&#10025</a>
+                      <a class="button three-star">&#10025</a>
+                      <a class="button four-star">&#9733</a>
+                      <a class="button five-star">&#10032</a>
+                    </div>
                     <div class="field">
                       <p class="control">
                         <textarea name="message" cols="30" rows="5" class="textarea" placeholder="Your thoughts..."></textarea>
