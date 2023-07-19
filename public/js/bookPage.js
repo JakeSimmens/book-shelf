@@ -7,19 +7,19 @@ const fiveStarReview = document.querySelector(".five-star")
 oneStarReview.addEventListener("click", 
   function fillOneStar(){
     oneStarReview.textContent = "\u2605"
-    twoStarReview.textContent = "\u2730"
-    threeStarReview.textContent = "\u2730"
-    fourStarReview.textContent = "\u2730"
-    fiveStarReview.textContent = "\u2730"
+    twoStarReview.textContent = "\u2729"
+    threeStarReview.textContent = "\u2729"
+    fourStarReview.textContent = "\u2729"
+    fiveStarReview.textContent = "\u2729"
   })
 
 twoStarReview.addEventListener("click", 
   function fillOneStar(){
     oneStarReview.textContent = "\u2605"
     twoStarReview.textContent = "\u2605"
-    threeStarReview.textContent = "\u2730"
-    fourStarReview.textContent = "\u2730"
-    fiveStarReview.textContent = "\u2730"
+    threeStarReview.textContent = "\u2729"
+    fourStarReview.textContent = "\u2729"
+    fiveStarReview.textContent = "\u2729"
   })
 
 threeStarReview.addEventListener("click", 
@@ -27,8 +27,8 @@ threeStarReview.addEventListener("click",
     oneStarReview.textContent = "\u2605"
     twoStarReview.textContent = "\u2605"
     threeStarReview.textContent = "\u2605"
-    fourStarReview.textContent = "\u2730"
-    fiveStarReview.textContent = "\u2730"
+    fourStarReview.textContent = "\u2729"
+    fiveStarReview.textContent = "\u2729"
   })
 
 fourStarReview.addEventListener("click", 
@@ -37,7 +37,7 @@ fourStarReview.addEventListener("click",
     twoStarReview.textContent = "\u2605"
     threeStarReview.textContent = "\u2605"
     fourStarReview.textContent = "\u2605"
-    fiveStarReview.textContent = "\u2730"
+    fiveStarReview.textContent = "\u2729"
   })
 
 fiveStarReview.addEventListener("click", 
