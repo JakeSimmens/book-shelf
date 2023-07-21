@@ -151,6 +151,14 @@
                         <strong><%=bookData.comments[i].username%></strong>
                         <small> · <%=bookData.comments[i].date%></small>
                         <div class="block pl-3">
+                        <% if(bookData.comments[i].rating > 0) { %>
+                          <p>RATING: <%=bookData.comments[i].rating%> 
+                            <% for(let star = 0; i < bookData.comments[i].rating; star++){ %>
+                              &#x2605 test
+                            <% } %>
+                          </p>
+                          
+                        <% } %>
                         <p><%=bookData.comments[i].message%></p>
                         </div>
                         <% if(currentUser === bookData.comments[i].username){ %>

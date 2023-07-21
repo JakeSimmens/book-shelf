@@ -19,6 +19,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
       req.params.id,
       { comments: {
           username: req.body.username,
+          rating: req.body.starCounter,
           message: req.body.message,
           date: middleware.getDateAndTime()
         }
