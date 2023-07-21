@@ -152,9 +152,13 @@
                         <small> · <%=bookData.comments[i].date%></small>
                         <div class="block pl-3">
                         <% if(bookData.comments[i].rating > 0) { %>
-                          <p>RATING: <%=bookData.comments[i].rating%> 
-                            <% for(let star = 0; i < bookData.comments[i].rating; star++){ %>
-                              &#x2605 test
+                          <p>
+                            <% for(let star = 0; star < 5; star++){ %>
+                              <% if(star < bookData.comments[i].rating) {%>
+                                &#x2605
+                              <%} else {%>
+                                &#x2729
+                              <% } %>
                             <% } %>
                           </p>
                           
