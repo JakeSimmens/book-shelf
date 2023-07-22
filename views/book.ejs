@@ -68,7 +68,17 @@
                                     <% if(bookData.averageRating){ %>
                                         <tr>
                                             <td class="has-text-right">Rating:</td>
-                                            <td><%= bookData.averageRating%> of 5</td>
+                                            <td>
+                                              <% for(let star = 0; star < 5; star++){ %>
+                                                <% if( bookData.averageRating > star && bookData.averageRating - star < 1 ) { %>
+                                                  &#xbd
+                                                <% } else if( star + 1 <= bookData.averageRating ) { %>
+                                                  &#x2605
+                                                <% } else { %>
+                                                  &#x2729
+                                                <% } %>
+                                              <% } %>
+                                            </td>
                                         </tr>
                                     <% } %>
                                     <% if(bookData.publisher){ %>
@@ -115,6 +125,15 @@
                 <% if(currentUser){ %>
                   <form action="<%=basePath%>/myBook/<%=bookData._id%>/comments%>" method="POST">
                     <input name="username" type="text" value="<%=currentUser%>" hidden>
+                    <div>
+                      <span>What's your rating... </span>
+                      <input name="starCounter" class="star-counter" type="number" value="0" hidden>
+                      <a class="button one-star">&#10025</a>
+                      <a class="button two-star">&#10025</a>
+                      <a class="button three-star">&#10025</a>
+                      <a class="button four-star">&#10025</a>
+                      <a class="button five-star">&#10025</a>
+                    </div>
                     <div class="field">
                       <p class="control">
                         <textarea name="message" cols="30" rows="5" class="textarea" placeholder="Your thoughts..."></textarea>
@@ -142,6 +161,18 @@
                         <strong><%=bookData.comments[i].username%></strong>
                         <small> · <%=bookData.comments[i].date%></small>
                         <div class="block pl-3">
+                        <% if(bookData.comments[i].rating > 0) { %>
+                          <p>
+                            <% for(let star = 0; star < 5; star++){ %>
+                              <% if(star < bookData.comments[i].rating) {%>
+                                &#x2605
+                              <%} else {%>
+                                &#x2729
+                              <% } %>
+                            <% } %>
+                          </p>
+                          
+                        <% } %>
                         <p><%=bookData.comments[i].message%></p>
                         </div>
                         <% if(currentUser === bookData.comments[i].username){ %>

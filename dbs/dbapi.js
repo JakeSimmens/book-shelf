@@ -96,6 +96,7 @@ async function createMongoAPI(dbConnection, nameOfCollection){
       let valueToUpdate = {
         $set: {
           ["comments."+comment.id+".message"]: comment.message,
+          ["comments."+comment.id+".rating"]: comment.rating,
           ["comments."+comment.id+".date"]: comment.date,
           ["comments."+comment.id+".edited"]: comment.edited
         }
