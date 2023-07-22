@@ -1,4 +1,5 @@
 const starCount = document.querySelector(".star-counter")
+const starCountEdit = document.querySelector(".star-counter-edit")
 const oneStarReview = document.querySelector(".one-star")
 const twoStarReview = document.querySelector(".two-star")
 const threeStarReview = document.querySelector(".three-star")

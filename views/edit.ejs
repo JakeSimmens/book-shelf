@@ -17,6 +17,15 @@
               <div class="box content">
                 <form action="<%=basePath%>/myBook/<%=bookId%>/comments/<%=comment.id%>?_method=PUT" method="POST">
                   <input name="username" type="text" value="<%=currentUser%>" hidden>
+                  <div>
+                    <span>Update your rating... </span>
+                    <input name="starCounter" class="star-counter star-counter-edit" type="number" value="<%=comment.rating%>" hidden>
+                    <a class="button one-star">&#10025</a>
+                    <a class="button two-star">&#10025</a>
+                    <a class="button three-star">&#10025</a>
+                    <a class="button four-star">&#10025</a>
+                    <a class="button five-star">&#10025</a>
+                  </div>
                   <div class="field">
                     <p class="control">
                       <textarea name="message" cols="30" rows="5" class="textarea" ><%=comment.message%></textarea>

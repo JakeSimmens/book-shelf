@@ -43,10 +43,11 @@ let connectToDb = function(booksDbConn, usersDbConn){
         return;
       }
       let editComment = bookData[0].comments[req.params.comment_id];
-
+      console.log(editComment)
       res.render("edit", {
         comment: {
           id: req.params.comment_id,
+          rating: editComment.rating,
           message: editComment.message
         },
         bookId: req.params.id,
@@ -59,6 +60,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
   router.put('/:comment_id', middleware.isLoggedIn, (req, res) => {
     booksDbConn.updateComment(req.params.id,  {
       id: req.params.comment_id,
+      rating: req.body.starCounter,
       message: req.body.message,
       date: middleware.getDateAndTime(),
       edited: true
