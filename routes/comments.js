@@ -43,7 +43,6 @@ let connectToDb = function(booksDbConn, usersDbConn){
         return;
       }
       let editComment = bookData[0].comments[req.params.comment_id];
-      console.log(editComment)
       res.render("edit", {
         comment: {
           id: req.params.comment_id,
