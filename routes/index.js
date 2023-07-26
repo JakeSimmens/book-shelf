@@ -23,7 +23,12 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
   });
 
   router.get("/", (req, res) => {
-    res.render("splash");
+    // res.render("splash");
+    res.render("newHome", {
+      myLibrary: [],
+      maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+      messages: req.flash("info")
+    });
   });
 
   router.get("/home", (req, res) => {
