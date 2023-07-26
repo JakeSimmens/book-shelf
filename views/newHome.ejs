@@ -38,18 +38,24 @@
 
             <div class="column is-two-quarters is-four-fifths-desktop">
               <div class="container shelves">
-                <div class="columns is-centered is-multiline is-mobile">
-                  <% if(myLibrary.length === 0 ){ %>
-                    <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
-                      <div class="bookCard is-primary has-text-centered has-text-light">
-                        <p>To add a book, use the search in the navbar.</p>
-                        <br>
-                        <p>Get inspired by what other users have picked.</p>
+                <div class="columns is-multiline is-mobile">
+                    <div class="column is-half-mobile is-two-thirds-tablet is-two-thirds-desktop">
+                      <image class="image is-1x1" src="https://images.unsplash.com/photo-1560332944-d047e59ac9b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3270&q=80"></image>
+                      <div class=" is-primary has-text-light">
+                        <p>	People have always wondered if a computer could be as smart as a human one day.  Over the past several decades, there have been many movies made on the topic, including Steven Spielberg’s A.I.  However, the movies are just science fiction.  In reality, artificial intelligence is far less complex but integrated in many ways into our everyday lives.</p>
+
                         <p><a href="<%=basePath%>/library">Take a look.</a></p>
                       </div>
                     </div>
-                  <% } %>
-                  <% for(let i = 0; i < myLibrary.length; i++){ %>
+                    <div class="column is-half-mobile is-one-third-tablet is-one-third-desktop">
+                      <div class=" is-primary has-text-light">
+                        <p>Book News</p>
+                        <br>
+                        <p>ADD LOG IN AREA HERE</p>
+                      </div>
+                    </div>
+
+                  <!-- <% for(let i = 0; i < myLibrary.length; i++){ %>
                     <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
                       <div class="bookCard">
                         <a href="<%=basePath%>/myBook/<%=myLibrary[i]._id%>">
@@ -59,7 +65,7 @@
                           </a>
                       </div>
                     </div>
-                  <% } %>  
+                  <% } %>   -->
 
                 </div>
               </div>
