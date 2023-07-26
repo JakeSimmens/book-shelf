@@ -25,6 +25,13 @@
                   <h3 class="is-3 pb-4">Welcome!</h3>
                   <p>Please <a href="<%=basePath%>/users/register">sign up</a> or <a href="<%=basePath%>/users/login">login</a> to create your own book list.</p>
               <% } %>
+              <h3 class="is-3 is-capitalized pb-2">Reading Challange</h3>
+              <h3 class="is-3 is-capitalized pb-2">Top 3 Books</h3>
+              <h3 class="is-3 is-capitalized pb-2">To Read...</h3>
+              <% if(myLibrary.length === 0 ){ %>
+                  <p>Get inspired by what other users have picked.</p>
+                  <p><a href="<%=basePath%>/library">Take a look.</a></p>
+              <% } %>
               
 
             </div>
