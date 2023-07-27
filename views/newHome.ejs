@@ -23,7 +23,57 @@
                   <br><p><a href="<%=basePath%>/library">jReads Collection</a></p>
               <% } else { %>
                   <h3 class="is-3 pb-4">Welcome!</h3>
-                  <p>Please <a href="<%=basePath%>/users/register">sign up</a> or <a href="<%=basePath%>/users/login">login</a> to create your own book list.</p>
+                  <form action="<%=basePath%>/users/login" method="POST">
+                    <div class="field">
+                      <div class="label is-medium">
+                        <label for="username" class="label has-text-light">Username</label>
+                      </div>
+                      <div class="field-body">
+                        <div class="field">
+                          <div class="control">
+                            <input class="input is-small" type="text" name="username" required>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+        
+                    <div class="field">
+                      <div class="label is-medium">
+                        <label for="password" class="label has-text-light">Password</label>
+                      </div>
+                      <div class="field-body">
+                        <div class="field">
+                          <div class="control">
+                            <input class="input is-small" type="password" name="password" required>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+        
+                    <div class="field is-horizontal">
+                      <div class="field-body">
+                        <div class="field is-grouped is-grouped-centered">
+                          <div class="control">
+                            <button class="button button-splash is-success is-small">Login</button>
+                          </div>
+                          <div class="control">
+                            <a href="<%=basePath%>/library" class="button button-splash is-info is-small">Guest</a>
+                          </div>
+        
+        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="level">
+                    <div class="level-item has-text-centered">
+                      <div class="control">
+                        <a href="<%=basePath%>/users/register" class="has-text-light">Sign Me Up</a>
+                      </div>
+                    </div>
+        
+                  </div>
+        
+                  </form>
               <% } %>
               <h3 class="is-3 is-capitalized pb-2">Reading Challange</h3>
               <h3 class="is-3 is-capitalized pb-2">Top 3 Books</h3>
