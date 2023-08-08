@@ -1,4 +1,8 @@
-// const {NEWS_API_KEY} = require("../config.js");
+const {NEWS_API_KEY} = require("../config.js");
+const NewsAPI = require('newsapi');
+const newsapi = new NewsAPI(NEWS_API_KEY);
+// const fetch = require("node-fetch");
+
 // GET https://newsapi.org/v2/everything?q=Apple&from=2023-07-28&sortBy=popularity&apiKey=API_KEY
 
 // var url = 'https://newsapi.org/v2/everything?' +
@@ -7,33 +11,46 @@
 //           'sortBy=popularity&' +
 //           'apiKey=b91d2aa703564c6ea813689f8bb448a4';
 
-const SEARCH_TERM = "books";
+const SEARCH_TERM = "science fiction book review";
 const SORT_BY = "popularity";
 const SEARCH_IN = "";
 const SOURCES = "";
 const DOMAINS = "";
 const LANGUAGE = "en";
-const PAGE_SIZE = 5;
 // const CURRENT_DATE = getFormatedDate();
 
-function fetchNews(){
+async function fetchNews(){
   console.log("Fetching News!!!")
-  return ["Article 1:  Big", "Article 2:  Huge", "Article 3:  Boring"]
+
+  return newsapi.v2.everything({
+    q: SEARCH_TERM,
+    from: '2023-08-01',
+    to: '2023-08-06',
+    language: LANGUAGE,
+    sortBy: SORT_BY
+  }).then( response => {
+    console.log("STATUS:",response.status)
+    console.log("Total Results:", response.totalResults)
+    console.log("Articles[]: ", response.articles)
+    
+    console.log(response)
+
+    let articles = []
+    for(let i=0; i < response.articles.length && i < 5; i++){
+      articles.push(response.articles[i].title);
+    }
+
+
+    return [...articles]
+    // return ["Article 1:  Big", "Article 2:  Huge", "Article 3:  Boring"]
+
+
+  })
+
+
+
+  
 }
-
-
-var url = 'https://newsapi.org/v2/everything?' +
-          'domains=goodreads.com&' +
-          `from=2023-08-01&` +
-          'sortBy=popularity&' +
-          'apiKey=b91d2aa703564c6ea813689f8bb448a4';
-
-// var req = new Request(url);
-
-// fetch(url)
-//     .then(function(response) {
-//         console.log(response.json());
-//     })
 
 // function getFormatedDate(){
 //   let formattedDay = ""
