@@ -1,15 +1,6 @@
 const {NEWS_API_KEY} = require("../config.js");
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI(NEWS_API_KEY);
-// const fetch = require("node-fetch");
-
-// GET https://newsapi.org/v2/everything?q=Apple&from=2023-07-28&sortBy=popularity&apiKey=API_KEY
-
-// var url = 'https://newsapi.org/v2/everything?' +
-//           'q=Apple&' +
-//           'from=2023-07-28&' +
-//           'sortBy=popularity&' +
-//           'apiKey=b91d2aa703564c6ea813689f8bb448a4';
 
 const SEARCH_TERM = "science fiction book review";
 const SORT_BY = "popularity";
@@ -17,64 +8,98 @@ const SEARCH_IN = "";
 const SOURCES = "";
 const DOMAINS = "";
 const LANGUAGE = "en";
-// const CURRENT_DATE = getFormatedDate();
+
+let dateToday = new Date().getDate();
+let currentNews = {
+  date: dateToday,
+  articles: []
+}
 
 async function fetchNews(){
   console.log("Fetching News!!!")
+  console.log("from: ", getFormatedDate())
+  console.log("to: ", getOneWeekAgoDate())
+
+  if(currentNews.articles.length > 0 && new Date().getDate() === currentNews.date){
+    console.log("Accessing Saved articles");
+    return [...currentNews.articles]
+  }
+
+  console.log("Retrieving new articles");
 
   return newsapi.v2.everything({
     q: SEARCH_TERM,
-    from: '2023-08-01',
-    to: '2023-08-06',
+    from: getOneWeekAgoDate(),
+    to: getFormatedDate(),
     language: LANGUAGE,
     sortBy: SORT_BY
   }).then( response => {
-    console.log("STATUS:",response.status)
+    // console.log("STATUS:",response.status)
     console.log("Total Results:", response.totalResults)
-    console.log("Articles[]: ", response.articles)
+    console.log("Articles[]: ", response.articles[0])
     
-    console.log(response)
+    // console.log(response)
 
-    let articles = []
+    currentNews.articles = []
     for(let i=0; i < response.articles.length && i < 5; i++){
-      articles.push(response.articles[i].title);
+      currentNews.articles.push(response.articles[i].title);
     }
-
-
-    return [...articles]
-    // return ["Article 1:  Big", "Article 2:  Huge", "Article 3:  Boring"]
-
-
+    return [...currentNews.articles]
   })
-
-
-
-  
 }
 
-// function getFormatedDate(){
-//   let formattedDay = ""
-//   let formattedMonth = ""
-//   let formatedYear = ""
+//FORMAT DATE FUNCTIONS
 
-//   let today = Date.now()
-//   let day = today.getDate();
-//   let month = today.getMonth();
-//   let year = toString(today.getYear());
+function getFormatedDate(){
+  let today = new Date();
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
 
-//   if( day < 10){
-//     formattedDay = `0${day}`;
-//   } else {
-//     formatedDay = `${day}`;
-//   }
-//   if( month < 10){
-//     formattedMonth = `0${month}`;
-//   } else {
-//     formattedMonth = `${month}`;
-//   }
+  return formatDate(day, month, year);
+}
 
-//   return `${year}-${formattedMonth}-${formattedDay}`;
-// }
+function getOneWeekAgoDate(){
+  let today = new Date();
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
+
+  if(day > 7){
+    day = day - 7;
+  } else {
+    month--;
+    if( month === 0){
+      month = 12;
+      year--;
+    }
+    if(month === 2){
+      day = 21 + day
+    } else {
+      day = 23 + day
+    }
+  }
+
+  return formatDate(day, month, year);
+}
+
+function formatDate(day, month, year){
+  let formattedDay = ""
+  let formattedMonth = ""
+
+  if( day < 10){
+    formattedDay = `0${day}`;
+  } else {
+    formattedDay = `${day}`;
+  }
+  if( month < 10){
+    formattedMonth = `0${month}`;
+  } else {
+    formattedMonth = `${month}`;
+  }
+
+  return `${year}-${formattedMonth}-${formattedDay}`;
+}
 
 if (!(typeof module === "undefined")) {
   exports.fetchNews = fetchNews;
