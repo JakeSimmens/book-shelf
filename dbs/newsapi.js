@@ -2,12 +2,13 @@ const {NEWS_API_KEY} = require("../config.js");
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI(NEWS_API_KEY);
 
-const SEARCH_TERM = "science fiction book review";
+const SEARCH_TERM = "fiction book review";
 const SORT_BY = "popularity";
 const SEARCH_IN = "";
 const SOURCES = "";
 const DOMAINS = "";
 const LANGUAGE = "en";
+const TOTAL_ARTICLES_SENT = 10;
 
 let dateToday = new Date().getDate();
 let currentNews = {
@@ -40,7 +41,7 @@ async function fetchNews(){
     // console.log(response)
 
     currentNews.articles = []
-    for(let i=0; i < response.articles.length && i < 5; i++){
+    for(let i=0; i < response.articles.length && i < TOTAL_ARTICLES_SENT; i++){
       currentNews.articles.push(formatNewsData(response.articles[i]));
     }
     return [...currentNews.articles]
