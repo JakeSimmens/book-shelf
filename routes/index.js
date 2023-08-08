@@ -6,6 +6,7 @@ const router = express.Router();
 const passport = require("passport");
 const session = require("express-session");
 const {setupPassportStrategy} = require("../authSetup.js");
+const {fetchNews} = require("../dbs/newsapi.js");
 
 const MAX_BOOKS_PER_SHELF = 5;
 
@@ -22,8 +23,16 @@ let connectToDb = function(booksdbConnection, usersdbConnection){
     next();
   });
 
-  router.get("/", (req, res) => {
-    res.render("splash");
+  router.get("/", async (req, res) => {
+    // res.render("splash");
+    let newsFeed = await fetchNews()
+
+    res.render("newHome", {
+      myLibrary: [],
+      maxBooksPerShelf: MAX_BOOKS_PER_SHELF,
+      messages: req.flash("info"),
+      newsFeed: newsFeed
+    });
   });
 
   router.get("/home", (req, res) => {

@@ -26,11 +26,11 @@ let connectToDb = function(usersdbConnection){
     req.logOut((err) => {
       if(err){
         req.flash("info","Unable to logout.");
-        res.redirect(`${BASE_PATH}/home`);
+        res.redirect(`${BASE_PATH}/`);
       }
     });
     req.flash("info","You have logged out");
-    res.redirect(`${BASE_PATH}/home`);
+    res.redirect(`${BASE_PATH}/`);
   });
 
   router.get("/register", (req, res) => {
