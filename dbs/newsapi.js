@@ -35,17 +35,26 @@ async function fetchNews(){
     sortBy: SORT_BY
   }).then( response => {
     // console.log("STATUS:",response.status)
-    console.log("Total Results:", response.totalResults)
-    console.log("Articles[]: ", response.articles[0])
-    
+    // console.log("Total Results:", response.totalResults)
+    // console.log("Articles[]: ", response.articles[0])
     // console.log(response)
 
     currentNews.articles = []
     for(let i=0; i < response.articles.length && i < 5; i++){
-      currentNews.articles.push(response.articles[i].title);
+      currentNews.articles.push(formatNewsData(response.articles[i]));
     }
     return [...currentNews.articles]
   })
+}
+
+function formatNewsData(article){
+  return {
+    author: article.author,
+    title: article.title,
+    description: article.description,
+    url: article.url,
+    urlToImage: article.urlToImage
+  }
 }
 
 //FORMAT DATE FUNCTIONS
