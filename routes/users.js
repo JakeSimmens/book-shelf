@@ -40,7 +40,7 @@ let connectToDb = function(usersdbConnection){
   router.post("/register", (req, res) => {
     if(!req.body.username){
       req.flash("info", "Please enter a username to sign up.");
-      res.redirect(`${BASE_PATH}/home`);
+      res.redirect('/');
     }
 
     let username = req.body.username;
@@ -51,18 +51,18 @@ let connectToDb = function(usersdbConnection){
       function checkForNoMatch(err, data){
         if(data.username !== undefined){
           req.flash("info", `${data.username} already exists, please pick a different username.`);
-          res.redirect(`${BASE_PATH}/users/login`);
+          res.redirect(`/users/login`);
         } else {
           bcrypt.hash(pw, saltRounds, (err, hash)=>{
             if(err){
               req.flash("info", "Error signing up.  Please try again.")
-              return res.redirect(`${BASE_PATH}/users/login`);
+              return res.redirect(`/users/login`);
             }
 
             usersdbConnection.insert({username: username, password: hash}, (err, userData) => {
               if(err){
                 req.flash("info", "Unable to add user.");
-                return res.redirect(`${BASE_PATH}/users/register`);
+                return res.redirect(`/users/register`);
               }
               let user = userData.ops[0].username;
               req.login(user, (err)=>{
@@ -70,7 +70,7 @@ let connectToDb = function(usersdbConnection){
                   return next(err);
                 }
                 req.flash("info", "Thank you for joining jReads.  You are signed in to your account.");
-                return res.redirect(`${BASE_PATH}/home`);
+                return res.redirect(`/`);
               });
             });
           });
