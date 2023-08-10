@@ -20,10 +20,10 @@
                     <% } else { %>
                     <h3 class="is-3 is-capitalized pb-2"><%=currentUser%>'s Collection</h3>
                     <% } %>
-                  <br><p><a href="<%=basePath%>/library">jReads Collection</a></p>
+                  <br><p><a href="/library">jReads Collection</a></p>
               <% } else { %>
                   <h3 class="is-3 pb-4">Welcome!</h3>
-                  <form action="<%=basePath%>/users/login" method="POST">
+                  <form action="/users/login" method="POST">
                     <div class="field">
                       <div class="label is-medium">
                         <label for="username" class="label has-text-light">Username</label>
@@ -57,7 +57,7 @@
                             <button class="button button-splash is-success is-small">Login</button>
                           </div>
                           <div class="control">
-                            <a href="<%=basePath%>/library" class="button button-splash is-info is-small">Guest</a>
+                            <a href="/library" class="button button-splash is-info is-small">Guest</a>
                           </div>  
                         </div>
                       </div>
@@ -65,7 +65,7 @@
                     <div class="level">
                       <div class="level-item has-text-centered">
                         <div class="control">
-                          <a href="<%=basePath%>/users/register" class="has-text-light">Sign Me Up</a>
+                          <a href="/users/register" class="has-text-light">Sign Me Up</a>
                         </div>
                       </div>
                     </div>
@@ -76,7 +76,7 @@
               <h3 class="is-3 is-capitalized pb-2">To Read...</h3> -->
               <!-- <% if(myLibrary.length === 0 ){ %>
                   <p>Get inspired by what other users have picked.</p>
-                  <p><a href="<%=basePath%>/library">Take a look.</a></p>
+                  <p><a href="/library">Take a look.</a></p>
               <% } %> -->
               
 
