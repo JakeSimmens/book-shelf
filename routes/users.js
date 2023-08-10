@@ -16,8 +16,8 @@ let connectToDb = function(usersdbConnection){
 
   router.post("/login", passport.authenticate("local",
     {
-      successRedirect: `${BASE_PATH}/home`,
-      failureRedirect: `${BASE_PATH}/users/login`,
+      successRedirect: '/',
+      failureRedirect: '/users/login',
       successFlash: true,
       failureFlash: true
     }));
