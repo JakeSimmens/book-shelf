@@ -38,7 +38,7 @@ initDatabases().then( async databases => {
   const myBookRoutes = require("./routes/myBook");
   const findBookRoutes = require("./routes/findBook");
   const commentRoutes = require("./routes/comments")
-  app.use(`${BASE_PATH}/`, indexRoutes(booksColl, usersColl));
+  app.use(`/`, indexRoutes(booksColl, usersColl));
   app.use(`${BASE_PATH}/users`, usersRoutes(usersColl));
   app.use(`${BASE_PATH}/findBook`, findBookRoutes(booksColl, usersColl));
   app.use(`${BASE_PATH}/myBook`, myBookRoutes(booksColl, usersColl));
