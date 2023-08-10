@@ -20,10 +20,10 @@
                     <% } else { %>
                     <h3 class="is-3 is-capitalized pb-2"><%=currentUser%>'s Collection</h3>
                     <% } %>
-                  <br><p><a href="<%=basePath%>/library">jReads Collection</a></p>
+                  <br><p><a href="/library">jReads Collection</a></p>
               <% } else { %>
                   <h3 class="is-3 pb-4">Welcome!</h3>
-                  <p>Please <a href="<%=basePath%>/users/register">sign up</a> or <a href="<%=basePath%>/users/login">login</a> to create your own book list.</p>
+                  <p>Please <a href="/users/register">sign up</a> or <a href="/users/login">login</a> to create your own book list.</p>
               <% } %>
               
 
@@ -38,14 +38,14 @@
                         <p>To add a book, use the search in the navbar.</p>
                         <br>
                         <p>Get inspired by what other users have picked.</p>
-                        <p><a href="<%=basePath%>/library">Take a look.</a></p>
+                        <p><a href="/library">Take a look.</a></p>
                       </div>
                     </div>
                   <% } %>
                   <% for(let i = 0; i < myLibrary.length; i++){ %>
                     <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
                       <div class="bookCard">
-                        <a href="<%=basePath%>/myBook/<%=myLibrary[i]._id%>">
+                        <a href="/myBook/<%=myLibrary[i]._id%>">
                           <figure class="image">
                             <img src= <%=myLibrary[i].imageLinks.thumbnail%> alt="Book cover for <%=myLibrary[i].title%>">
                           </figure>
