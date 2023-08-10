@@ -20,11 +20,11 @@
                         </p>
                         <%if(currentUser){ %>
                           <%if(!isGoogleBook && inUserLibrary){ %>
-                            <form action="<%=basePath%>/myBook/<%=bookData._id%>?_method=DELETE" method="POST">
+                            <form action="/myBook/<%=bookData._id%>?_method=DELETE" method="POST">
                                 <button class="dangerBtn">Remove</button>
                             </form>
                           <%} else { %>
-                            <form action="<%=basePath%>/findBook" method="POST">
+                            <form action="/findBook" method="POST">
                                 <input hidden type="text" name="bookID" value=<%=googleBookId%> >
                                 <button class="button is-success is-small btnAdd">Add Book</button>
                             </form>
@@ -32,10 +32,10 @@
                         <% } %>
 
                         <% if(currentUser){ %>
-                          <p class="is-size-5 is-capitalized pt-5 mb-5"><a href="<%=basePath%>/home">Your Collection</a></p>
-                          <p class="is-size-5 is-capitalized"><a href="<%=basePath%>/library">jReads Collection</a></p>
+                          <p class="is-size-5 is-capitalized pt-5 mb-5"><a href="/home">Your Collection</a></p>
+                          <p class="is-size-5 is-capitalized"><a href="/library">jReads Collection</a></p>
                         <% } else { %>
-                          <p class="is-size-5 is-capitalized pt-5"><a href="<%=basePath%>/home">jReads Collection</a></p>
+                          <p class="is-size-5 is-capitalized pt-5"><a href="/home">jReads Collection</a></p>
                         <% } %>
 
                     </figcaption>  
@@ -123,7 +123,7 @@
             <div class="media-content">
               <div class="box content">
                 <% if(currentUser){ %>
-                  <form action="<%=basePath%>/myBook/<%=bookData._id%>/comments%>" method="POST">
+                  <form action="/myBook/<%=bookData._id%>/comments%>" method="POST">
                     <input name="username" type="text" value="<%=currentUser%>" hidden>
                     <div>
                       <span>What's your rating... </span>
@@ -146,7 +146,7 @@
                     </div>
                   </form>
                 <% } else { %>
-                  <p class="title is-5">Please <a href="<%=basePath%>/users/register">sign up</a> or <a href="<%=basePath%>/users/login">log in</a> to post a comment.</p>
+                  <p class="title is-5">Please <a href="/users/register">sign up</a> or <a href="/users/login">log in</a> to post a comment.</p>
                 <% } %>
               </div>
             </div>
@@ -177,8 +177,8 @@
                         </div>
                         <% if(currentUser === bookData.comments[i].username){ %>
                           <div class="is-flex is-justify-content-flex-end">
-                            <a class="has-text-info commentBtn" href="<%=basePath%>/myBook/<%=bookData._id%>/comments/<%=i%>/edit">Edit</a>
-                            <form class="is-flex" action="<%=basePath%>/myBook/<%=bookData._id%>/comments/<%=i%>?_method=DELETE" method="POST">
+                            <a class="has-text-info commentBtn" href="/myBook/<%=bookData._id%>/comments/<%=i%>/edit">Edit</a>
+                            <form class="is-flex" action="/myBook/<%=bookData._id%>/comments/<%=i%>?_method=DELETE" method="POST">
                               <button class="has-text-danger commentBtn">Delete</button>
                             </form>
                           </div>
