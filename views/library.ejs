@@ -13,11 +13,11 @@
                 <% if(currentUser){ %>
                   <h3 class="is-3 pb-4"><span class="logo-style">jReads Collection</span></h3>
                   <p>Every book listed in our users' libraries.</p><br>
-                  <p class="is-4 is-capitalized"><a href="<%=basePath%>/home">Your Collection</a></p>
+                  <p class="is-4 is-capitalized"><a href="/home">Your Collection</a></p>
                 <% } else { %>
                   <h3 class="is-3 pb-4"><span class="logo-style">jReads Collection</span></h3>
                   <p>Every book listed in our users' libraries.</p><br>
-                  <p>Please <a href="<%=basePath%>/users/register">sign up</a> or <a href="<%=basePath%>/users/login">log in</a> to create your own book list.</p>
+                  <p>Please <a href="/users/register">sign up</a> or <a href="/users/login">log in</a> to create your own book list.</p>
                 <% } %>
 
             </div>
@@ -34,7 +34,7 @@
                   <% for(let i = 0; i < library.length; i++){ %>
                     <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
                       <div class="bookCard">
-                        <a href="<%=basePath%>/myBook/<%=library[i]._id%>">
+                        <a href="/myBook/<%=library[i]._id%>">
                           <figure class="image">
                             <img src= <%=library[i].imageLinks.thumbnail%> alt="Book cover for <%=library[i].title%>">
                           </figure>

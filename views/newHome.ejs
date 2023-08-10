@@ -20,10 +20,10 @@
                     <% } else { %>
                     <h3 class="is-3 is-capitalized pb-2"><%=currentUser%>'s Collection</h3>
                     <% } %>
-                  <br><p><a href="<%=basePath%>/library">jReads Collection</a></p>
+                  <br><p><a href="/library">jReads Collection</a></p>
               <% } else { %>
                   <h3 class="is-3 pb-4">Welcome!</h3>
-                  <form action="<%=basePath%>/users/login" method="POST">
+                  <form action="/users/login" method="POST">
                     <div class="field">
                       <div class="label is-medium">
                         <label for="username" class="label has-text-light">Username</label>
@@ -57,7 +57,7 @@
                             <button class="button button-splash is-success is-small">Login</button>
                           </div>
                           <div class="control">
-                            <a href="<%=basePath%>/library" class="button button-splash is-info is-small">Guest</a>
+                            <a href="/library" class="button button-splash is-info is-small">Guest</a>
                           </div>  
                         </div>
                       </div>
@@ -65,7 +65,7 @@
                     <div class="level">
                       <div class="level-item has-text-centered">
                         <div class="control">
-                          <a href="<%=basePath%>/users/register" class="has-text-light">Sign Me Up</a>
+                          <a href="/users/register" class="has-text-light">Sign Me Up</a>
                         </div>
                       </div>
                     </div>
@@ -76,7 +76,7 @@
               <h3 class="is-3 is-capitalized pb-2">To Read...</h3> -->
               <!-- <% if(myLibrary.length === 0 ){ %>
                   <p>Get inspired by what other users have picked.</p>
-                  <p><a href="<%=basePath%>/library">Take a look.</a></p>
+                  <p><a href="/library">Take a look.</a></p>
               <% } %> -->
               
 
@@ -89,18 +89,18 @@
 
                       <image class="image is-1x1" src="https://images.unsplash.com/photo-1640013097686-6879c7c4a59b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"></image>
                       <div class=" is-primary has-text-light">
-                        <p>	People have always wondered if a computer could be as smart as a human one day.  Over the past several decades, there have been many movies made on the topic, including Steven Spielberg’s A.I.  However, the movies are just science fiction.  In reality, artificial intelligence is far less complex but integrated in many ways into our everyday lives. <a href="<%=basePath%>/library">Take a look.</a></p><br><br>
+                        <p>	People have always wondered if a computer could be as smart as a human one day.  Over the past several decades, there have been many movies made on the topic, including Steven Spielberg’s A.I.  However, the movies are just science fiction.  In reality, artificial intelligence is far less complex but integrated in many ways into our everyday lives. <a href="/library">Take a look.</a></p><br><br>
                         
                       </div>
 
                       <image class="image is-1x1" src="https://images.unsplash.com/photo-1560332944-d047e59ac9b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3270&q=80"></image>
                       <div class=" is-primary has-text-light">
-                        <p> Beach. Book. <a href="<%=basePath%>/library">Browse.</a></p><br><br>
+                        <p> Beach. Book. <a href="/library">Browse.</a></p><br><br>
                       </div>
 
                       <image class="image is-1x1" src="https://images.unsplash.com/photo-1546074177-ffdda98d214f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2574&q=80"></image>
                       <div class=" is-primary has-text-light">
-                        <p> Enjoy your time reading.  Relax and escape from your home for a minute.  Think and expand your mind for a moment.  Find your next great book. <a href="<%=basePath%>/library">Find more to read.</a></p>
+                        <p> Enjoy your time reading.  Relax and escape from your home for a minute.  Think and expand your mind for a moment.  Find your next great book. <a href="/library">Find more to read.</a></p>
                       </div>
 
                     </div>

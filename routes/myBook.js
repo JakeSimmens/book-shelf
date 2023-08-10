@@ -1,6 +1,3 @@
-// const {BASE_PATH} = require("../secrets");
-const {BASE_PATH}  = require("../config.js");
-
 const middleware = require("../middleware");
 const express = require("express");
 //use mergeParams to allow req.params.id to pass thru
@@ -17,7 +14,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
         return;
       }
       if(data.length == 0){
-        res.redirect(`${BASE_PATH}/home`);
+        res.redirect(`/home`);
         return;
       }
 
@@ -58,7 +55,7 @@ let connectToDb = function(booksDbConn, usersDbConn){
       } else {
         req.flash("info", "The book has been removed from your library.");
       }
-      res.redirect(`${BASE_PATH}/home`);
+      res.redirect(`/home`);
     });
   });
 
