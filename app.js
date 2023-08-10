@@ -1,5 +1,4 @@
-//const {SESSION_SECRET, BASE_PATH}  = require("./secrets.js");
-const {SESSION_SECRET, BASE_PATH}  = require("./config.js");
+const {SESSION_SECRET}  = require("./config.js");
 
 const flash             = require("connect-flash");
 const express           = require("express");
@@ -24,7 +23,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
-
 
 //initialize databases
 initDatabases().then( async databases => {

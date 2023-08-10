@@ -1,6 +1,3 @@
-// const {BASE_PATH} = require("../secrets");
-const {BASE_PATH}  = require("../config.js");
-
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");

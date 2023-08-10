@@ -1,6 +1,3 @@
-// const {BASE_PATH} = require("../secrets");
-const {BASE_PATH}  = require("../config.js");
-
 const middleware = require("../middleware");
 const express = require("express");
 //use mergeParams to allow req.params.id to pass thru

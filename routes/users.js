@@ -1,12 +1,9 @@
-// const {BASE_PATH} = require("../secrets");
-const {BASE_PATH}  = require("../config.js");
 const middleware = require("../middleware");
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-
 
 let connectToDb = function(usersdbConnection){
 
